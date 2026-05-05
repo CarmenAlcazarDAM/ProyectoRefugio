@@ -1,8 +1,9 @@
 module org.example.proyectorefugio {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
-    opens org.example.proyectorefugio to javafx.fxml;
-    exports org.example.proyectorefugio;
+    opens org.proyectorefugio to javafx.fxml;
+    exports org.proyectorefugio;
 }
