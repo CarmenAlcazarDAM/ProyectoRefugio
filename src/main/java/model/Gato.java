@@ -11,4 +11,11 @@ public class Gato extends Animal{
         super(nombre, raza, sexo, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, fechaIngreso);
         this.leucemiaFelina = leucemiaFelina;
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+
+                " leucemiaFelina=" + leucemiaFelina +
+                '}';
+    }
 }

@@ -29,4 +29,22 @@ public class Animal {
         this.observaciones = observaciones;
         this.fechaIngreso = fechaIngreso;
     }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", raza='" + raza + '\'' +
+                ", sexo=" + sexo +
+                ", marcasDistintivas='" + marcasDistintivas + '\'' +
+                ", numeroChip=" + numeroChip +
+                ", esterilizado=" + esterilizado +
+                ", historia='" + historia + '\'' +
+                ", observaciones='" + observaciones + '\'' +
+                ", fechaIngreso=" + fechaIngreso +
+                ", adoptado=" + adoptado +
+                ", fechaAlta=" + fechaAlta +
+                '}';
+    }
 }
