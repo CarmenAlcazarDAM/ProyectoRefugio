@@ -37,21 +37,106 @@ public class Animal {
         this.sexo = sexo;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getRaza() {
+        return raza;
+    }
+
+    public void setRaza(String raza) {
+        this.raza = raza;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getMarcasDistintivas() {
+        return marcasDistintivas;
+    }
+
+    public void setMarcasDistintivas(String marcasDistintivas) {
+        this.marcasDistintivas = marcasDistintivas;
+    }
+
+    public int getNumeroChip() {
+        return numeroChip;
+    }
+
+    public void setNumeroChip(int numeroChip) {
+        this.numeroChip = numeroChip;
+    }
+
+    public boolean isEsterilizado() {
+        return esterilizado;
+    }
+
+    public void setEsterilizado(boolean esterilizado) {
+        this.esterilizado = esterilizado;
+    }
+
+    public String getHistoria() {
+        return historia;
+    }
+
+    public void setHistoria(String historia) {
+        this.historia = historia;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public Date getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
+
+    public boolean isAdoptado() {
+        return adoptado;
+    }
+
+    public void setAdoptado(boolean adoptado) {
+        this.adoptado = adoptado;
+    }
+
+    public Date getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public void setFechaAlta(Date fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }
+
     @Override
     public String toString() {
-        return "Animal{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", raza='" + raza + '\'' +
-                ", sexo=" + sexo +
-                ", marcasDistintivas='" + marcasDistintivas + '\'' +
-                ", numeroChip=" + numeroChip +
-                ", esterilizado=" + esterilizado +
-                ", historia='" + historia + '\'' +
-                ", observaciones='" + observaciones + '\'' +
-                ", fechaIngreso=" + fechaIngreso +
-                ", adoptado=" + adoptado +
-                ", fechaAlta=" + fechaAlta +
-                '}';
+        return nombre.toUpperCase() + " (Id: " + id + ", " + sexo + ", " + raza + ")";
     }
+
+
 }

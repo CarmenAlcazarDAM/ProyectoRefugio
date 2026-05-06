@@ -14,12 +14,13 @@ public class Perro extends Animal{
         this.peso = peso;
         this.agresivo = agresivo;
     }
+    public Perro(int id, String nombre, String raza, Sexo sexo){
+        super(id,nombre, raza,sexo);
+
+    }
 
     @Override
     public String toString() {
-        return super.toString() +
-                " peso=" + peso +
-                ", agresivo=" + agresivo +
-                '}';
+        return super.toString();
     }
 }
