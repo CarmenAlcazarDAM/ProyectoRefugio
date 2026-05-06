@@ -12,10 +12,16 @@ public class Gato extends Animal{
         this.leucemiaFelina = leucemiaFelina;
     }
 
+    public boolean isLeucemiaFelina() {
+        return leucemiaFelina;
+    }
+
+    public void setLeucemiaFelina(boolean leucemiaFelina) {
+        this.leucemiaFelina = leucemiaFelina;
+    }
+
     @Override
     public String toString() {
-        return super.toString()+
-                " leucemiaFelina=" + leucemiaFelina +
-                '}';
+        return super.toString();
     }
 }

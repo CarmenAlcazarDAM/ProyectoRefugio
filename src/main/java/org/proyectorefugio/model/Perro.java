@@ -19,6 +19,22 @@ public class Perro extends Animal{
 
     }
 
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+
+    public boolean isAgresivo() {
+        return agresivo;
+    }
+
+    public void setAgresivo(boolean agresivo) {
+        this.agresivo = agresivo;
+    }
+
     @Override
     public String toString() {
         return super.toString();
