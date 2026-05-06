@@ -1,4 +1,4 @@
-package model;
+package org.proyectorefugio.model;
 
 import java.util.Date;
 
@@ -28,6 +28,13 @@ public class Animal {
         this.historia = historia;
         this.observaciones = observaciones;
         this.fechaIngreso = fechaIngreso;
+    }
+
+    public Animal(int id, String nombre, String raza, Sexo sexo){
+        this.id = id;
+        this.nombre = nombre;
+        this.raza = raza;
+        this.sexo = sexo;
     }
 
     @Override

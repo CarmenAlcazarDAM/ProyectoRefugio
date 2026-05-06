@@ -1,4 +1,4 @@
-package DAO;
+package org.proyectorefugio.modelDAO;
 
 public class GatoDAO {
     //TENGO QUE CREAR UN MÉTODO QUE ME HAGA UNA LISTA DE GATOS

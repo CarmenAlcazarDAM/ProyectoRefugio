@@ -1,4 +1,4 @@
-package model;
+package org.proyectorefugio.model;
 
 public class Persona {
     private String dni;

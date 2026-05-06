@@ -1,4 +1,4 @@
-package dataAccess;
+package org.proyectorefugio.dataAccess;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
