@@ -29,7 +29,7 @@ public class pruebasMain {
 //        }
 
         System.out.println("----------------Prueba buscar perros por Nombre-----------------");
-        List<Perro> perros2 = PerroDAO.findByName("Bianca");
+        List<Perro> perros2 = PerroDAO.findByNameNotAdopted("Bianca");
         for(Perro p : perros2){
             System.out.println(p);
         }
