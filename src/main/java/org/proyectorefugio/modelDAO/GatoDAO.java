@@ -16,12 +16,13 @@ public class GatoDAO {
     private final static String SQL_FIND_ALL = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, gato g WHERE a.id = g.idGato";
     private final static String SQL_FIND_ALL_NOT_ADOPTED = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, gato g WHERE a.id = g.idGato AND adoptado = 0";
 
-    private final static String SQL_FIND_BY_NAME_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre = ? AND adoptado = 0 AND id IN (SELECT idGato FROM gato)";
-    private final static String SQL_FIND_BY_NAME_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre = ? AND adoptado <> 0 AND id IN (SELECT idGato FROM gato)";
+    private final static String SQL_FIND_BY_NAME_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado = 0 AND id IN (SELECT idGato FROM gato)";
+    private final static String SQL_FIND_BY_NAME_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado <> 0 AND id IN (SELECT idGato FROM gato)";
 
-    private final static String SQL_FIND_BY_BREED_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza = ? AND adoptado = 0 AND id IN (SELECT idGato FROM gato)";
-    private final static String SQL_FIND_BY_BREED_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza = ? AND adoptado <> 0 AND id IN (SELECT idGato FROM gato)";
+    private final static String SQL_FIND_BY_BREED_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado = 0 AND id IN (SELECT idGato FROM gato)";
+    private final static String SQL_FIND_BY_BREED_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado <> 0 AND id IN (SELECT idGato FROM gato)";
 
+    private final static String SQL_FIND_BY_COLOUR = "SELECT id, nombre, raza, sexo FROM animal WHERE color LIKE ? AND id IN (SELECT idGato FROM gato)";
 
     /**
      * Método que devuelve una lista con todos los gatos de la base de datos
@@ -78,7 +79,7 @@ public class GatoDAO {
         Gato gato = null;
 
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME_NOT_ADOPTED)) {
-            ps.setString(1, name);
+            ps.setString(1, "%"+name+"%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -105,7 +106,7 @@ public class GatoDAO {
         Gato gato = null;
 
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME_ADOPTED)) {
-            ps.setString(1, name);
+            ps.setString(1, "%"+name+"%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -133,7 +134,7 @@ public class GatoDAO {
         Gato gato = null;
 
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED_NOT_ADOPTED)) {
-            ps.setString(1, breed);
+            ps.setString(1, "%"+breed+"%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -149,6 +150,7 @@ public class GatoDAO {
         }
         return listaGatos;
     }
+
     /**
      * Método que busca a los gatos que tengan una raza específica y han sido adoptados
      *
@@ -160,7 +162,33 @@ public class GatoDAO {
         Gato gato = null;
 
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED_ADOPTED)) {
-            ps.setString(1, breed);
+            ps.setString(1, "%"+breed+"%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                String raza = rs.getString("raza");
+                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
+                gato = new Gato(id, nombre, raza, sexo);
+
+                listaGatos.add(gato);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaGatos;
+    }
+
+    /**
+     * Método que busca a los gatos que tengan unos colores específicos
+     * @param colour --> color a buscar, introducido por el usuario
+     * @return --> devuelve una lista con los gatos que tengan esos colores
+     */
+    public static List<Gato> findByColour (String colour){
+        List<Gato> listaGatos = new ArrayList<>();
+        Gato gato = null;
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_COLOUR)) {
+            ps.setString(1, "%" + colour + "%"); // El símbolo % representa cualquier secuencia de caracteres para permitir búsquedas parciales con LIKE.
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
