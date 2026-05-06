@@ -16,6 +16,12 @@ public class Animal {
     private boolean adoptado = false;
     private Date fechaAlta;
 
+    public Animal(int id, String nombre, String raza, Sexo sexo){
+        this.id = id;
+        this.nombre = nombre;
+        this.raza = raza;
+        this.sexo = sexo;
+    }
     public Animal( String nombre, String raza, Sexo sexo, String marcasDistintivas,
                   int numeroChip, boolean esterilizado, String historia, String observaciones, Date fechaIngreso) {
         id++;
@@ -30,12 +36,6 @@ public class Animal {
         this.fechaIngreso = fechaIngreso;
     }
 
-    public Animal(int id, String nombre, String raza, Sexo sexo){
-        this.id = id;
-        this.nombre = nombre;
-        this.raza = raza;
-        this.sexo = sexo;
-    }
 
     public int getId() {
         return id;
