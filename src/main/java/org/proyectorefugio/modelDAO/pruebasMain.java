@@ -20,6 +20,13 @@ public class pruebasMain {
 //        for(Perro p : perros){
 //            System.out.println(p);
 //        }
+
+        System.out.println("----------------Prueba listar perros en adopción-----------------");
+
+        List<Perro> perros = PerroDAO.findAllNotAdopted();
+        for(Perro p : perros){
+            System.out.println(p);
+        }
 //
 //        System.out.println("----------------Prueba listar gatos-----------------");
 //
@@ -28,10 +35,10 @@ public class pruebasMain {
 //            System.out.println(g);
 //        }
 
-        System.out.println("----------------Prueba buscar perros por Nombre-----------------");
-        List<Perro> perros2 = PerroDAO.findByNameNotAdopted("Bianca");
-        for(Perro p : perros2){
-            System.out.println(p);
-        }
+//        System.out.println("----------------Prueba buscar perros por Nombre-----------------");
+//        List<Perro> perros2 = PerroDAO.findByNameNotAdopted("Bianca");
+//        for(Perro p : perros2){
+//            System.out.println(p);
+//        }
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 
 public class PerroDAO {
     private final static String SQL_FIND_ALL = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, perro p WHERE a.id = p.idPerro";
+    private final static String SQL_FIND_ALL_NOT_ADOPTED = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, perro p WHERE a.id = p.idPerro AND adoptado = 0";
     private final static String SQL_FIND_BY_NAME_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre = ? AND adoptado = 0 AND id IN (SELECT idPerro FROM perro)";
     private final static String SQL_FIND_BY_NAME_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre = ? AND adoptado <> 0 AND id IN (SELECT idPerro FROM perro)";
 
@@ -25,6 +26,28 @@ public class PerroDAO {
         List<Perro> listaPerros = new ArrayList<>();
         Perro perro = null;
         try (ResultSet rs = ConnectionBD.getConnection().createStatement().executeQuery(SQL_FIND_ALL)) {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                Animal datosAnimal = AnimalDAO.findByID(id);
+
+                perro = new Perro(id, datosAnimal.getNombre(), datosAnimal.getRaza(), datosAnimal.getSexo());
+                listaPerros.add(perro);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaPerros;
+    }
+    /**
+     * Método que devuelve una lista con todos los perros de la base de datos
+     *
+     * @return --> lista con todos los perros y sus datos.
+     */
+    public static List<Perro> findAllNotAdopted() {
+        List<Perro> listaPerros = new ArrayList<>();
+        Perro perro = null;
+        try (ResultSet rs = ConnectionBD.getConnection().createStatement().executeQuery(SQL_FIND_ALL_NOT_ADOPTED)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 Animal datosAnimal = AnimalDAO.findByID(id);
