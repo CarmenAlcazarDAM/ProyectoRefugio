@@ -14,8 +14,12 @@ import java.util.List;
 public class PerroDAO {
     private final static String SQL_FIND_ALL = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, perro p WHERE a.id = p.idPerro";
     private final static String SQL_FIND_ALL_NOT_ADOPTED = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, perro p WHERE a.id = p.idPerro AND adoptado = 0";
+
     private final static String SQL_FIND_BY_NAME_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre = ? AND adoptado = 0 AND id IN (SELECT idPerro FROM perro)";
     private final static String SQL_FIND_BY_NAME_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre = ? AND adoptado <> 0 AND id IN (SELECT idPerro FROM perro)";
+
+    private final static String SQL_FIND_BY_BREED_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza = ? AND adoptado = 0 AND id IN (SELECT idPerro FROM perro)";
+    private final static String SQL_FIND_BY_BREED_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza = ? AND adoptado <> 0 AND id IN (SELECT idPerro FROM perro)";
 
     /**
      * Método que devuelve una lista con todos los perros de la base de datos
@@ -39,6 +43,7 @@ public class PerroDAO {
         }
         return listaPerros;
     }
+
     /**
      * Método que devuelve una lista con todos los perros de la base de datos
      *
@@ -64,6 +69,7 @@ public class PerroDAO {
 
     /**
      * Método que busca a los perros que tengan un nombre específico y estén en adopción
+     *
      * @param name --> nombre a buscar, introducido por el usuario
      * @return --> devuelve una lista con los perros que tengan el nombre introducido por el usuario
      */
@@ -72,14 +78,14 @@ public class PerroDAO {
         Perro perro = null;
 
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME_NOT_ADOPTED)) {
-            ps.setString(1,name);
+            ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
                 String raza = rs.getString("raza");
                 Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                perro = new Perro(id,nombre,raza,sexo);
+                perro = new Perro(id, nombre, raza, sexo);
 
                 listaPerros.add(perro);
             }
@@ -91,6 +97,7 @@ public class PerroDAO {
 
     /**
      * Método que busca a los perros que tengan un nombre específico y ya han sido adoptados
+     *
      * @param name --> nombre a buscar, introducido por el usuario
      * @return --> devuelve una lista con los perros que tengan el nombre introducido por el usuario
      */
@@ -99,14 +106,14 @@ public class PerroDAO {
         Perro perro = null;
 
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME_ADOPTED)) {
-            ps.setString(1,name);
+            ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
                 String raza = rs.getString("raza");
                 Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                perro = new Perro(id,nombre,raza,sexo);
+                perro = new Perro(id, nombre, raza, sexo);
 
                 listaPerros.add(perro);
             }
@@ -116,4 +123,61 @@ public class PerroDAO {
         return listaPerros;
     }
 
+    /**
+     * Método que busca a los perros que tengan una raza específica y no han sido adoptados
+     *
+     * @param breed --> raza a buscar, introducido por el usuario
+     * @return --> devuelve una lista con los perros que tengan esa misma raza
+     */
+    public static List<Perro> findByBreedNotAdopted(String breed) {
+        List<Perro> listaPerros = new ArrayList<>();
+        Perro perro = null;
+
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED_NOT_ADOPTED)) {
+            ps.setString(1, breed);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                String raza = rs.getString("raza");
+                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
+                perro = new Perro(id, nombre, raza, sexo);
+
+                listaPerros.add(perro);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaPerros;
+    }
+
+    /**
+     * Método que busca a los perros que tengan una raza específica y ya han sido adoptados
+     *
+     * @param breed --> raza a buscar, introducido por el usuario
+     * @return --> devuelve una lista con los perros que tengan esa misma raza
+     */
+    public static List<Perro> findByBreedAdopted(String breed) {
+        List<Perro> listaPerros = new ArrayList<>();
+        Perro perro = null;
+
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED_ADOPTED)) {
+            ps.setString(1, breed);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                String raza = rs.getString("raza");
+                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
+                perro = new Perro(id, nombre, raza, sexo);
+
+                listaPerros.add(perro);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaPerros;
+    }
 }
+
+
