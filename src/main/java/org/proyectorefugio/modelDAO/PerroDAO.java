@@ -15,11 +15,11 @@ public class PerroDAO {
     private final static String SQL_FIND_ALL = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, perro p WHERE a.id = p.idPerro";
     private final static String SQL_FIND_ALL_NOT_ADOPTED = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, perro p WHERE a.id = p.idPerro AND adoptado = 0";
 
-    private final static String SQL_FIND_BY_NAME_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre = ? AND adoptado = 0 AND id IN (SELECT idPerro FROM perro)";
-    private final static String SQL_FIND_BY_NAME_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre = ? AND adoptado <> 0 AND id IN (SELECT idPerro FROM perro)";
+    private final static String SQL_FIND_BY_NAME_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado = 0 AND id IN (SELECT idPerro FROM perro)";
+    private final static String SQL_FIND_BY_NAME_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado <> 0 AND id IN (SELECT idPerro FROM perro)";
 
-    private final static String SQL_FIND_BY_BREED_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza = ? AND adoptado = 0 AND id IN (SELECT idPerro FROM perro)";
-    private final static String SQL_FIND_BY_BREED_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza = ? AND adoptado <> 0 AND id IN (SELECT idPerro FROM perro)";
+    private final static String SQL_FIND_BY_BREED_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado = 0 AND id IN (SELECT idPerro FROM perro)";
+    private final static String SQL_FIND_BY_BREED_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado <> 0 AND id IN (SELECT idPerro FROM perro)";
 
     /**
      * Método que devuelve una lista con todos los perros de la base de datos
@@ -78,7 +78,7 @@ public class PerroDAO {
         Perro perro = null;
 
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME_NOT_ADOPTED)) {
-            ps.setString(1, name);
+            ps.setString(1, "%" + name + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -106,7 +106,7 @@ public class PerroDAO {
         Perro perro = null;
 
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME_ADOPTED)) {
-            ps.setString(1, name);
+            ps.setString(1, "%" + name + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -134,7 +134,7 @@ public class PerroDAO {
         Perro perro = null;
 
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED_NOT_ADOPTED)) {
-            ps.setString(1, breed);
+            ps.setString(1, "%" + breed + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -162,7 +162,7 @@ public class PerroDAO {
         Perro perro = null;
 
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED_ADOPTED)) {
-            ps.setString(1, breed);
+            ps.setString(1, "%" + breed + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
