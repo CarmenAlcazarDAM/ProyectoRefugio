@@ -5,6 +5,7 @@ module org.proyectorefugio {
     requires javafx.fxml;
 
 
+
     opens org.proyectorefugio.dataAccess to java.xml.bind;
 
     opens org.proyectorefugio to javafx.fxml;

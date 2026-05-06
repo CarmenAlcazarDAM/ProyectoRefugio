@@ -1,6 +1,7 @@
 package org.proyectorefugio.modelDAO;
 
 import org.proyectorefugio.model.Animal;
+import org.proyectorefugio.model.Gato;
 import org.proyectorefugio.model.Perro;
 
 import java.util.ArrayList;
@@ -18,6 +19,12 @@ public class pruebasMain {
             System.out.println(p);
         }
 
+        System.out.println("---------------------------------");
+
+        List<Gato> gatos = GatoDAO.findAll();
+        for(Gato g : gatos){
+            System.out.println(g);
+        }
 
     }
 }
