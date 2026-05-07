@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 public class AnimalDAO {
@@ -35,6 +36,12 @@ public class AnimalDAO {
     private static final String SQL_DELETE_BY_ID = "DELETE animal WHERE id = ?";
 
     private static String SQL_UPDATE_CHIP = "UPDATE animal SET numeroChip = ? WHERE id = ?";
+    private static String SQL_UPDATE_OBSERVACIONES = "UPDATE animal SET observaciones = ? WHERE id = ?";
+    private static String SQL_UPDATE_ESTERILIZADO = "UPDATE animal SET esterilizado = ? WHERE id = ?";
+    private static String SQL_UPDATE_FECHA_ALTA = "UPDATE animal SET fechaAlta = ? WHERE id = ?";
+    private static String SQL_UPDATE_UBICACION = "UPDATE animal SET idUbicacion = ? WHERE id = ?";
+    private static String SQL_UPDATE_ADOPTANTE = "UPDATE animal SET dniAdoptante = ? WHERE id = ?";
+
 
     /**------------------------------------------------------**/
 
@@ -250,12 +257,127 @@ public class AnimalDAO {
     }
 
     /// //////////////////// UPDATE ///////////////////////
-// podemos hacer update del numero de chip, de observaciones, esterilizado, fecha de alta, idUbicacion y dniAdoptante
+    /**
+     * Método que actualiza la informacion del numero de chip de un animal
+     * @param a --> animal al que vamos a actualizar la información
+     * @param numeroChip --> número del chip pasado por parámetro (dos animales no pueden tener el mismo número de chip)
+     * @return --> devuelve true si se actualiza correctamente, false si no lo hace
+     */
     public static boolean updateNumeroChip(Animal a, int numeroChip) {
         boolean updated = false;
         if ((a != null) && findByID(a.getId()) != null && findByChip(numeroChip) == null){
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_CHIP)) {
                 ps.setInt(1,numeroChip);
+                ps.setInt(2, a.getId());
+                ps.executeUpdate();
+
+                updated = true;
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
+        return updated;
+    }
+
+    /**
+     * Método que actualiza la informacion de Observaciones del animal
+     * @param a --> animal al que vamos a actualizar la información
+     * @param observaciones --> observacion que vamos a añadir
+     * @return --> devuelve true si se actualiza correctamente, false si no lo hace
+     */
+    public static boolean updateObservaciones(Animal a, String observaciones) {
+        boolean updated = false;
+        if ((a != null) && findByID(a.getId()) != null){
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_OBSERVACIONES)) {
+                ps.setString(1,observaciones);
+                ps.setInt(2, a.getId());
+                ps.executeUpdate();
+
+                updated = true;
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
+        return updated;
+    }
+
+    /**
+     *Método que actualiza si se esteriliza a un animal
+     * @param a --> animal al que vamos a actualizar la información
+     * @param estelizado --> información de esterilizacion pasada por parámetro
+     * @return --> devuelve true si se actualiza correctamente, false si no lo hace
+     */
+    public static boolean updateEsterilizado(Animal a, boolean estelizado) {
+        boolean updated = false;
+        if ((a != null) && findByID(a.getId()) != null){
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_ESTERILIZADO)) {
+                ps.setBoolean(1,estelizado);
+                ps.setInt(2, a.getId());
+                ps.executeUpdate();
+
+                updated = true;
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
+        return updated;
+    }
+
+    /**
+     * Método que actualiza la fecha de alta de un animal
+     * @param a --> animal al que vamos a actualizar la información
+     * @param fechaAlta --> fecha en la que se dará de alta el animal
+     * @return --> devuelve true si se actualiza correctamente, false si no lo hace
+     */
+    public static boolean updateFechaAlta(Animal a, Date fechaAlta) {
+        boolean updated = false;
+        if ((a != null) && findByID(a.getId()) != null){
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_FECHA_ALTA)) {
+                ps.setDate(1,fechaAlta);
+                ps.setInt(2, a.getId());
+                ps.executeUpdate();
+
+                updated = true;
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
+        return updated;
+    }
+
+    /**
+     * Método que actualiza la informacion de la ubicación del animal
+     * @param a --> animal al que vamos a actualizar la información
+     * @param idUbicacion --> id de la ubicacion pasado por parámetro
+     * @return --> devuelve true si se actualiza correctamente, false si no lo hace
+     */
+    public static boolean updateUbicacion(Animal a, int idUbicacion) {
+        boolean updated = false;
+        if ((a != null) && findByID(a.getId()) != null){
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_UBICACION)) {
+                ps.setInt(1,idUbicacion);
+                ps.setInt(2, a.getId());
+                ps.executeUpdate();
+
+                updated = true;
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
+        return updated;
+    }
+
+    /**
+     * Método que actualiza la informacion del adoptante
+     * @param a --> animal al que vamos a actualizar la información
+     * @param dniAdoptante --> dni del adoptante pasado por parámetro
+     * @return --> devuelve true si se actualiza correctamente, false si no lo hace
+     */
+    public static boolean updateAdoptante(Animal a, String dniAdoptante) {
+        boolean updated = false;
+        if ((a != null) && findByID(a.getId()) != null){
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_ADOPTANTE)) {
+                ps.setString(1,dniAdoptante);
                 ps.setInt(2, a.getId());
                 ps.executeUpdate();
 
