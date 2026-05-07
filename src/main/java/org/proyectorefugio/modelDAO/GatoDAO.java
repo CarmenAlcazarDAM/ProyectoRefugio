@@ -254,7 +254,7 @@ public class GatoDAO {
      */
     public static boolean updateLeucemia(Gato g, boolean leucemia) {
         boolean updated = false;
-        if ((p != null) && AnimalDAO.findByID(g.getId()) != null){
+        if ((g != null) && AnimalDAO.findByID(g.getId()) != null){
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_LEUCEMIA)) {
                 ps.setBoolean(1,leucemia);
                 ps.setInt(2, g.getId());
