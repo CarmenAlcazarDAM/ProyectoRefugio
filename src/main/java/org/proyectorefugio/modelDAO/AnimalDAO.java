@@ -269,7 +269,9 @@ public class AnimalDAO {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_CHIP)) {
                 ps.setInt(1,numeroChip);
                 ps.setInt(2, a.getId());
-                ps.executeUpdate();
+
+                int filasAfectadas = ps.executeUpdate();
+                updated = (filasAfectadas > 0);
 
                 updated = true;
             }catch (SQLException e){
@@ -291,7 +293,9 @@ public class AnimalDAO {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_OBSERVACIONES)) {
                 ps.setString(1,observaciones);
                 ps.setInt(2, a.getId());
-                ps.executeUpdate();
+
+                int filasAfectadas = ps.executeUpdate();
+                updated = (filasAfectadas > 0);
 
                 updated = true;
             }catch (SQLException e){
@@ -313,7 +317,9 @@ public class AnimalDAO {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_ESTERILIZADO)) {
                 ps.setBoolean(1,estelizado);
                 ps.setInt(2, a.getId());
-                ps.executeUpdate();
+
+                int filasAfectadas = ps.executeUpdate();
+                updated = (filasAfectadas > 0);
 
                 updated = true;
             }catch (SQLException e){
@@ -335,7 +341,9 @@ public class AnimalDAO {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_FECHA_ALTA)) {
                 ps.setDate(1,fechaAlta);
                 ps.setInt(2, a.getId());
-                ps.executeUpdate();
+
+                int filasAfectadas = ps.executeUpdate();
+                updated = (filasAfectadas > 0);
 
                 updated = true;
             }catch (SQLException e){
@@ -357,7 +365,9 @@ public class AnimalDAO {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_UBICACION)) {
                 ps.setInt(1,idUbicacion);
                 ps.setInt(2, a.getId());
-                ps.executeUpdate();
+
+                int filasAfectadas = ps.executeUpdate();
+                updated = (filasAfectadas > 0);
 
                 updated = true;
             }catch (SQLException e){
@@ -379,7 +389,9 @@ public class AnimalDAO {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_ADOPTANTE)) {
                 ps.setString(1,dniAdoptante);
                 ps.setInt(2, a.getId());
-                ps.executeUpdate();
+
+                int filasAfectadas = ps.executeUpdate();
+                updated = (filasAfectadas > 0);
 
                 updated = true;
             }catch (SQLException e){
