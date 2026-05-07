@@ -24,8 +24,11 @@ public class GatoDAO {
     private final static String SQL_FIND_GATO = "SELECT leucemiaFelina FROM gato WHERE idGato = ?";
 
     private final static String SQL_INSERT = "INSERT INTO gato VALUES(?)";
+
+    private static String SQL_UPDATE_LEUCEMIA = "UPDATE gato SET leucemiaFelina = ? WHERE idPerro = ?";
     /**------------------------------------------------------**/
 
+    /////////////////////// FIND ///////////////////////
 
     /**
      * Método que devuelve una lista con todos los gatos de la base de datos
@@ -217,7 +220,7 @@ public class GatoDAO {
         return listaGatos;
     }
 
-    //////////////////////// AÑADIR ///////////////////////
+    //////////////////////// ADD ///////////////////////
     /**
      * Método que inserta un GATO en la base de datos dentro de la tabla gato
      * @param g --> objeto Gato pasado como parámetro
@@ -240,6 +243,31 @@ public class GatoDAO {
             }
         }
         return false;
+    }
+
+    /////////////////////// UPDATE ///////////////////////
+    /**
+     * Método que actualiza la informacion sobre la leucemia de un gato
+     * @param g --> gato al que vamos a actualizar la información
+     * @param leucemia --> leucemia del gato, true si es agresivo, false si no lo es
+     * @return --> devuelve true si se actualiza correctamente, false si no lo hace
+     */
+    public static boolean updateLeucemia(Gato g, boolean leucemia) {
+        boolean updated = false;
+        if ((p != null) && AnimalDAO.findByID(g.getId()) != null){
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_LEUCEMIA)) {
+                ps.setBoolean(1,leucemia);
+                ps.setInt(2, g.getId());
+
+                int filasAfectadas = ps.executeUpdate();
+                updated = (filasAfectadas > 0);
+
+                updated = true;
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
+        return updated;
     }
 
 }
