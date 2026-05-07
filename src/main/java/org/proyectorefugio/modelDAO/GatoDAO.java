@@ -23,7 +23,7 @@ public class GatoDAO {
 
     private final static String SQL_FIND_GATO = "SELECT leucemiaFelina FROM gato WHERE idGato = ?";
 
-    private final static String SQL_INSERT = "INSERT INTO perro VALUES(?)";
+    private final static String SQL_INSERT = "INSERT INTO gato VALUES(?)";
     /**------------------------------------------------------**/
 
 
