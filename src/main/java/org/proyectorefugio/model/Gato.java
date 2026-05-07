@@ -9,10 +9,10 @@ public class Gato extends Animal{
         super(id,nombre, raza,sexo);
 
     }
-    public Gato(String nombre, String raza, Sexo sexo, String marcasDistintivas,
+    public Gato(int id, String nombre, String raza, Sexo sexo, String marcasDistintivas,
                 int numeroChip, boolean esterilizado, String historia, String observaciones,
-                Date fechaIngreso, boolean leucemiaFelina) {
-        super(nombre, raza, sexo, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, fechaIngreso);
+                Date fechaIngreso, int idUbicacion, boolean leucemiaFelina) {
+        super(id,nombre, raza, sexo, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, fechaIngreso, idUbicacion);
         this.leucemiaFelina = leucemiaFelina;
     }
 

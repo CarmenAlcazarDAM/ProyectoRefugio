@@ -13,16 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GatoDAO {
+
+    /**--------------------Sentencias SQL--------------------**/
+
     private final static String SQL_FIND_ALL = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, gato g WHERE a.id = g.idGato";
     private final static String SQL_FIND_ALL_NOT_ADOPTED = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, gato g WHERE a.id = g.idGato AND adoptado = 0";
 
-    private final static String SQL_FIND_BY_NAME_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado = 0 AND id IN (SELECT idGato FROM gato)";
-    private final static String SQL_FIND_BY_NAME_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado <> 0 AND id IN (SELECT idGato FROM gato)";
+//    private final static String SQL_FIND_BY_NAME_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado = 0 AND id IN (SELECT idGato FROM gato)";
+//    private final static String SQL_FIND_BY_NAME_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado <> 0 AND id IN (SELECT idGato FROM gato)";
+//
+//    private final static String SQL_FIND_BY_BREED_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado = 0 AND id IN (SELECT idGato FROM gato)";
+//    private final static String SQL_FIND_BY_BREED_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado <> 0 AND id IN (SELECT idGato FROM gato)";
+//
+//    private final static String SQL_FIND_BY_COLOUR = "SELECT id, nombre, raza, sexo FROM animal WHERE color LIKE ? AND id IN (SELECT idGato FROM gato)";
+private final static String SQL_FIND_GATO = "SELECT leucemiaFelina FROM gato WHERE idGato = ?";
+    /**------------------------------------------------------**/
 
-    private final static String SQL_FIND_BY_BREED_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado = 0 AND id IN (SELECT idGato FROM gato)";
-    private final static String SQL_FIND_BY_BREED_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado <> 0 AND id IN (SELECT idGato FROM gato)";
-
-    private final static String SQL_FIND_BY_COLOUR = "SELECT id, nombre, raza, sexo FROM animal WHERE color LIKE ? AND id IN (SELECT idGato FROM gato)";
 
     /**
      * Método que devuelve una lista con todos los gatos de la base de datos
@@ -67,6 +73,39 @@ public class GatoDAO {
         }
         return listaGatos;
     }
+    private static Gato rellenarDatosGato(Animal a) {
+        Gato g = null;
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_GATO)) {
+
+            ps.setInt(1, a.getId());
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+
+
+                    boolean leucemiaFelina = rs.getBoolean("leucemiaFelina");
+
+                    g = new Gato(
+                            a.getId(),
+                            a.getNombre(),
+                            a.getRaza(),
+                            a.getSexo(),
+                            a.getMarcasDistintivas(),
+                            a.getNumeroChip(),
+                            a.isEsterilizado(),
+                            a.getHistoria(),
+                            a.getObservaciones(),
+                            a.getFechaIngreso(),
+                            a.getIdUbicacion(),
+                            rs.getBoolean("leucemiaFelina")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return g;
+    }
 
     /**
      * Método que busca a los gatos que tengan un nombre específico y estén en adopción
@@ -76,23 +115,17 @@ public class GatoDAO {
      */
     public static List<Gato> findByNameNotAdopted(String name) {
         List<Gato> listaGatos = new ArrayList<>();
-        Gato gato = null;
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME_NOT_ADOPTED)) {
-            ps.setString(1, "%"+name+"%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                gato = new Gato(id, nombre, raza, sexo);
+        List<Animal> animalesEncontrados = AnimalDAO.findByNameNotAdopted(name);
 
-                listaGatos.add(gato);
+        for (Animal a : animalesEncontrados) {
+            Gato g = rellenarDatosGato(a);
+
+            if (g != null) {
+                listaGatos.add(g);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
+
         return listaGatos;
     }
     /**
@@ -103,23 +136,17 @@ public class GatoDAO {
      */
     public static List<Gato> findByNameAdopted(String name) {
         List<Gato> listaGatos = new ArrayList<>();
-        Gato gato = null;
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME_ADOPTED)) {
-            ps.setString(1, "%"+name+"%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                gato = new Gato(id, nombre, raza, sexo);
+        List<Animal> animalesEncontrados = AnimalDAO.findByNameAdopted(name);
 
-                listaGatos.add(gato);
+        for (Animal a : animalesEncontrados) {
+            Gato g = rellenarDatosGato(a);
+
+            if (g != null) {
+                listaGatos.add(g);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
+
         return listaGatos;
     }
 
@@ -131,23 +158,17 @@ public class GatoDAO {
      */
     public static List<Gato> findByBreedNotAdopted(String breed) {
         List<Gato> listaGatos = new ArrayList<>();
-        Gato gato = null;
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED_NOT_ADOPTED)) {
-            ps.setString(1, "%"+breed+"%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                gato = new Gato(id, nombre, raza, sexo);
+        List<Animal> animalesEncontrados = AnimalDAO.findByNameNotAdopted(breed);
 
-                listaGatos.add(gato);
+        for (Animal a : animalesEncontrados) {
+            Gato g = rellenarDatosGato(a);
+
+            if (g != null) {
+                listaGatos.add(g);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
+
         return listaGatos;
     }
 
@@ -159,23 +180,17 @@ public class GatoDAO {
      */
     public static List<Gato> findByBreedAdopted(String breed) {
         List<Gato> listaGatos = new ArrayList<>();
-        Gato gato = null;
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED_ADOPTED)) {
-            ps.setString(1, "%"+breed+"%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                gato = new Gato(id, nombre, raza, sexo);
+        List<Animal> animalesEncontrados = AnimalDAO.findByNameAdopted(breed);
 
-                listaGatos.add(gato);
+        for (Animal a : animalesEncontrados) {
+            Gato g = rellenarDatosGato(a);
+
+            if (g != null) {
+                listaGatos.add(g);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
+
         return listaGatos;
     }
 
@@ -186,22 +201,17 @@ public class GatoDAO {
      */
     public static List<Gato> findByColour (String colour){
         List<Gato> listaGatos = new ArrayList<>();
-        Gato gato = null;
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_COLOUR)) {
-            ps.setString(1, "%" + colour + "%"); // El símbolo % representa cualquier secuencia de caracteres para permitir búsquedas parciales con LIKE.
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                gato = new Gato(id, nombre, raza, sexo);
 
-                listaGatos.add(gato);
+        List<Animal> animalesEncontrados = AnimalDAO.findByColour(colour);
+
+        for (Animal a : animalesEncontrados) {
+            Gato g = rellenarDatosGato(a);
+
+            if (g != null) {
+                listaGatos.add(g);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
+
         return listaGatos;
     }
 
