@@ -14,31 +14,29 @@ import java.util.List;
 
 public class GatoDAO {
 
-    /**--------------------Sentencias SQL--------------------**/
+    /**
+     * --------------------Sentencias SQL--------------------
+     **/
 
     private final static String SQL_FIND_ALL = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, gato g WHERE a.id = g.idGato";
     private final static String SQL_FIND_ALL_NOT_ADOPTED = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, gato g WHERE a.id = g.idGato AND adoptado = 0";
 
-//    private final static String SQL_FIND_BY_NAME_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado = 0 AND id IN (SELECT idGato FROM gato)";
-//    private final static String SQL_FIND_BY_NAME_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado <> 0 AND id IN (SELECT idGato FROM gato)";
-//
-//    private final static String SQL_FIND_BY_BREED_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado = 0 AND id IN (SELECT idGato FROM gato)";
-//    private final static String SQL_FIND_BY_BREED_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado <> 0 AND id IN (SELECT idGato FROM gato)";
-//
-//    private final static String SQL_FIND_BY_COLOUR = "SELECT id, nombre, raza, sexo FROM animal WHERE color LIKE ? AND id IN (SELECT idGato FROM gato)";
-private final static String SQL_FIND_GATO = "SELECT leucemiaFelina FROM gato WHERE idGato = ?";
+    private final static String SQL_FIND_GATO = "SELECT leucemiaFelina FROM gato WHERE idGato = ?";
+
+    private final static String SQL_INSERT = "INSERT INTO perro VALUES(?)";
     /**------------------------------------------------------**/
 
 
     /**
      * Método que devuelve una lista con todos los gatos de la base de datos
+     *
      * @return --> lista con todos los gatos y sus datos.
      */
-    public static List<Gato> findAll(){
+    public static List<Gato> findAll() {
         List<Gato> listaGatos = new ArrayList<>();
         Gato gato = null;
-        try(ResultSet rs = ConnectionBD.getConnection().createStatement().executeQuery(SQL_FIND_ALL)){
-            while(rs.next()){
+        try (ResultSet rs = ConnectionBD.getConnection().createStatement().executeQuery(SQL_FIND_ALL)) {
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 Animal datosAnimal = AnimalDAO.findByID(id);
 
@@ -46,11 +44,12 @@ private final static String SQL_FIND_GATO = "SELECT leucemiaFelina FROM gato WHE
                 listaGatos.add(gato);
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return listaGatos;
     }
+
     /**
      * Método que devuelve una lista con todos los gatos de la base de datos
      *
@@ -73,6 +72,7 @@ private final static String SQL_FIND_GATO = "SELECT leucemiaFelina FROM gato WHE
         }
         return listaGatos;
     }
+
     private static Gato rellenarDatosGato(Animal a) {
         Gato g = null;
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_GATO)) {
@@ -128,6 +128,7 @@ private final static String SQL_FIND_GATO = "SELECT leucemiaFelina FROM gato WHE
 
         return listaGatos;
     }
+
     /**
      * Método que busca a los gatos que tengan un nombre específico y ya han sido adoptados
      *
@@ -196,10 +197,11 @@ private final static String SQL_FIND_GATO = "SELECT leucemiaFelina FROM gato WHE
 
     /**
      * Método que busca a los gatos que tengan unos colores específicos
+     *
      * @param colour --> color a buscar, introducido por el usuario
      * @return --> devuelve una lista con los gatos que tengan esos colores
      */
-    public static List<Gato> findByColour (String colour){
+    public static List<Gato> findByColour(String colour) {
         List<Gato> listaGatos = new ArrayList<>();
 
         List<Animal> animalesEncontrados = AnimalDAO.findByColour(colour);
@@ -213,6 +215,26 @@ private final static String SQL_FIND_GATO = "SELECT leucemiaFelina FROM gato WHE
         }
 
         return listaGatos;
+    }
+
+    /// ///////////////////// AÑADIR ///////////////////////
+
+    public static boolean addGato(Gato g, Animal a) {
+
+        if ((g != null) && (a != null)) {
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT)) {
+                ps.setInt(1, a.getId());
+                ps.setBoolean(2, g.isLeucemiaFelina());
+
+                ps.executeUpdate();
+
+                return true;
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return false;
     }
 
 }
