@@ -194,8 +194,13 @@ public class PerroDAO {
     }
 
 
-    /// ///////////////////// AÑADIR ///////////////////////
-
+    //////////////////////// AÑADIR ///////////////////////
+    /**
+     * Método que inserta un PERRO en la base de datos dentro de la tabla perro
+     * @param p --> objeto Perro pasado como parámetro
+     * @param a --> objeto Animal pasadocomo parámetro
+     * @return --> devuelve true si se ha insertado corrcctamente, false si no se ha insertado
+     */
     public static boolean addPerro(Perro p, Animal a) {
 
         if ((p != null) && (a != null)) {
