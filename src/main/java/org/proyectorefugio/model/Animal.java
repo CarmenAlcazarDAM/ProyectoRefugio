@@ -15,6 +15,8 @@ public class Animal {
     private Date fechaIngreso;
     private boolean adoptado = false;
     private Date fechaAlta;
+    private String dniAdoptante;
+    private int idUbicacion;
 
     public Animal(int id, String nombre, String raza, Sexo sexo){
         this.id = id;
@@ -22,9 +24,10 @@ public class Animal {
         this.raza = raza;
         this.sexo = sexo;
     }
-    public Animal( String nombre, String raza, Sexo sexo, String marcasDistintivas,
-                  int numeroChip, boolean esterilizado, String historia, String observaciones, Date fechaIngreso) {
-        id++;
+    public Animal(int id, String nombre, String raza, Sexo sexo, String marcasDistintivas,
+                  int numeroChip, boolean esterilizado, String historia,
+                   String observaciones, Date fechaIngreso, int idUbicacion) {
+        this.id = id;
         this.nombre = nombre;
         this.raza = raza;
         this.sexo = sexo;
@@ -34,6 +37,7 @@ public class Animal {
         this.historia = historia;
         this.observaciones = observaciones;
         this.fechaIngreso = fechaIngreso;
+        this.idUbicacion = idUbicacion;
     }
 
 
@@ -131,6 +135,22 @@ public class Animal {
 
     public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
+    }
+
+    public String getDniAdoptante() {
+        return dniAdoptante;
+    }
+
+    public void setDniAdoptante(String dniAdoptante) {
+        this.dniAdoptante = dniAdoptante;
+    }
+
+    public int getIdUbicacion() {
+        return idUbicacion;
+    }
+
+    public void setIdUbicacion(int idUbicacion) {
+        this.idUbicacion = idUbicacion;
     }
 
     @Override

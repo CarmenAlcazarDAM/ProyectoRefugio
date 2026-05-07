@@ -38,14 +38,21 @@ public class pruebasMain {
 //        System.out.println("----------------Prueba buscar perros por Nombre-----------------");
 //        List<Perro> perros2 = PerroDAO.findByNameNotAdopted("Bianca");
 //        for(Perro p : perros2){
-//            System.out.println(p);
+//            System.out.println(p);   1200
 //        }
 
-        System.out.println("----------------Prueba listar gatos por color-----------------");
+//        System.out.println("----------------Prueba listar gatos por color-----------------");
+//
+//        List<Gato> gatos = GatoDAO.findByColour("gris");
+//        for(Gato g : gatos){
+//            System.out.println(g);
+//        }
 
-        List<Gato> gatos = GatoDAO.findByColour("gris");
-        for(Gato g : gatos){
-            System.out.println(g);
+        System.out.println("----------------Prueba listar perros por nombre-----------------");
+
+        List<Perro> perros = PerroDAO.findByNameNotAdopted("Chispa");
+        for(Perro p : perros){
+            System.out.println(p);
         }
     }
 }

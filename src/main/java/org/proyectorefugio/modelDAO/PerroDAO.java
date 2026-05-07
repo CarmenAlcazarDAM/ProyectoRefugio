@@ -12,15 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PerroDAO {
+
+    /**
+     * --------------------Sentencias SQL--------------------
+     **/
+
     private final static String SQL_FIND_ALL = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, perro p WHERE a.id = p.idPerro";
     private final static String SQL_FIND_ALL_NOT_ADOPTED = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, perro p WHERE a.id = p.idPerro AND adoptado = 0";
 
-    private final static String SQL_FIND_BY_NAME_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado = 0 AND id IN (SELECT idPerro FROM perro)";
-    private final static String SQL_FIND_BY_NAME_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado <> 0 AND id IN (SELECT idPerro FROM perro)";
+    private final static String SQL_FIND_PERRO = "SELECT peso, agresivo FROM perro WHERE idPerro = ?";
 
-    private final static String SQL_FIND_BY_BREED_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado = 0 AND id IN (SELECT idPerro FROM perro)";
-    private final static String SQL_FIND_BY_BREED_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado <> 0 AND id IN (SELECT idPerro FROM perro)";
+    private final static String SQL_INSERT = "INSERT INTO perro VALUES(?)";
 
+    /**------------------------------------------------------**/
+
+    /////////////////////// BUSCAR ///////////////////////
     /**
      * Método que devuelve una lista con todos los perros de la base de datos
      *
@@ -75,24 +81,53 @@ public class PerroDAO {
      */
     public static List<Perro> findByNameNotAdopted(String name) {
         List<Perro> listaPerros = new ArrayList<>();
-        Perro perro = null;
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME_NOT_ADOPTED)) {
-            ps.setString(1, "%" + name + "%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                perro = new Perro(id, nombre, raza, sexo);
+        List<Animal> animalesEncontrados = AnimalDAO.findByNameNotAdopted(name);
 
-                listaPerros.add(perro);
+        for (Animal a : animalesEncontrados) {
+            Perro p = rellenarDatosPerro(a);
+
+            if (p != null) {
+                listaPerros.add(p);
+            }
+        }
+
+        return listaPerros;
+    }
+
+    private static Perro rellenarDatosPerro(Animal a) {
+        Perro p = null;
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_PERRO)) {
+
+            ps.setInt(1, a.getId());
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+
+                    double peso = rs.getDouble("peso");
+                    boolean agresivo = rs.getBoolean("agresivo");
+
+                    p = new Perro(
+                            a.getId(),
+                            a.getNombre(),
+                            a.getRaza(),
+                            a.getSexo(),
+                            a.getMarcasDistintivas(),
+                            a.getNumeroChip(),
+                            a.isEsterilizado(),
+                            a.getHistoria(),
+                            a.getObservaciones(),
+                            a.getFechaIngreso(),
+                            a.getIdUbicacion(),
+                            rs.getDouble("peso"),
+                            rs.getBoolean("agresivo")
+                    );
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return listaPerros;
+        return p;
     }
 
     /**
@@ -103,22 +138,15 @@ public class PerroDAO {
      */
     public static List<Perro> findByNameAdopted(String name) {
         List<Perro> listaPerros = new ArrayList<>();
-        Perro perro = null;
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME_ADOPTED)) {
-            ps.setString(1, "%" + name + "%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                perro = new Perro(id, nombre, raza, sexo);
+        List<Animal> animalesEncontrados = AnimalDAO.findByNameAdopted(name);
 
-                listaPerros.add(perro);
+        for (Animal a : animalesEncontrados) {
+            Perro p = rellenarDatosPerro(a);
+
+            if (p != null) {
+                listaPerros.add(p);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
         return listaPerros;
     }
@@ -131,22 +159,15 @@ public class PerroDAO {
      */
     public static List<Perro> findByBreedNotAdopted(String breed) {
         List<Perro> listaPerros = new ArrayList<>();
-        Perro perro = null;
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED_NOT_ADOPTED)) {
-            ps.setString(1, "%" + breed + "%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                perro = new Perro(id, nombre, raza, sexo);
+        List<Animal> animalesEncontrados = AnimalDAO.findByBreedNotAdopted(breed);
 
-                listaPerros.add(perro);
+        for (Animal a : animalesEncontrados) {
+            Perro p = rellenarDatosPerro(a);
+
+            if (p != null) {
+                listaPerros.add(p);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
         return listaPerros;
     }
@@ -159,24 +180,39 @@ public class PerroDAO {
      */
     public static List<Perro> findByBreedAdopted(String breed) {
         List<Perro> listaPerros = new ArrayList<>();
-        Perro perro = null;
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED_ADOPTED)) {
-            ps.setString(1, "%" + breed + "%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                perro = new Perro(id, nombre, raza, sexo);
+        List<Animal> animalesEncontrados = AnimalDAO.findByBreedAdopted(breed);
 
-                listaPerros.add(perro);
+        for (Animal a : animalesEncontrados) {
+            Perro p = rellenarDatosPerro(a);
+
+            if (p != null) {
+                listaPerros.add(p);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
         return listaPerros;
+    }
+
+
+    /// ///////////////////// AÑADIR ///////////////////////
+
+    public static boolean addPerro(Perro p, Animal a) {
+
+        if ((p != null) && (a != null)) {
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT)) {
+                ps.setInt(1, a.getId());
+                ps.setDouble(2, p.getPeso());
+                ps.setBoolean(3, p.isAgresivo());
+
+                ps.executeUpdate();
+
+                return true;
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return false;
     }
 }
 
