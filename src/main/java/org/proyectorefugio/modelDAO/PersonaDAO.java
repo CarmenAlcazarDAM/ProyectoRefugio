@@ -1,6 +1,7 @@
 package org.proyectorefugio.modelDAO;
 
 import org.proyectorefugio.dataAccess.ConnectionBD;
+import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Persona;
 
 import java.sql.PreparedStatement;
@@ -19,6 +20,12 @@ public class PersonaDAO {
     private final static String SQL_FIND_BY_LAST_NAME = "SELECT * FROM persona WHERE apellido LIKE ?";
 
     private final static String SQL_DELETE = "DELETE persona WHERE dni = ?";
+
+    private static String SQL_UPDATE_TELEFONO = "UPDATE persona SET telefono = ? WHERE id = ?";
+    private static String SQL_UPDATE_CORREO = "UPDATE persona SET correo = ? WHERE id = ?";
+    private static String SQL_UPDATE_DIRECCION = "UPDATE persona SET direccion = ? WHERE id = ?";
+
+
 
 
     /**------------------------------------------------------**/
@@ -148,4 +155,76 @@ public class PersonaDAO {
     }
 
     /////////////////////// UPDATE ///////////////////////
+    //update de telefono, correo y direccion
+    /**
+     * Método que actualiza la información del télefono de contacto de una persona
+     * @param p --> Persona a la que vamos a actualizar la información
+     * @param telefono --> telefono de la persona pasado por parámetro
+     * @return --> devuelve true si se actualiza correctamente, false si no lo hace
+     */
+    public static boolean updateTelefono(Persona p, String telefono) {
+        boolean updated = false;
+        if ((p != null) && findByDni(p.getDni()) != null ){
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_TELEFONO)) {
+                ps.setString(1,telefono);
+                ps.setString(2, p.getDni());
+
+                int filasAfectadas = ps.executeUpdate();
+                updated = (filasAfectadas > 0);
+
+                updated = true;
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
+        return updated;
+    }
+
+    /**
+     * Método que actualiza la información del correo de contacto de una persona
+     * @param p --> Persona a la que vamos a actualizar la información
+     * @param correo --> correo de la persona pasado por parámetro
+     * @return --> devuelve true si se actualiza correctamente, false si no lo hace
+     */
+    public static boolean updateEmail(Persona p, String correo) {
+        boolean updated = false;
+        if ((p != null) && findByDni(p.getDni()) != null ){
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_CORREO)) {
+                ps.setString(1,correo);
+                ps.setString(2, p.getDni());
+
+                int filasAfectadas = ps.executeUpdate();
+                updated = (filasAfectadas > 0);
+
+                updated = true;
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
+        return updated;
+    }
+
+    /**
+     * Método que actualiza la información de la dirección de una persona
+     * @param p --> Persona a la que vamos a actualizar la información
+     * @param direccion --> dirección de la persona pasada por parámetro
+     * @return --> devuelve true si se actualiza correctamente, false si no lo hace
+     */
+    public static boolean updateAdress(Persona p, String direccion) {
+        boolean updated = false;
+        if ((p != null) && findByDni(p.getDni()) != null ){
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_DIRECCION)) {
+                ps.setString(1,direccion);
+                ps.setString(2, p.getDni());
+
+                int filasAfectadas = ps.executeUpdate();
+                updated = (filasAfectadas > 0);
+
+                updated = true;
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
+        return updated;
+    }
 }
