@@ -33,7 +33,7 @@ public class AnimalDAO {
 
     private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    private static final String SQL_DELETE_BY_ID = "DELETE animal WHERE id = ?";
+    private static final String SQL_DELETE_BY_ID = "DELETE animal FROM animal WHERE id = ?";
 
     private static String SQL_UPDATE_CHIP = "UPDATE animal SET numeroChip = ? WHERE id = ?";
     private static String SQL_UPDATE_OBSERVACIONES = "UPDATE animal SET observaciones = ? WHERE id = ?";

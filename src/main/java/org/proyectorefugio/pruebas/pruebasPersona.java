@@ -24,11 +24,29 @@ public class pruebasPersona {
 //            System.out.println(p2);
 //        }
 
-        System.out.println("\n-----------------------Prueba findByLastName-------------------------------");
-        List<Persona> personas3 = PersonaDAO.findByLastName("ocana");
-        for (Persona p3 : personas3) {
-            System.out.println(p3);
-        }
+//        System.out.println("\n-----------------------Prueba findByLastName-------------------------------");
+//        List<Persona> personas3 = PersonaDAO.findByLastName("ocana");
+//        for (Persona p3 : personas3) {
+//            System.out.println(p3);
+//        }
+
+        System.out.println("\n-----------------------Prueba INSERT-------------------------------");
+        Persona p4 = new Persona("12345678X", "Lucía", "Méndez Ortiz", "611223344", "lucia.mendez@email.com", "Calle Real 10, Puente Genil");
+//        PersonaDAO.addPersona(p4);
+
+//        System.out.println("\n-----------------------Prueba updateTelefono-------------------------------");
+//        PersonaDAO.updateTelefono(p4, "611223355");
+
+//        System.out.println("\n-----------------------Prueba updateCorreo-------------------------------");
+//        PersonaDAO.updateCorreo(p4, "lucia.mendez@email.es");
+
+//        System.out.println("\n-----------------------Prueba updateAdress-------------------------------");
+//        PersonaDAO.updateAdress(p4, "Calle Real s/n, Puente Genil");
+
+        System.out.println("\n-----------------------Prueba DELETE-------------------------------");
+        PersonaDAO.deletePersona(p4.getDni());
+
+
 
     }
 }

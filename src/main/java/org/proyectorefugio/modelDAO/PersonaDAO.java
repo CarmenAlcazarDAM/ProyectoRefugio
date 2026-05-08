@@ -19,15 +19,13 @@ public class PersonaDAO {
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM persona WHERE nombre LIKE ?";
     private final static String SQL_FIND_BY_LAST_NAME = "SELECT * FROM persona WHERE apellidos LIKE ?";
 
-    private static final String SQL_INSERT = "INSERT INTO persona VALUES (?)";
+    private static final String SQL_INSERT = "INSERT INTO persona (dni, nombre, apellidos, telefono, correo, direccion) VALUES (?, ?, ?, ?, ?, ?)";
 
-    private final static String SQL_DELETE = "DELETE persona WHERE dni = ?";
+    private final static String SQL_DELETE = "DELETE persona FROM persona  WHERE dni = ?";
 
-    private static String SQL_UPDATE_TELEFONO = "UPDATE persona SET telefono = ? WHERE id = ?";
-    private static String SQL_UPDATE_CORREO = "UPDATE persona SET correo = ? WHERE id = ?";
-    private static String SQL_UPDATE_DIRECCION = "UPDATE persona SET direccion = ? WHERE id = ?";
-
-
+    private static String SQL_UPDATE_TELEFONO = "UPDATE persona SET telefono = ? WHERE dni = ?";
+    private static String SQL_UPDATE_CORREO = "UPDATE persona SET correo = ? WHERE dni = ?";
+    private static String SQL_UPDATE_DIRECCION = "UPDATE persona SET direccion = ? WHERE dni = ?";
 
 
     /**------------------------------------------------------**/
@@ -211,7 +209,7 @@ public class PersonaDAO {
      * @param correo --> correo de la persona pasado por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
-    public static boolean updateEmail(Persona p, String correo) {
+    public static boolean updateCorreo(Persona p, String correo) {
         boolean updated = false;
         if ((p != null) && findByDni(p.getDni()) != null ){
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_CORREO)) {
