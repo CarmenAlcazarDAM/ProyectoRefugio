@@ -18,10 +18,13 @@ public class PersonaDAO {
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM persona WHERE nombre LIKE ?";
     private final static String SQL_FIND_BY_LAST_NAME = "SELECT * FROM persona WHERE apellido LIKE ?";
 
+    private final static String SQL_DELETE = "DELETE persona WHERE dni = ?";
+
 
     /**------------------------------------------------------**/
 
     /////////////////////// FIND ///////////////////////
+
     /**
      * Método que busca y devuelve un objeto Persona según su DNI
      *
@@ -55,6 +58,7 @@ public class PersonaDAO {
 
     /**
      * Método que crea una lista con todas las personas de la base de datos
+     *
      * @return --> devuelve una lista con todas personas y sus datos
      */
     public static List<Persona> findAll() {
@@ -74,6 +78,7 @@ public class PersonaDAO {
 
     /**
      * Método que busca a las personas que tengan un nombre específico
+     *
      * @param name --> nombre pasado por parámetro
      * @return --> devuelve una lista de personas que compartan el mismo nombre
      */
@@ -98,6 +103,7 @@ public class PersonaDAO {
 
     /**
      * Método que busca a las personas que tengan un apellido específico
+     *
      * @param lastName --> apellido pasado por parámetro
      * @return --> devuelve una lista de personas que compartan el mismo apellido
      */
@@ -119,4 +125,27 @@ public class PersonaDAO {
         }
         return listaPersonas;
     }
+
+    /////////////////////// DELETE ///////////////////////
+
+    /**
+     * Método que borra una persona de la base de datos
+     * @param dni --> dni de la persona pasado por parámetro
+     * @return --> devuelve true si se borra correctamente, false si no se borra
+     */
+    public static boolean deletePersona(String dni) {
+        if (findByDni(dni) != null) {
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_DELETE)) {
+                ps.setString(1, dni);
+                ps.executeUpdate();
+                return true;
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return false;
+    }
+
+    /////////////////////// UPDATE ///////////////////////
 }
