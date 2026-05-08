@@ -1,10 +1,8 @@
-package org.proyectorefugio.modelDAO;
+package org.proyectorefugio.pruebas;
 
-import org.proyectorefugio.model.Animal;
-import org.proyectorefugio.model.Gato;
 import org.proyectorefugio.model.Perro;
+import org.proyectorefugio.modelDAO.PerroDAO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class pruebasMain {

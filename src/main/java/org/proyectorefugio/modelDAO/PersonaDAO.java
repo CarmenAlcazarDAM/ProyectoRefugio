@@ -17,7 +17,9 @@ public class PersonaDAO {
     private final static String SQL_FIND_BY_DNI = "SELECT * FROM persona WHERE dni = ?";
     private final static String SQL_FIND_ALL = "SELECT * FROM persona";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM persona WHERE nombre LIKE ?";
-    private final static String SQL_FIND_BY_LAST_NAME = "SELECT * FROM persona WHERE apellido LIKE ?";
+    private final static String SQL_FIND_BY_LAST_NAME = "SELECT * FROM persona WHERE apellidos LIKE ?";
+
+    private static final String SQL_INSERT = "INSERT INTO persona VALUES (?)";
 
     private final static String SQL_DELETE = "DELETE persona WHERE dni = ?";
 
@@ -40,9 +42,7 @@ public class PersonaDAO {
      */
     public static Persona findByDni(String dni) {
         Persona p = null;
-        if (!dni.isEmpty()) {
-            return null;
-        }
+
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_DNI)) {
             ps.setString(1, dni);
             ResultSet rs = ps.executeQuery();
@@ -133,6 +133,31 @@ public class PersonaDAO {
         return listaPersonas;
     }
 
+    /////////////////////// INSERT ///////////////////////
+
+    public static Persona addPersona(Persona p){
+        Persona añadida = null;
+        if(p!=null){
+            try(PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT)){
+                ps.setString(1, p.getDni());
+                ps.setString(2, p.getNombre());
+                ps.setString(3, p.getApellidos());
+                ps.setString(4, p.getTelefono());
+                ps.setString(5, p.getCorreo());
+                ps.setString(6,p.getDireccion());
+
+                ps.executeUpdate();
+
+                añadida = findByDni(p.getDni());
+
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
+        return añadida;
+    }
+
+
     /////////////////////// DELETE ///////////////////////
 
     /**
@@ -155,7 +180,7 @@ public class PersonaDAO {
     }
 
     /////////////////////// UPDATE ///////////////////////
-    //update de telefono, correo y direccion
+
     /**
      * Método que actualiza la información del télefono de contacto de una persona
      * @param p --> Persona a la que vamos a actualizar la información
