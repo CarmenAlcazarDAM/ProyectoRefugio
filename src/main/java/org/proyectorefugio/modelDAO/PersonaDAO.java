@@ -15,6 +15,10 @@ public class PersonaDAO {
      **/
     private final static String SQL_FIND_BY_DNI = "SELECT * FROM persona WHERE dni = ?";
     private final static String SQL_FIND_ALL = "SELECT * FROM persona";
+    private final static String SQL_FIND_BY_NAME = "SELECT * FROM persona WHERE nombre LIKE ?";
+    private final static String SQL_FIND_BY_LAST_NAME = "SELECT * FROM persona WHERE apellido LIKE ?";
+
+
     /**------------------------------------------------------**/
 
     /////////////////////// FIND ///////////////////////
@@ -62,6 +66,54 @@ public class PersonaDAO {
                 p = findByDni(dni);
                 listaPersonas.add(p);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaPersonas;
+    }
+
+    /**
+     * Método que busca a las personas que tengan un nombre específico
+     * @param name --> nombre pasado por parámetro
+     * @return --> devuelve una lista de personas que compartan el mismo nombre
+     */
+    public static List<Persona> findByName(String name) {
+        List<Persona> listaPersonas = new ArrayList<>();
+        Persona p = null;
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME)) {
+            ps.setString(1, "%" + name + "%");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String dni = rs.getString("dni");
+                p = findByDni(dni);
+                listaPersonas.add(p);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaPersonas;
+    }
+
+    /**
+     * Método que busca a las personas que tengan un apellido específico
+     * @param lastName --> apellido pasado por parámetro
+     * @return --> devuelve una lista de personas que compartan el mismo apellido
+     */
+    public static List<Persona> findByLastName(String lastName) {
+        List<Persona> listaPersonas = new ArrayList<>();
+        Persona p = null;
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_LAST_NAME)) {
+            ps.setString(1, "%" + lastName + "%");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String dni = rs.getString("dni");
+                p = findByDni(dni);
+                listaPersonas.add(p);
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
