@@ -58,7 +58,7 @@ public class AnimalDAO {
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_ID)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+            while (rs.next()) {
                 String nombre = rs.getString("nombre");
                 String raza = rs.getString("raza");
                 Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
