@@ -17,7 +17,7 @@ public class VoluntarioDAO {
      * --------------------Sentencias SQL--------------------
      **/
     private final static String SQL_FIND = "SELECT * FROM voluntario";
-    private final static String SQL_FIND_VOLUNTARIO = "SELECT voluntario FROM voluntario WHERE dni = ?";
+    private final static String SQL_FIND_VOLUNTARIO = "SELECT * FROM voluntario WHERE dniVoluntario = ?";
 
     private final static String SQL_INSERT = "INSERT INTO voluntario VALUES(?)";
 
@@ -76,7 +76,7 @@ public class VoluntarioDAO {
      * @return --> devuelve el objeto Voluntario si lo encuentra
      *
      */
-    public static Voluntario findDni(String dni) {
+    public static Voluntario findByDni(String dni) {
 
         if (esVoluntario(dni)) {
             Persona p = PersonaDAO.findByDni(dni);
@@ -115,9 +115,9 @@ public class VoluntarioDAO {
     public static List<Voluntario> findByLastName(String lastName) {
         List<Voluntario> listaVoluntarios = new ArrayList<>();
 
-        List<Persona> voluntariosEncontrados = PersonaDAO.findByLastName(lastName);
+        List<Persona> personasEncontradas = PersonaDAO.findByLastName(lastName);
 
-        for (Persona p : voluntariosEncontrados) {
+        for (Persona p : personasEncontradas) {
             if (esVoluntario(p.getDni())) {
                 Voluntario v = rellenar(p);
                 listaVoluntarios.add(v);
@@ -146,11 +146,11 @@ public class VoluntarioDAO {
      * @param v --> objeto Voluntario pasado como parámetro
      * @return --> devuelve true si se ha insertado correctamente, false si no se ha insertado
      */
-    public static boolean addVoluntario(Persona p, Voluntario v) {
+    public static boolean addVoluntario(Persona p) {
 
-        if ((p != null) && (v != null)) {
+        if ((p != null)) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT)) {
-                ps.setString(1, v.getDni());
+                ps.setString(1, p.getDni());
 
                 ps.executeUpdate();
 

@@ -7,6 +7,6 @@ public class Voluntario extends Persona{
 
     @Override
     public String toString() {
-        return super.getNombre() + " es Voluntario";
+        return super.toString();
     }
 }

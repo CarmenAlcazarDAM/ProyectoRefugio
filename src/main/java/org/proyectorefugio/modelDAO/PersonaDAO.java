@@ -3,6 +3,7 @@ package org.proyectorefugio.modelDAO;
 import org.proyectorefugio.dataAccess.ConnectionBD;
 import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Persona;
+import org.proyectorefugio.model.Voluntario;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -130,7 +131,6 @@ public class PersonaDAO {
         }
         return listaPersonas;
     }
-
     /////////////////////// INSERT ///////////////////////
 
     public static Persona addPersona(Persona p){
