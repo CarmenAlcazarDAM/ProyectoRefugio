@@ -201,8 +201,8 @@ public class PerroDAO {
     /**
      * Método que inserta un PERRO en la base de datos dentro de la tabla perro
      * @param p --> objeto Perro pasado como parámetro
-     * @param a --> objeto Animal pasadocomo parámetro
-     * @return --> devuelve true si se ha insertado corrcctamente, false si no se ha insertado
+     * @param a --> objeto Animal pasado como parámetro
+     * @return --> devuelve true si se ha insertado correctamente, false si no se ha insertado
      */
     public static boolean addPerro(Perro p, Animal a) {
 
