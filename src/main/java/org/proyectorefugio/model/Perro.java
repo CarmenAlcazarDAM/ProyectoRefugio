@@ -7,7 +7,7 @@ public class Perro extends Animal{
     private double peso;
     private boolean agresivo;
 
-    public Perro(int id,String nombre, String raza, Sexo sexo, String marcasDistintivas, int numeroChip, boolean esterilizado, String historia, String observaciones, Date fechaIngreso, int idUbicacion, double peso, boolean agresivo) {
+    public Perro(int id,String nombre, String raza, Sexo sexo, String marcasDistintivas, String numeroChip, boolean esterilizado, String historia, String observaciones, Date fechaIngreso, int idUbicacion, double peso, boolean agresivo) {
         super(id,nombre, raza, sexo, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, fechaIngreso, idUbicacion);
         this.peso = peso;
         this.agresivo = agresivo;

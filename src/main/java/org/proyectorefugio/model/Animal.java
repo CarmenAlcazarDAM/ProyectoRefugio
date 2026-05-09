@@ -7,8 +7,9 @@ public class Animal {
     private String nombre;
     private String raza;
     private Sexo sexo;
+    private String color;
     private String marcasDistintivas;
-    private int numeroChip;
+    private String numeroChip;
     private boolean esterilizado = false;
     private String historia;
     private String observaciones;
@@ -25,7 +26,7 @@ public class Animal {
         this.sexo = sexo;
     }
     public Animal(int id, String nombre, String raza, Sexo sexo, String marcasDistintivas,
-                  int numeroChip, boolean esterilizado, String historia,
+                  String numeroChip, boolean esterilizado, String historia,
                    String observaciones, Date fechaIngreso, int idUbicacion) {
         this.id = id;
         this.nombre = nombre;
@@ -37,6 +38,19 @@ public class Animal {
         this.historia = historia;
         this.observaciones = observaciones;
         this.fechaIngreso = fechaIngreso;
+        this.idUbicacion = idUbicacion;
+    }
+
+    public Animal(String nombre, String raza, Sexo sexo,String color,String marcasDistintivas, String numeroChip, boolean esterilizado, String historia, String observaciones, int idUbicacion) {
+        this.nombre = nombre;
+        this.raza = raza;
+        this.sexo = sexo;
+        this.color = color;
+        this.marcasDistintivas = marcasDistintivas;
+        this.numeroChip = numeroChip;
+        this.esterilizado = esterilizado;
+        this.historia = historia;
+        this.observaciones = observaciones;
         this.idUbicacion = idUbicacion;
     }
 
@@ -73,6 +87,14 @@ public class Animal {
         this.sexo = sexo;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public String getMarcasDistintivas() {
         return marcasDistintivas;
     }
@@ -81,11 +103,11 @@ public class Animal {
         this.marcasDistintivas = marcasDistintivas;
     }
 
-    public int getNumeroChip() {
+    public String getNumeroChip() {
         return numeroChip;
     }
 
-    public void setNumeroChip(int numeroChip) {
+    public void setNumeroChip(String numeroChip) {
         this.numeroChip = numeroChip;
     }
 

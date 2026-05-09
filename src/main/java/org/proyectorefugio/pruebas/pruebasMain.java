@@ -7,10 +7,7 @@ import java.util.List;
 
 public class pruebasMain {
     public static void main(String[] args) {
-//        System.out.println("----------------Prueba buscar por id-----------------");
-//
-//        Animal animal = AnimalDAO.findByID(1);
-//        System.out.println(animal);
+
 //
 //        System.out.println("----------------Prueba listar perros-----------------");
 //

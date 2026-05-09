@@ -10,6 +10,7 @@ import org.proyectorefugio.model.Sexo;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -31,7 +32,7 @@ public class AnimalDAO {
 
     private final static String SQL_FIND_BY_COLOUR = "SELECT id, nombre, raza, sexo FROM animal WHERE color LIKE ? AND id IN (SELECT idGato FROM gato)";
 
-    private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo,color, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String SQL_DELETE_BY_ID = "DELETE animal FROM animal WHERE id = ?";
 
@@ -71,11 +72,11 @@ public class AnimalDAO {
         return animal;
     }
 
-    public static Animal findByChip(int chip){
+    public static Animal findByChip(String chip){
         Animal animal = null;
 
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_CHIP)) {
-            ps.setInt(1, chip);
+            ps.setString(1, chip);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int id = rs.getInt("id");
@@ -210,17 +211,18 @@ public class AnimalDAO {
     public static Animal addAnimal(Animal animal) {
         Animal añadido = null;
 
-        if ((animal != null)) {
+        if ((animal != null) && findByChip(animal.getNumeroChip())==null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT_ANIMAL)) {
                 ps.setString(1, animal.getNombre());
                 ps.setString(2, animal.getRaza());
                 ps.setString(3, animal.getSexo().toString().toLowerCase());
-                ps.setString(4, animal.getMarcasDistintivas());
-                ps.setInt(5, animal.getNumeroChip());
-                ps.setBoolean(6, animal.isEsterilizado());
-                ps.setString(7, animal.getHistoria());
-                ps.setString(8, animal.getObservaciones());
-                ps.setInt(9, animal.getIdUbicacion());
+                ps.setString(4, animal.getColor());
+                ps.setString(5, animal.getMarcasDistintivas());
+                ps.setString(6, animal.getNumeroChip());
+                ps.setBoolean(7, animal.isEsterilizado());
+                ps.setString(8, animal.getHistoria());
+                ps.setString(9, animal.getObservaciones());
+                ps.setInt(10, animal.getIdUbicacion());
 
                 ps.executeUpdate();
 
@@ -263,11 +265,11 @@ public class AnimalDAO {
      * @param numeroChip --> número del chip pasado por parámetro (dos animales no pueden tener el mismo número de chip)
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
-    public static boolean updateNumeroChip(Animal a, int numeroChip) {
+    public static boolean updateNumeroChip(Animal a, String numeroChip) {
         boolean updated = false;
         if ((a != null) && findByID(a.getId()) != null && findByChip(numeroChip) == null){
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_CHIP)) {
-                ps.setInt(1,numeroChip);
+                ps.setString(1,numeroChip);
                 ps.setInt(2, a.getId());
 
                 int filasAfectadas = ps.executeUpdate();
@@ -335,11 +337,11 @@ public class AnimalDAO {
      * @param fechaAlta --> fecha en la que se dará de alta el animal
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
-    public static boolean updateFechaAlta(Animal a, Date fechaAlta) {
+    public static boolean updateFechaAlta(Animal a, LocalDate fechaAlta) {
         boolean updated = false;
         if ((a != null) && findByID(a.getId()) != null){
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_FECHA_ALTA)) {
-                ps.setDate(1,fechaAlta);
+                ps.setDate(1, Date.valueOf(fechaAlta));
                 ps.setInt(2, a.getId());
 
                 int filasAfectadas = ps.executeUpdate();
