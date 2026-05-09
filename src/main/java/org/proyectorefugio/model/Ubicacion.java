@@ -9,6 +9,13 @@ public class Ubicacion {
     private int minutosRecreo;
     private int capacidad;
 
+    public Ubicacion( Ubicaciones tipo, Time horaRecreo, int minutosRecreo, int capacidad) {
+
+        this.tipo = tipo;
+        this.horaRecreo = horaRecreo;
+        this.minutosRecreo = minutosRecreo;
+        this.capacidad = capacidad;
+    }
     public Ubicacion(int id, Ubicaciones tipo, Time horaRecreo, int minutosRecreo, int capacidad) {
         this.id = id;
         this.tipo = tipo;

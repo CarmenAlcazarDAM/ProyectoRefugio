@@ -46,7 +46,7 @@ public class UbicacionDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Ubicaciones tipo = Ubicaciones.valueOf(rs.getString("tipo"));
+                Ubicaciones tipo = Ubicaciones.valueOf(rs.getString("tipo").toUpperCase());
                 Time horaRecreo = rs.getTime("horaRecreo");
                 int minutosRecreo = rs.getInt("minutosRecreo");
                 int capacidad = rs.getInt("capacidad");
