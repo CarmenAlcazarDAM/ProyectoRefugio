@@ -5,4 +5,8 @@ public class Voluntario extends Persona{
         super(dni, nombre, apellidos, telefono, correo, direccion);
     }
 
+    @Override
+    public String toString() {
+        return super.getNombre() + " es Voluntario";
+    }
 }

@@ -29,7 +29,7 @@ public class PerroDAO {
 
     /**------------------------------------------------------**/
 
-    /////////////////////// BUSCAR ///////////////////////
+    /////////////////////// FIND ///////////////////////
     /**
      * Método que devuelve una lista con todos los perros de la base de datos
      *
