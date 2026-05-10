@@ -1,8 +1,10 @@
 package org.proyectorefugio.pruebas;
 
 import org.proyectorefugio.model.Animal;
+import org.proyectorefugio.model.Perro;
 import org.proyectorefugio.model.Sexo;
 import org.proyectorefugio.modelDAO.AnimalDAO;
+import org.proyectorefugio.modelDAO.PerroDAO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -83,21 +85,31 @@ public class pruebasAnimal {
 //        animal = AnimalDAO. findByID(8);
 //        AnimalDAO.updateEsterilizado(animal, false);
 
-        System.out.println("----------------Prueba updateFechaAlta-----------------");
-        animal = AnimalDAO. findByID(8);
-        LocalDate hoy = LocalDate.now();
-        AnimalDAO.updateFechaAlta(animal, hoy);
+//        System.out.println("----------------Prueba updateFechaAlta-----------------");
+//        animal = AnimalDAO. findByID(8);
+//        LocalDate hoy = LocalDate.now();
+//        AnimalDAO.updateFechaAlta(animal, hoy);
+//
+//        System.out.println("----------------Prueba updateUbicacion-----------------");
+//        animal = AnimalDAO. findByID(8);
+//        AnimalDAO.updateUbicacion(animal, 4);
 
-        System.out.println("----------------Prueba updateUbicacion-----------------");
-        animal = AnimalDAO. findByID(8);
-        AnimalDAO.updateUbicacion(animal, 4);
+//        System.out.println("----------------Prueba updateAdoptante-----------------");
+//        animal = AnimalDAO. findByID(8);
+//        AnimalDAO.updateAdoptante(animal, "55443322L");
+
+//        System.out.println("----------------Prueba addPerro-----------------");
+//        animal = AnimalDAO. findByID(12);
+        int id = animal.getId();
+        String nombre = animal.getNombre();
+        String raza = animal.getRaza();
+        Sexo sexo = animal.getSexo();
+       Perro p = new Perro(id, nombre, raza,sexo ,12.5, false);
+//        PerroDAO.addPerro(p, animal);
 
         System.out.println("----------------Prueba updateAdoptante-----------------");
-        animal = AnimalDAO. findByID(8);
-        AnimalDAO.updateAdoptante(animal, "55443322L");
 
-
-
+        PerroDAO.updatePeso(p, 13);
     }
 
 }

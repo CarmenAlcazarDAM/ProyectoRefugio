@@ -45,7 +45,7 @@ public class pruebasMain {
 
         System.out.println("----------------Prueba listar perros por nombre-----------------");
 
-        List<Perro> perros = PerroDAO.findByNameNotAdopted("Chispa");
+        List<Perro> perros = PerroDAO.findByName("Chispa", true);
         for(Perro p : perros){
             System.out.println(p);
         }
