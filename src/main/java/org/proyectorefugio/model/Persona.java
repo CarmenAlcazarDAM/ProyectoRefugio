@@ -26,6 +26,8 @@ public class Persona {
 
     public void setDni(String dni) {
 
+        dni = dni.toUpperCase(); //Para que siempre se guarde con la letra en mayúscula
+
        if(!Utils.validarDNI(dni)){
            throw new IllegalArgumentException("DNI/NIE no válido");
        }
