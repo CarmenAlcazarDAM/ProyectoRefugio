@@ -24,13 +24,12 @@ public class AnimalDAO {
     private final static String SQL_FIND_BY_ID = "SELECT * FROM animal WHERE id = ?";
     private final static String SQL_FIND_BY_CHIP = "SELECT * FROM animal WHERE numeroChip = ?";
 
-    private final static String SQL_FIND_BY_NAME_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado = 0";
-    private final static String SQL_FIND_BY_NAME_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado <> 0";
+    private final static String SQL_FIND_BY_NAME = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado = ?";
 
-    private final static String SQL_FIND_BY_BREED_NOT_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado = 0";
-    private final static String SQL_FIND_BY_BREED_ADOPTED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado <> 0";
+    private final static String SQL_FIND_BY_BREED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado = ?";
 
-    private final static String SQL_FIND_BY_COLOUR = "SELECT id, nombre, raza, sexo FROM animal WHERE color LIKE ? AND id IN (SELECT idGato FROM gato)";
+
+    private final static String SQL_FIND_BY_COLOUR = "SELECT id, nombre, raza, sexo FROM animal WHERE color LIKE ? AND adoptado = ? AND id IN (SELECT idGato FROM gato)";
 
     private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo,color, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -72,6 +71,12 @@ public class AnimalDAO {
         return animal;
     }
 
+    /**
+     * Método que busca un Animal por su numero de chip en caso de que lo tenga,
+     * el número de chip de cada animal es una secuencia de 15 números e irrepetible
+     * @param chip --> número de chip pasado por parámetro
+     * @return --> devuelve al Animal con dicho número de chip en caso de encontrarlo
+     */
     public static Animal findByChip(String chip){
         Animal animal = null;
 
@@ -92,13 +97,22 @@ public class AnimalDAO {
         return animal;
     }
 
-    public static List<Animal> findByNameNotAdopted(String name) {
+    /**
+     * Método que busca los Animales que compartan el mismo nombre
+     * @param name --> nombre a buscar
+     * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
+     * @return --> devuelve una lista con todos los Animales encontrados
+     */
+    public static List<Animal> findByName(String name, boolean isAdopted) {
         List<Animal> listaAnimales = new ArrayList<>();
         Animal animal = null;
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME_NOT_ADOPTED)) {
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME)) {
             ps.setString(1, "%" + name + "%");
+            ps.setBoolean(2, isAdopted);
+
             ResultSet rs = ps.executeQuery();
+
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
@@ -114,34 +128,20 @@ public class AnimalDAO {
         return listaAnimales;
     }
 
-    public static List<Animal> findByNameAdopted(String name) {
-        List<Animal> listaAnimales = new ArrayList<>();
-        Animal animal = null;
-
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_NAME_ADOPTED)) {
-            ps.setString(1, "%" + name + "%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                animal = new Animal(id, nombre, raza, sexo);
-
-                listaAnimales.add(animal);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return listaAnimales;
-    }
-
-    public static List<Animal> findByBreedNotAdopted(String breed) {
+    /**
+     * Método que busca los Animales que compartan la misma raza
+     * @param breed --> raza a buscar
+     * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
+     * @return --> devuelve una lista con todos los Animales encontrados
+     */
+    public static List<Animal> findByBreed(String breed, boolean isAdopted) {
         List<Animal> listaAnimal = new ArrayList<>();
         Animal animal = null;
 
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED_NOT_ADOPTED)) {
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED)) {
             ps.setString(1, "%" + breed + "%");
+            ps.setBoolean(2, isAdopted);
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -158,33 +158,19 @@ public class AnimalDAO {
         return listaAnimal;
     }
 
-    public static List<Animal> findByBreedAdopted(String breed) {
-        List<Animal> listaAnimal = new ArrayList<>();
-        Animal animal = null;
-
-        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_BREED_ADOPTED)) {
-            ps.setString(1, "%" + breed + "%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                animal = new Animal(id, nombre, raza, sexo);
-
-                listaAnimal.add(animal);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return listaAnimal;
-    }
-
-    public static List<Animal> findByColour(String colour) {
+    /**
+     * Método que busca los Animales que compartan el mismo color
+     * @param colour --> color a buscar
+     * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
+     * @return --> devuelve una lista con todos los Animales encontrados
+     */
+    public static List<Animal> findByColour(String colour, boolean isAdopted) {
         List<Animal> listaAnimal = new ArrayList<>();
         Animal animal = null;
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_COLOUR)) {
             ps.setString(1, "%" + colour + "%"); // El símbolo % representa cualquier secuencia de caracteres para permitir búsquedas parciales con LIKE.
+            ps.setBoolean(2, isAdopted);
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
