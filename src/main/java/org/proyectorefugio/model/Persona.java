@@ -3,6 +3,8 @@ package org.proyectorefugio.model;
 import jdk.jshell.execution.Util;
 import org.proyectorefugio.utils.Utils;
 
+import java.util.Objects;
+
 public class Persona {
     private String dni;
     private String nombre;
@@ -77,5 +79,17 @@ public class Persona {
     @Override
     public String toString() {
         return nombre + " " + apellidos;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Persona persona = (Persona) o;
+        return Objects.equals(dni, persona.dni);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(dni);
     }
 }
