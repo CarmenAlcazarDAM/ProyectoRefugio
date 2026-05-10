@@ -100,16 +100,20 @@ public class pruebasAnimal {
 
 //        System.out.println("----------------Prueba addPerro-----------------");
 //        animal = AnimalDAO. findByID(12);
-        int id = animal.getId();
-        String nombre = animal.getNombre();
-        String raza = animal.getRaza();
-        Sexo sexo = animal.getSexo();
-       Perro p = new Perro(id, nombre, raza,sexo ,12.5, false);
+//        int id = animal.getId();
+//        String nombre = animal.getNombre();
+//        String raza = animal.getRaza();
+//        Sexo sexo = animal.getSexo();
+//       Perro p = new Perro(id, nombre, raza,sexo ,12.5, false);
 //        PerroDAO.addPerro(p, animal);
 
-        System.out.println("----------------Prueba updateAdoptante-----------------");
+        System.out.println("----------------Prueba updatePeso-----------------");
+        Animal a = AnimalDAO.findByID(12);
+//        PerroDAO.updatePeso(a, 13);
 
-        PerroDAO.updatePeso(p, 13);
+        System.out.println("----------------Prueba updateAgresivo-----------------");
+
+        PerroDAO.updateAgresivo(a, true);
     }
 
 }

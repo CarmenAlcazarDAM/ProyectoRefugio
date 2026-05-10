@@ -171,16 +171,16 @@ public class PerroDAO {
     /**
      * Método que actualiza la informacion del peso del perro
      *
-     * @param p    --> perro al que vamos a actualizar la información
+     * @param a    --> animal al que vamos a actualizar la información
      * @param peso --> peso del perro pasado por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
-    public static boolean updatePeso(Perro p, double peso) {
+    public static boolean updatePeso(Animal a, double peso) {
         boolean updated = false;
-        if ((p != null) && AnimalDAO.findByID(p.getId()) != null) {
+        if ((a != null) && AnimalDAO.findByID(a.getId()) != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_PESO)) {
                 ps.setDouble(1, peso);
-                ps.setInt(2, p.getId());
+                ps.setInt(2, a.getId());
 
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
@@ -195,16 +195,16 @@ public class PerroDAO {
     /**
      * Método que actualiza la informacion sobre la agresividad del perro
      *
-     * @param p        --> perro al que vamos a actualizar la información
+     * @param a --> animal al que vamos a actualizar la información
      * @param agresivo --> agresividad del perro, true si es agresivo, false si no lo es
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
-    public static boolean updateAgresivo(Perro p, boolean agresivo) {
+    public static boolean updateAgresivo(Animal a, boolean agresivo) {
         boolean updated = false;
-        if ((p != null) && AnimalDAO.findByID(p.getId()) != null) {
+        if ((a != null) && AnimalDAO.findByID(a.getId()) != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_AGRESIVO)) {
                 ps.setBoolean(1, agresivo);
-                ps.setInt(2, p.getId());
+                ps.setInt(2, a.getId());
 
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);

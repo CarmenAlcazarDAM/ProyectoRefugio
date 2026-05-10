@@ -192,16 +192,16 @@ public class GatoDAO {
     /**
      * Método que actualiza la informacion sobre la leucemia de un gato
      *
-     * @param g        --> gato al que vamos a actualizar la información
+     * @param a --> animal al que vamos a actualizar la información
      * @param leucemia --> leucemia del gato, true si es agresivo, false si no lo es
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
-    public static boolean updateLeucemia(Gato g, boolean leucemia) {
+    public static boolean updateLeucemia(Animal a, boolean leucemia) {
         boolean updated = false;
-        if ((g != null) && AnimalDAO.findByID(g.getId()) != null) {
+        if ((a != null) && AnimalDAO.findByID(a.getId()) != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_LEUCEMIA)) {
                 ps.setBoolean(1, leucemia);
-                ps.setInt(2, g.getId());
+                ps.setInt(2, a.getId());
 
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
