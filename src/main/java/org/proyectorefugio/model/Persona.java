@@ -1,5 +1,8 @@
 package org.proyectorefugio.model;
 
+import jdk.jshell.execution.Util;
+import org.proyectorefugio.utils.Utils;
+
 public class Persona {
     private String dni;
     private String nombre;
@@ -22,6 +25,10 @@ public class Persona {
     }
 
     public void setDni(String dni) {
+
+       if(!Utils.validarDNI(dni)){
+           throw new IllegalArgumentException("DNI/NIE no válido");
+       }
         this.dni = dni;
     }
 
