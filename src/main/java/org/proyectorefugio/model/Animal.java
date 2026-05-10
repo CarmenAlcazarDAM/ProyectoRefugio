@@ -1,5 +1,7 @@
 package org.proyectorefugio.model;
 
+import org.proyectorefugio.utils.Utils;
+
 import java.util.Date;
 
 public class Animal {
@@ -108,6 +110,9 @@ public class Animal {
     }
 
     public void setNumeroChip(String numeroChip) {
+        if(!Utils.validaChip(numeroChip)){
+            throw new IllegalArgumentException("Número de chip no válido");
+        }
         this.numeroChip = numeroChip;
     }
 
