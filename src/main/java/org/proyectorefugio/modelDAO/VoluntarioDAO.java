@@ -143,7 +143,6 @@ public class VoluntarioDAO {
     /**
      * Método que inserta un VOLUNTARIO en la base de datos dentro de la tabla voluntario
      * @param p --> objeto Persona pasado como parámetro
-     * @param v --> objeto Voluntario pasado como parámetro
      * @return --> devuelve true si se ha insertado correctamente, false si no se ha insertado
      */
     public static boolean addVoluntario(Persona p) {

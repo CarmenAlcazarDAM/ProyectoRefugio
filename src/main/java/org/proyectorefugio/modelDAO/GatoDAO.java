@@ -167,7 +167,6 @@ public class GatoDAO {
     /**
      * Método que inserta un GATO en la base de datos dentro de la tabla gato
      *
-     * @param g --> objeto Gato pasado como parámetro
      * @param a --> objeto Animal pasado como parámetro
      * @return --> devuelve true si se ha insertado correctamente, false si no se ha insertado
      */
