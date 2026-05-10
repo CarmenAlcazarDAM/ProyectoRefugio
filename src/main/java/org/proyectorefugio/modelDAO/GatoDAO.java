@@ -22,9 +22,9 @@ public class GatoDAO {
 
     private final static String SQL_FIND_GATO = "SELECT leucemiaFelina FROM gato WHERE idGato = ?";
 
-    private final static String SQL_INSERT = "INSERT INTO gato VALUES(?)";
+    private final static String SQL_INSERT = "INSERT INTO gato (idGato, leucemiaFelina) VALUES(?, ?)";
 
-    private static String SQL_UPDATE_LEUCEMIA = "UPDATE gato SET leucemiaFelina = ? WHERE idPerro = ?";
+    private static String SQL_UPDATE_LEUCEMIA = "UPDATE gato SET leucemiaFelina = ? WHERE idGato = ?";
     /**------------------------------------------------------**/
 
     /////////////////////// FIND ///////////////////////
@@ -207,7 +207,7 @@ public class GatoDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
