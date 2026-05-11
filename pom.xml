@@ -83,7 +83,7 @@
                     <execution>
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>org.example.proyectorefugio/org.proyectorefugio.PrincipalApplication</mainClass>
+                            <mainClass>org.example.proyectorefugio/org.proyectorefugio.view.PrincipalApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

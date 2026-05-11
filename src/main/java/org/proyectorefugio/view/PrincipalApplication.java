@@ -1,4 +1,4 @@
-package org.proyectorefugio;
+package org.proyectorefugio.view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,7 @@ import java.io.IOException;
 public class PrincipalApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(PrincipalApplication.class.getResource("refugio-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(PrincipalApplication.class.getResource("/org/proyectorefugio/refugio-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1500, 750);
         stage.setTitle("Refugio");
         stage.setScene(scene);
