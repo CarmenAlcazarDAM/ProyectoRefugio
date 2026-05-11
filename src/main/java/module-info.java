@@ -3,7 +3,9 @@ module org.proyectorefugio {
     requires java.sql;
     requires javafx.controls;
     requires javafx.fxml;
+    requires jdk.jshell;
 
+    requires javafx.graphics;
 
 
     opens org.proyectorefugio.dataAccess to java.xml.bind;
@@ -13,4 +15,8 @@ module org.proyectorefugio {
     exports org.proyectorefugio;
     exports org.proyectorefugio.pruebas;
     opens org.proyectorefugio.pruebas to javafx.fxml;
+    exports org.proyectorefugio.controller;
+    opens org.proyectorefugio.controller to javafx.fxml;
+    exports org.proyectorefugio.view;
+    opens org.proyectorefugio.view to javafx.fxml;
 }
