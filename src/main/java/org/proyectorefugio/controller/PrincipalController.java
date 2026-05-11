@@ -28,10 +28,29 @@ public class PrincipalController {
             e.printStackTrace();
         }
 
+
+    }
+    public void iniciate(){
+
     }
 
     public void abrirAnimales(ActionEvent event){
         cargarVista("/org/proyectorefugio/animales-view.fxml");
     }
 
+    public void abrirVoluntarios(ActionEvent event) {
+        cargarVista("/org/proyectorefugio/voluntario-view.fxml");
+    }
+
+    public void abrirAdoptantes(ActionEvent event) {
+        cargarVista("/org/proyectorefugio/adoptante-view.fxml");
+    }
+
+    public void abrirUbicaciones(ActionEvent event) {
+        cargarVista("/org/proyectorefugio/ubicacion-view.fxml");
+    }
+    public void volverInicio(ActionEvent event) {
+        cargarVista("/org/proyectorefugio/bienvenida-view.fxml");
+
+    }
 }

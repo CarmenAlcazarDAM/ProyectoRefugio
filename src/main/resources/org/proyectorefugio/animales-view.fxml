@@ -7,13 +7,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="643.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.AnimalController">
+<AnchorPane prefHeight="717.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.AnimalController">
    <children>
-      <HBox layoutX="209.0" layoutY="176.0" prefHeight="291.0" prefWidth="648.0" spacing="100.0">
+      <HBox layoutX="186.0" layoutY="185.0" prefHeight="291.0" prefWidth="648.0" spacing="150.0">
          <children>
             <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#selectPerros" prefHeight="252.0" prefWidth="257.0" text="Perros" textAlignment="CENTER">
                <graphic>
-                  <ImageView fitHeight="242.0" fitWidth="242.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@44e46930c482601f3372a504aa7433c3.png" />
                      </image>
@@ -25,7 +25,7 @@
             </Button>
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#selectGatos" text="Gatos" textAlignment="CENTER">
                <graphic>
-                  <ImageView fitHeight="242.0" fitWidth="242.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@44e46930c482601f3372a504aa7433c31.png" />
                      </image>

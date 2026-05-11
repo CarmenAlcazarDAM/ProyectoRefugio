@@ -6,8 +6,8 @@ import org.proyectorefugio.modelDAO.AnimalDAO;
 
 public class AnimalController {
 
-
     public void selectPerros(ActionEvent event) {
+
     }
 
     public void selectGatos(ActionEvent event) {
