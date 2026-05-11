@@ -14,15 +14,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PrincipalController implements Initializable {
+public class PrincipalController {
     @FXML
     private AnchorPane panelContenido;
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // Aquí llamamos al método para cargar la pantalla de inicio por defecto
-        cargarVista("/org/proyectorefugio/refugio-view.fxml");
-    }
-    // Método genérico para cambiar de vista (puedes usarlo en tus botones)
+
     private void cargarVista(String fxml) {
         try {
             Parent vista = FXMLLoader.load(getClass().getResource(fxml));
