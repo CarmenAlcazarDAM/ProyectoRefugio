@@ -6,6 +6,7 @@ module org.proyectorefugio {
     requires jdk.jshell;
 
     requires javafx.graphics;
+    requires javafx.base;
 
 
     opens org.proyectorefugio.dataAccess to java.xml.bind;
