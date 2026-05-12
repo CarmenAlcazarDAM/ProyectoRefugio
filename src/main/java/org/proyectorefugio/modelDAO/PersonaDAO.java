@@ -18,13 +18,13 @@ public class PersonaDAO {
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM persona WHERE nombre LIKE ?";
     private final static String SQL_FIND_BY_LAST_NAME = "SELECT * FROM persona WHERE apellidos LIKE ?";
 
-    private static final String SQL_INSERT = "INSERT INTO persona (dni, nombre, apellidos, telefono, correo, direccion) VALUES (?, ?, ?, ?, ?, ?)";
+    private final static  String SQL_INSERT = "INSERT INTO persona (dni, nombre, apellidos, telefono, correo, direccion) VALUES (?, ?, ?, ?, ?, ?)";
 
     private final static String SQL_DELETE = "DELETE persona FROM persona  WHERE dni = ?";
 
-    private static String SQL_UPDATE_TELEFONO = "UPDATE persona SET telefono = ? WHERE dni = ?";
-    private static String SQL_UPDATE_CORREO = "UPDATE persona SET correo = ? WHERE dni = ?";
-    private static String SQL_UPDATE_DIRECCION = "UPDATE persona SET direccion = ? WHERE dni = ?";
+    private final static String SQL_UPDATE_TELEFONO = "UPDATE persona SET telefono = ? WHERE dni = ?";
+    private final static String SQL_UPDATE_CORREO = "UPDATE persona SET correo = ? WHERE dni = ?";
+    private final static String SQL_UPDATE_DIRECCION = "UPDATE persona SET direccion = ? WHERE dni = ?";
 
 
     /**------------------------------------------------------**/

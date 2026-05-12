@@ -98,7 +98,7 @@ public class VoluntarioDAO {
         for (Persona p : voluntariosEncontrados) {
             if (esVoluntario(p.getDni())) {
                 Voluntario v = rellenar(p);
-                ;
+
                 listaVoluntarios.add(v);
             }
         }
