@@ -3,8 +3,6 @@ package org.proyectorefugio.modelDAO;
 import org.proyectorefugio.model.Animal;
 
 import org.proyectorefugio.dataAccess.ConnectionBD;
-import org.proyectorefugio.model.Gato;
-import org.proyectorefugio.model.Perro;
 import org.proyectorefugio.model.Sexo;
 
 import java.sql.PreparedStatement;
@@ -28,8 +26,8 @@ public class AnimalDAO {
 
     private final static String SQL_FIND_BY_BREED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado = ?";
 
-
     private final static String SQL_FIND_BY_COLOUR = "SELECT id, nombre, raza, sexo FROM animal WHERE color LIKE ? AND adoptado = ? AND id IN (SELECT idGato FROM gato)";
+
 
     private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo,color, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 

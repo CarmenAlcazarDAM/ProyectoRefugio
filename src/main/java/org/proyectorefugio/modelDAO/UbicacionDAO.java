@@ -4,7 +4,6 @@ import org.proyectorefugio.dataAccess.ConnectionBD;
 import org.proyectorefugio.model.Ubicacion;
 import org.proyectorefugio.model.Ubicaciones;
 
-import java.net.ConnectException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -113,7 +112,7 @@ public class UbicacionDAO {
 
     /// ////////////////// ADD ///////////////////////
     /**
-     * Método qu einserta una nueva ubicación en la base de datos
+     * Método que inserta una nueva ubicación en la base de datos
      *
      * @param u --> Objeto Ubicacion a insertar
      * @return --> devuelve el objeto añadido

@@ -1,8 +1,6 @@
 package org.proyectorefugio.modelDAO;
 
 import org.proyectorefugio.dataAccess.ConnectionBD;
-import org.proyectorefugio.model.Animal;
-import org.proyectorefugio.model.Perro;
 import org.proyectorefugio.model.Persona;
 import org.proyectorefugio.model.Voluntario;
 
@@ -51,7 +49,7 @@ public class VoluntarioDAO {
     /**
      * Método que verifica si un dni especifico existe dentro de la tabla voluntarios
      * @param dni --> dni a buscar
-     * @return --> devuelve true si encuentra el dni dentro de volutarios, false si no lo encuentra
+     * @return --> devuelve true si encuentra el dni dentro de volutario, false si no lo encuentra
      */
     private static boolean esVoluntario(String dni) {
         boolean existe = false;

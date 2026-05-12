@@ -17,7 +17,6 @@ public class PrincipalController {
         try {
             Parent vista = FXMLLoader.load(getClass().getResource(fxml));
 
-            // Ajustar la vista para que ocupe todo el AnchorPane
             AnchorPane.setTopAnchor(vista, 0.0);
             AnchorPane.setBottomAnchor(vista, 0.0);
             AnchorPane.setLeftAnchor(vista, 0.0);
@@ -28,9 +27,6 @@ public class PrincipalController {
             e.printStackTrace();
         }
 
-
-    }
-    public void iniciate(){
 
     }
 

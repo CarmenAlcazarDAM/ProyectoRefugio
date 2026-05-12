@@ -83,6 +83,12 @@ public class PerroDAO {
         return listaPerros;
     }
 
+    /**
+     * Método que extrae de la base de datos toda la información del objeto Perro
+     * @param a --> Animal pasado por parámetro
+     * @return --> devuelve el objeto Perro completo con la información de los atributos de la clase Animal
+     * y de la clase Perro
+     */
     private static Perro rellenarDatosPerro(Animal a) {
         Perro p = null;
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_PERRO)) {
@@ -91,9 +97,6 @@ public class PerroDAO {
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-
-                    double peso = rs.getDouble("peso");
-                    boolean agresivo = rs.getBoolean("agresivo");
 
                     p = new Perro(
                             a.getId(),

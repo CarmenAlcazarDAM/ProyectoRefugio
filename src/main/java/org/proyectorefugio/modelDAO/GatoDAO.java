@@ -58,6 +58,12 @@ public class GatoDAO {
         return listaGatos;
     }
 
+    /**
+     * Método que extrae de la base de datos toda la información del objeto Gato
+     * @param a --> Animal pasado por parámetro
+     * @return --> devuelve el objeto Gato completo con la información de los atributos de la clase Animal
+     * y de la clase Gato
+     */
     private static Gato rellenarDatosGato(Animal a) {
         Gato g = null;
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_GATO)) {
@@ -66,9 +72,6 @@ public class GatoDAO {
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-
-
-                    boolean leucemiaFelina = rs.getBoolean("leucemiaFelina");
 
                     g = new Gato(
                             a.getId(),
