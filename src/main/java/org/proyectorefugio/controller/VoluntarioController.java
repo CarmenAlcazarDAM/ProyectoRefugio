@@ -1,36 +1,64 @@
 package org.proyectorefugio.controller;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import org.proyectorefugio.model.Ayuda;
 import org.proyectorefugio.model.Voluntario;
+import org.proyectorefugio.modelDAO.AyudaDAO;
 import org.proyectorefugio.modelDAO.VoluntarioDAO;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class VoluntarioController {
     @FXML
-    private AnchorPane panelVoluntarios;
-    public ListView<Voluntario> listaVoluntarios;
-    private ObservableList<Voluntario> personasObservableList;
-    private VoluntarioDAO dao = new VoluntarioDAO();
+    public TableView<Ayuda> tablaAyuda;
 
     @FXML
-    public void  initialize(){
-        personasObservableList = FXCollections.observableArrayList();
+    public TableColumn<Ayuda, String> voluntarioCol;
+    @FXML
+    public TableColumn<Ayuda, Integer> ubicacionCol;
 
-        listaVoluntarios.setItems(personasObservableList);
+    @FXML
+    public TableColumn<Ayuda, LocalDate> fechaCol;
 
-        actualizarLista();
+    @FXML
+    public TableColumn<Ayuda, String> tareaCol;
+
+    @FXML
+    private void initialize() {
+        voluntarioCol.setCellValueFactory(cellData -> {
+            String dni = cellData.getValue().getDniVoluntario();
+
+            Voluntario voluntario = VoluntarioDAO.findByDni(dni);
+            return new SimpleStringProperty(voluntario.getNombre() + " " + voluntario.getApellidos());
+        });
+
+        ubicacionCol.setCellValueFactory(
+                new PropertyValueFactory<>("idUbicacion")
+        );
+        fechaCol.setCellValueFactory(
+                new PropertyValueFactory<>("fecha")
+        );
+        tareaCol.setCellValueFactory(
+                new PropertyValueFactory<>("tarea")
+        );
+
+        ObservableList<Ayuda> listaAyudas =
+                FXCollections.observableArrayList(AyudaDAO.findAll());
+
+        tablaAyuda.setItems(listaAyudas);
     }
 
-    public void actualizarLista() {
 
-        List<Voluntario> listaDesdeDb = dao.findAll();
-        personasObservableList.addAll(listaDesdeDb);
-    }
 }

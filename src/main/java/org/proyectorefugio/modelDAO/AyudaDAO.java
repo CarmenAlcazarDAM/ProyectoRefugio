@@ -16,7 +16,7 @@ public class AyudaDAO {
     /**
      * -------------------Sentencias SQL---------------------
      **/
-    private final static String SQL_FIND_ALL = "SELECT * FROM ayuda";
+    private final static String SQL_FIND_ALL = "SELECT * FROM ayuda ORDER BY fecha desc";
     private final static String SQL_FIND_SINGLE = "SELECT * FROM ayuda WHERE dniVoluntario = ? AND idUbicacion = ? AND fecha = ?";
     private final static String SQL_FIND_BY_DNI = "SELECT * FROM ayuda WHERE dniVoluntario = ?";
     private final static String SQL_FIND_BY_UBICACION = "SELECT * FROM ayuda WHERE idUbicacion = ?";
@@ -175,12 +175,12 @@ public class AyudaDAO {
             try(PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT)){
                 ps.setString(1, a.getDniVoluntario());
                 ps.setInt(2, a.getIdUbicacion());
-                ps.setDate(3, a.getFecha());
+                ps.setDate(3, Date.valueOf(a.getFecha()));
                 ps.setString(4, a.getTarea());
 
                 ps.executeUpdate();
 
-                añadida = findSingle(a.getDniVoluntario(),a.getIdUbicacion(), a.getFecha().toLocalDate());
+                añadida = findSingle(a.getDniVoluntario(),a.getIdUbicacion(), a.getFecha());
 
             }catch (SQLException e){
                 throw new RuntimeException(e);
@@ -224,12 +224,12 @@ public class AyudaDAO {
      */
     public static boolean updateUbicacion(Ayuda a, int idUbicacion) {
         boolean updated = false;
-        if ((a != null) && findSingle(a.getDniVoluntario(),a.getIdUbicacion(), a.getFecha().toLocalDate()) != null ){
+        if ((a != null) && findSingle(a.getDniVoluntario(),a.getIdUbicacion(), a.getFecha()) != null ){
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_UBICACION)) {
                 ps.setInt(1,idUbicacion);
                 ps.setString(2, a.getDniVoluntario());
                 ps.setInt(3, a.getIdUbicacion());
-                ps.setDate(4, a.getFecha());
+                ps.setDate(4, Date.valueOf(a.getFecha()));
 
 
                 int filasAfectadas = ps.executeUpdate();
@@ -251,12 +251,12 @@ public class AyudaDAO {
      */
     public static boolean updateFecha(Ayuda a, LocalDate fecha) {
         boolean updated = false;
-        if ((a != null) && findSingle(a.getDniVoluntario(),a.getIdUbicacion(), a.getFecha().toLocalDate()) != null ){
+        if ((a != null) && findSingle(a.getDniVoluntario(),a.getIdUbicacion(), a.getFecha()) != null ){
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_FECHA)) {
                 ps.setDate(1,Date.valueOf(fecha));
                 ps.setString(2, a.getDniVoluntario());
                 ps.setInt(3, a.getIdUbicacion());
-                ps.setDate(4, a.getFecha());
+                ps.setDate(4, Date.valueOf(a.getFecha()));
 
 
                 int filasAfectadas = ps.executeUpdate();
@@ -278,12 +278,12 @@ public class AyudaDAO {
      */
     public static boolean updateTarea(Ayuda a, String tarea) {
         boolean updated = false;
-        if ((a != null) && findSingle(a.getDniVoluntario(),a.getIdUbicacion(), a.getFecha().toLocalDate()) != null ){
+        if ((a != null) && findSingle(a.getDniVoluntario(),a.getIdUbicacion(), a.getFecha()) != null ){
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_TAREA)) {
                 ps.setString(1,tarea);
                 ps.setString(2, a.getDniVoluntario());
                 ps.setInt(3, a.getIdUbicacion());
-                ps.setDate(4, a.getFecha());
+                ps.setDate(4, Date.valueOf(a.getFecha()));
 
 
                 int filasAfectadas = ps.executeUpdate();

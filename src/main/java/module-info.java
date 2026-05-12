@@ -21,4 +21,6 @@ module org.proyectorefugio {
     opens org.proyectorefugio.controller to javafx.fxml;
     exports org.proyectorefugio.view;
     opens org.proyectorefugio.view to javafx.fxml;
+    opens org.proyectorefugio.model to javafx.base;
+
 }
