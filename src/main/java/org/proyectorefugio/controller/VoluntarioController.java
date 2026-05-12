@@ -1,5 +1,7 @@
 package org.proyectorefugio.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
@@ -14,18 +16,21 @@ public class VoluntarioController {
     @FXML
     private AnchorPane panelVoluntarios;
     public ListView<Voluntario> listaVoluntarios;
-    private VoluntarioDAO voluntarioDAO = new VoluntarioDAO();
+    private ObservableList<Voluntario> personasObservableList;
+    private VoluntarioDAO dao = new VoluntarioDAO();
 
+    @FXML
+    public void  initialize(){
+        personasObservableList = FXCollections.observableArrayList();
 
-    public void inicio(URL url, ResourceBundle resourceBundle) {
-        List<Voluntario> lista = voluntarioDAO.findAll();
+        listaVoluntarios.setItems(personasObservableList);
+
+        actualizarLista();
     }
 
-    public void actualizarLista(ListView.EditEvent<Voluntario> voluntarioEditEvent) {
-        List<Voluntario> voluntarios = voluntarioDAO.findAll();
-        for (Voluntario v: voluntarios){
-            System.out.println(v);
+    public void actualizarLista() {
 
-        }
+        List<Voluntario> listaDesdeDb = dao.findAll();
+        personasObservableList.addAll(listaDesdeDb);
     }
 }
