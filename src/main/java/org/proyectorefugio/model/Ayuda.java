@@ -33,7 +33,7 @@ public class Ayuda {
         this.idUbicacion = idUbicacion;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
