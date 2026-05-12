@@ -131,6 +131,11 @@ public class PersonaDAO {
     }
     /////////////////////// INSERT ///////////////////////
 
+    /**
+     * Método que inserta una Persona en la base de datos
+     * @param p --> persona que vamos a insertar pasada como parámetro
+     * @return --> devuelve el Objeto Persona insertado en la base de datos
+     */
     public static Persona addPersona(Persona p){
         Persona añadida = null;
         if(p!=null){

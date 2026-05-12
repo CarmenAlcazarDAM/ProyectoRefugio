@@ -1,6 +1,7 @@
 package org.proyectorefugio.model;
 
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Ayuda {
@@ -32,7 +33,7 @@ public class Ayuda {
         this.idUbicacion = idUbicacion;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
