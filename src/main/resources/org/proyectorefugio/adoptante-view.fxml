@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.AdoptanteController">
+<AnchorPane prefHeight="717.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.AdoptanteController">
    <children>
-      <Text layoutX="277.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="adoptante" />
+      <TableView fx:id="tablaAdoptantes" layoutX="42.0" layoutY="36.0" prefHeight="658.0" prefWidth="444.0">
+        <columns>
+          <TableColumn fx:id="nombreCompletoCol" prefWidth="263.2000617980957" text="Adoptante" />
+          <TableColumn fx:id="dniCol" prefWidth="178.39990234375" text="DNI" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
