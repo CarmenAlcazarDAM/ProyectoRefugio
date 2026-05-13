@@ -36,7 +36,15 @@ public class VoluntarioController {
     public TableColumn<Ayuda, String> tareaCol;
 
     @FXML
+    public ListView<Voluntario> listaVoluntarios;
+
+    @FXML
     private void initialize() {
+        iniciarTabla();
+        iniciarListaVoluntarios();
+    }
+
+    public void iniciarTabla(){
         voluntarioCol.setCellValueFactory(cellData -> {
             String dni = cellData.getValue().getDniVoluntario();
 
@@ -58,6 +66,11 @@ public class VoluntarioController {
                 FXCollections.observableArrayList(AyudaDAO.findAll());
 
         tablaAyuda.setItems(listaAyudas);
+    }
+
+    public void iniciarListaVoluntarios(){
+        ObservableList<Voluntario> observable = FXCollections.observableList(VoluntarioDAO.findAll());
+        listaVoluntarios.setItems(observable);
     }
 
 
