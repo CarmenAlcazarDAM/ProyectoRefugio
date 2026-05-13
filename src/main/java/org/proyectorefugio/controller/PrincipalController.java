@@ -30,21 +30,40 @@ public class PrincipalController {
 
     }
 
+    /**
+     * Método que abre la ventana animales-view.fxml cuando pulsamos el botón Animales en JavaFX
+     * @param event --> evento de acción (clic del botón)
+     */
     public void abrirAnimales(ActionEvent event){
         cargarVista("/org/proyectorefugio/animales-view.fxml");
     }
-
+    /**
+     * Método que abre la ventana voluntario-view.fxml cuando pulsamos el botón Voluntarios en JavaFX
+     * @param event --> evento de acción (clic del botón)
+     */
     public void abrirVoluntarios(ActionEvent event) {
         cargarVista("/org/proyectorefugio/voluntario-view.fxml");
     }
 
+    /**
+     * Método que abre la ventana adoptante-view.fxml cuando pulsamos el botón Adoptantes en JavaFX
+     * @param event --> evento de acción (clic del botón)
+     */
     public void abrirAdoptantes(ActionEvent event) {
         cargarVista("/org/proyectorefugio/adoptante-view.fxml");
     }
-
+    /**
+     * Método que abre la ventana ubicacion-view.fxml cuando pulsamos el botón Ubicaciones en JavaFX
+     * @param event --> evento de acción (clic del botón)
+     */
     public void abrirUbicaciones(ActionEvent event) {
         cargarVista("/org/proyectorefugio/ubicacion-view.fxml");
     }
+
+    /**
+     * Método que vuelve a la ventana principal cuando pulsamos el botón INICIO en JavaFX
+     * @param event --> evento de acción (clic del botón)
+     */
     public void volverInicio(ActionEvent event) {
         cargarVista("/org/proyectorefugio/bienvenida-view.fxml");
 

@@ -1,7 +1,6 @@
 package org.proyectorefugio.controller;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
+
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -16,8 +15,7 @@ import org.proyectorefugio.model.Ubicacion;
 import org.proyectorefugio.modelDAO.AnimalDAO;
 import org.proyectorefugio.modelDAO.UbicacionDAO;
 
-import java.sql.Time;
-import java.time.LocalTime;
+
 import java.util.List;
 
 public class UbicacionController {

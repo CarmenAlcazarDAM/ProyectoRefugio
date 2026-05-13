@@ -27,11 +27,18 @@ public class AdoptanteController {
 
 
     @FXML
+    /**
+     * Método que inicia la vista del fxml cuando abrimos la ventana
+     */
     private void initialize() {
         tablaAdoptantes();
 
     }
 
+    /**
+     * Método que extrae los datos de los adoptantes de la base de datos y clasifica la
+     * información por columnas en una tabla.
+     */
     public void tablaAdoptantes(){
         nombreCompletoCol.setCellValueFactory(cellData -> {
             String dni = cellData.getValue().getDni();
