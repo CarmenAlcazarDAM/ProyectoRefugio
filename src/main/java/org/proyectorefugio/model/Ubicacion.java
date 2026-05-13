@@ -1,6 +1,7 @@
 package org.proyectorefugio.model;
 
-import java.sql.Time;
+import org.proyectorefugio.enums.Ubicaciones;
+
 import java.time.LocalTime;
 
 public class Ubicacion {

@@ -1,13 +1,8 @@
 package org.proyectorefugio.pruebas;
 
 import org.proyectorefugio.model.Animal;
-import org.proyectorefugio.model.Perro;
-import org.proyectorefugio.model.Sexo;
 import org.proyectorefugio.modelDAO.AnimalDAO;
 import org.proyectorefugio.modelDAO.PerroDAO;
-
-import java.time.LocalDate;
-import java.util.List;
 
 import static java.time.LocalTime.now;
 

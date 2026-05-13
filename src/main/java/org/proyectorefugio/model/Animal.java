@@ -1,5 +1,6 @@
 package org.proyectorefugio.model;
 
+import org.proyectorefugio.enums.Sexo;
 import org.proyectorefugio.utils.Utils;
 
 import java.util.Date;

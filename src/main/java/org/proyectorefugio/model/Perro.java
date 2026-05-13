@@ -1,29 +1,32 @@
 package org.proyectorefugio.model;
 
+import org.proyectorefugio.enums.Sexo;
+import org.proyectorefugio.interfaces.Acogible;
+
 import java.util.Date;
 
-public class Perro extends Animal{
+public class Perro extends Animal implements Acogible {
 
     private int idPerro;
     private double peso;
     private boolean agresivo;
 
-    public Perro(int id,String nombre, String raza, Sexo sexo,
+    public Perro(int id, String nombre, String raza, Sexo sexo,
                  String marcasDistintivas, String numeroChip, boolean esterilizado,
                  String historia, String observaciones, Date fechaIngreso,
                  int idUbicacion, double peso, boolean agresivo) {
-        super(id,nombre, raza, sexo, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, fechaIngreso, idUbicacion);
+        super(id, nombre, raza, sexo, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, fechaIngreso, idUbicacion);
 
         this.peso = peso;
         this.agresivo = agresivo;
     }
 
-    public Perro(int id, String nombre, String raza, Sexo sexo){
-        super(id,nombre, raza,sexo);
+    public Perro(int id, String nombre, String raza, Sexo sexo) {
+        super(id, nombre, raza, sexo);
     }
 
     public Perro(int id, String nombre, String raza, Sexo sexo, double peso, boolean agresivo) {
-        super(id,nombre, raza,sexo);
+        super(id, nombre, raza, sexo);
 
         this.peso = peso;
         this.agresivo = agresivo;
@@ -49,5 +52,23 @@ public class Perro extends Animal{
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    @Override
+    /**
+     * Método que indica si un perro puede ser acogido no.
+     * Si es agresivo no puede ser acogido
+     *
+     * Este método existe para una futura ampliación del programa
+     * donde se contemple además de la Adopción, la Acogida de los animales
+     * a la espera de una familia que los adopte.
+     *
+     * @return --> devuelve false si no puede ser acogido
+     */
+    public boolean puedeSerAcogido() {
+        if (this.agresivo) {
+            return false;
+        }
+        return true;
     }
 }

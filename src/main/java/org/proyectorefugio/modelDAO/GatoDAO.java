@@ -3,8 +3,7 @@ package org.proyectorefugio.modelDAO;
 import org.proyectorefugio.dataAccess.ConnectionBD;
 import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Gato;
-import org.proyectorefugio.model.Perro;
-import org.proyectorefugio.model.Sexo;
+import org.proyectorefugio.enums.Sexo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

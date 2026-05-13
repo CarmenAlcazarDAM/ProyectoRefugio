@@ -1,4 +1,4 @@
-package org.proyectorefugio.model;
+package org.proyectorefugio.enums;
 
 public enum Ubicaciones {
     CHENIL,

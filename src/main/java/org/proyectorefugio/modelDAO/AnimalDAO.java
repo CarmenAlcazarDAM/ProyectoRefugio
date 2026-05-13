@@ -3,13 +3,12 @@ package org.proyectorefugio.modelDAO;
 import org.proyectorefugio.model.Animal;
 
 import org.proyectorefugio.dataAccess.ConnectionBD;
-import org.proyectorefugio.model.Sexo;
+import org.proyectorefugio.enums.Sexo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;

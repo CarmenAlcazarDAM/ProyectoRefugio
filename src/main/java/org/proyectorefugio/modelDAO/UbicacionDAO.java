@@ -2,7 +2,7 @@ package org.proyectorefugio.modelDAO;
 
 import org.proyectorefugio.dataAccess.ConnectionBD;
 import org.proyectorefugio.model.Ubicacion;
-import org.proyectorefugio.model.Ubicaciones;
+import org.proyectorefugio.enums.Ubicaciones;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

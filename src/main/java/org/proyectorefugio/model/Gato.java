@@ -1,5 +1,7 @@
 package org.proyectorefugio.model;
 
+import org.proyectorefugio.enums.Sexo;
+
 import java.util.Date;
 
 public class Gato extends Animal{

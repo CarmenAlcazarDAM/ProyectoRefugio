@@ -1,14 +1,5 @@
 package org.proyectorefugio.pruebas;
 
-import org.proyectorefugio.model.Persona;
-import org.proyectorefugio.model.Ubicacion;
-import org.proyectorefugio.model.Ubicaciones;
-import org.proyectorefugio.modelDAO.PersonaDAO;
-import org.proyectorefugio.modelDAO.UbicacionDAO;
-
-import java.sql.Time;
-import java.util.List;
-
 public class pruebasUbicacion {
     public static void main(String[] args) {
 //        System.out.println("\n-----------------------Prueba findAll-------------------------------");
