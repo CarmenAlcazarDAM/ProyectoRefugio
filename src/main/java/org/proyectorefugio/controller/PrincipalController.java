@@ -13,6 +13,10 @@ public class PrincipalController {
     @FXML
     private AnchorPane panelContenido;
 
+    /**
+     * Carga de forma dinámica un archivo FXML dentro del AnchorPane.
+     * @param fxml --> ruta del archivo.fxml que deseamos cargar
+     */
     private void cargarVista(String fxml) {
         try {
             Parent vista = FXMLLoader.load(getClass().getResource(fxml));
