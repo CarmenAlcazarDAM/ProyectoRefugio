@@ -73,7 +73,7 @@ public class AdoptanteController {
                                 "Teléfono: " + seleccionado.getTelefono() + "\n" +
                                 "Correo: " + seleccionado.getCorreo() + "\n" +
                                 "Dirección: " + seleccionado.getDireccion()
-                );
+                        );
             }
         });
     }
