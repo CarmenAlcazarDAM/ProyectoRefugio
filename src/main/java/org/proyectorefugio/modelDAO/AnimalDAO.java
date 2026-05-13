@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -27,6 +28,8 @@ public class AnimalDAO {
     private final static String SQL_FIND_BY_BREED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado = ?";
 
     private final static String SQL_FIND_BY_COLOUR = "SELECT id, nombre, raza, sexo FROM animal WHERE color LIKE ? AND adoptado = ? AND id IN (SELECT idGato FROM gato)";
+
+    private final static String SQL_FIND_BY_UBICACION_AND_ALTA = "SELECT * FROM animal WHERE idUbicacion = ? AND fechaALTA IS NULL";
 
 
     private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo,color, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -168,6 +171,38 @@ public class AnimalDAO {
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_COLOUR)) {
             ps.setString(1, "%" + colour + "%"); // El símbolo % representa cualquier secuencia de caracteres para permitir búsquedas parciales con LIKE.
             ps.setBoolean(2, isAdopted);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                String raza = rs.getString("raza");
+                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
+                animal = new Animal(id, nombre, raza, sexo);
+
+                listaAnimal.add(animal);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaAnimal;
+    }
+
+    /**
+     * Método que busca todos los animales que están en una ubicacion determinada
+     * y no se han dado de Alta en el registro es decir, aún se encuentran
+     * en el refugio
+     * @param idUbicacion --> id de la ubicación a buscar
+     * @return --> devuelve una lista con los animales que habitan en una ubicacion
+     * en este momento.
+     */
+    public static List<Animal> findByUbicacion(int idUbicacion) {
+        List<Animal> listaAnimal = new ArrayList<>();
+        Animal animal = null;
+
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_UBICACION_AND_ALTA)) {
+            ps.setInt(1, idUbicacion);
+
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

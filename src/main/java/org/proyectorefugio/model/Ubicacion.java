@@ -1,22 +1,24 @@
 package org.proyectorefugio.model;
 
 import java.sql.Time;
+import java.time.LocalTime;
 
 public class Ubicacion {
     private int id;
     private Ubicaciones tipo;
-    private Time horaRecreo;
+    private LocalTime horaRecreo;
     private int minutosRecreo;
     private int capacidad;
 
-    public Ubicacion( Ubicaciones tipo, Time horaRecreo, int minutosRecreo, int capacidad) {
+    public Ubicacion(Ubicaciones tipo, LocalTime horaRecreo, int minutosRecreo, int capacidad) {
 
         this.tipo = tipo;
         this.horaRecreo = horaRecreo;
         this.minutosRecreo = minutosRecreo;
         this.capacidad = capacidad;
     }
-    public Ubicacion(int id, Ubicaciones tipo, Time horaRecreo, int minutosRecreo, int capacidad) {
+
+    public Ubicacion(int id, Ubicaciones tipo, LocalTime horaRecreo, int minutosRecreo, int capacidad) {
         this.id = id;
         this.tipo = tipo;
         this.horaRecreo = horaRecreo;
@@ -40,11 +42,28 @@ public class Ubicacion {
         this.tipo = tipo;
     }
 
-    public Time getHoraRecreo() {
+    public LocalTime getHoraRecreo() {
         return horaRecreo;
     }
 
-    public void setHoraRecreo(Time horaRecreo) {
+    /**
+     * Método que convierte el tipo de dato LocalTime en String
+     * para poder gestionarlo cuando tiene valor null. Además la ubicacion
+     * de AGRESIVOS no salen al recreo sino que son paseados con correa uno por uno.
+     * @return --> devuelve la hora pasada a texto
+     */
+    public String getHoraEnTexto() {
+        if (this.horaRecreo == null) {
+            if(this.tipo == Ubicaciones.AGRESIVOS){
+                return "Paseo con correa";
+            }
+
+            return "Sin recreo";
+        }
+        return this.horaRecreo.toString();
+    }
+
+    public void setHoraRecreo(LocalTime horaRecreo) {
         this.horaRecreo = horaRecreo;
     }
 

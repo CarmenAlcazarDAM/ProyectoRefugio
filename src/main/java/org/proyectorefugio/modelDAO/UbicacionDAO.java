@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,10 +48,18 @@ public class UbicacionDAO {
             while (rs.next()) {
                 Ubicaciones tipo = Ubicaciones.valueOf(rs.getString("tipo").toUpperCase());
                 Time horaRecreo = rs.getTime("horaRecreo");
+
+                //Convierte el tipo de dato Time que recibe de la base
+                // de datos en tipo de dato LocalTime con el que trabaja Java
+                LocalTime hora = null;
+                if (horaRecreo != null) {
+                     hora = horaRecreo.toLocalTime();
+                }
+
                 int minutosRecreo = rs.getInt("minutosRecreo");
                 int capacidad = rs.getInt("capacidad");
 
-                u = new Ubicacion(id, tipo, horaRecreo, minutosRecreo, capacidad);
+                u = new Ubicacion(id, tipo, hora, minutosRecreo, capacidad);
 
             }
 
@@ -123,7 +132,7 @@ public class UbicacionDAO {
         if (u != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT)) {
                 ps.setString(1, u.getTipo().toString().toUpperCase());
-                ps.setTime(2, u.getHoraRecreo());
+                ps.setTime(2, Time.valueOf(u.getHoraRecreo()));
                 ps.setInt(3, u.getMinutosRecreo());
                 ps.setInt(4, u.getCapacidad());
 
