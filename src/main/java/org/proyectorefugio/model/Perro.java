@@ -66,7 +66,7 @@ public class Perro extends Animal implements Acogible {
      * @return --> devuelve false si no puede ser acogido
      */
     public boolean puedeSerAcogido() {
-        if (this.agresivo) {
+        if(this.agresivo) {
             return false;
         }
         return true;
