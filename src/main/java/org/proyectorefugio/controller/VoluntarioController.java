@@ -39,9 +39,13 @@ public class VoluntarioController {
     public ListView<Voluntario> listaVoluntarios;
 
     @FXML
+    public Label informacionAdicional;
+
+    @FXML
     private void initialize() {
         iniciarTabla();
         iniciarListaVoluntarios();
+        mostrarInformacionAdicional();
     }
 
     public void iniciarTabla(){
@@ -71,6 +75,24 @@ public class VoluntarioController {
     public void iniciarListaVoluntarios(){
         ObservableList<Voluntario> observable = FXCollections.observableList(VoluntarioDAO.findAll());
         listaVoluntarios.setItems(observable);
+    }
+
+    /**
+     * Método que muestra toda la información del Voluntario cuando seleccionas sobre él en la tabla
+     * La información aparece en un recuadro Label que aparece cuando das el primer click.
+     */
+    public void mostrarInformacionAdicional() {
+        listaVoluntarios.getSelectionModel().selectedItemProperty().addListener((observable, anterior, seleccionado) -> {
+            if (seleccionado != null) {
+                informacionAdicional.setText(
+                        "Nombre: " + seleccionado.getNombre() + "\n" +
+                                "DNI: " + seleccionado.getDni() + "\n" +
+                                "Teléfono: " + seleccionado.getTelefono() + "\n" +
+                                "Correo: " + seleccionado.getCorreo() + "\n" +
+                                "Dirección: " + seleccionado.getDireccion()
+                );
+            }
+        });
     }
 
 
