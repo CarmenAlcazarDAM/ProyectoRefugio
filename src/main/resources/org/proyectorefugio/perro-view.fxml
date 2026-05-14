@@ -13,12 +13,12 @@
 <AnchorPane prefHeight="643.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.PerroController">
    <children>
       <Text layoutX="519.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guau" />
-      <TableView layoutX="65.0" layoutY="62.0" prefHeight="524.0" prefWidth="413.0">
+      <TableView fx:id="tablaPerros" layoutX="65.0" layoutY="62.0" prefHeight="524.0" prefWidth="413.0">
         <columns>
-          <TableColumn prefWidth="151.0" text="Nombre" />
-          <TableColumn prefWidth="43.0" text="Id" />
-            <TableColumn prefWidth="64.0" text="Sexo" />
-            <TableColumn prefWidth="154.0" text="Raza" />
+          <TableColumn fx:id="nombreCol" prefWidth="151.0" text="Nombre" />
+          <TableColumn fx:id="idCol" prefWidth="43.0" text="Id" />
+            <TableColumn fx:id="sexoCol" prefWidth="64.0" text="Sexo" />
+            <TableColumn fx:id="razaCol" prefWidth="154.0" text="Raza" />
         </columns>
       </TableView>
       <CheckBox layoutX="519.0" layoutY="120.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="105.0" text="Adoptado" />
