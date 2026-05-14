@@ -101,11 +101,7 @@ public class AnimalDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-
-                animal = new Animal(id, nombre, raza, sexo);
+                animal = findByID(id);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -131,10 +127,7 @@ public class AnimalDAO {
 
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                animal = new Animal(id, nombre, raza, sexo);
+                animal = findByID(id);
 
                 listaAnimales.add(animal);
             }
@@ -161,10 +154,8 @@ public class AnimalDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                animal = new Animal(id, nombre, raza, sexo);
+
+                animal = findByID(id);
 
                 listaAnimal.add(animal);
             }
@@ -190,10 +181,8 @@ public class AnimalDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                animal = new Animal(id, nombre, raza, sexo);
+
+                animal = findByID(id);
 
                 listaAnimal.add(animal);
             }
@@ -222,10 +211,8 @@ public class AnimalDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String nombre = rs.getString("nombre");
-                String raza = rs.getString("raza");
-                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
-                animal = new Animal(id, nombre, raza, sexo);
+
+                animal = findByID(id);
 
                 listaAnimal.add(animal);
             }
