@@ -31,7 +31,7 @@ public class AdoptanteController {
 
     @FXML
     /**
-     * Método que inicia la vista del fxml cuando abrimos la ventana
+     * Metodo que inicia la vista del fxml cuando abrimos la ventana
      */
     private void initialize() {
         tablaAdoptantes();

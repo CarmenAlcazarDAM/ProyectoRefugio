@@ -11,11 +11,10 @@ public class PrincipalApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(PrincipalApplication.class.getResource("/org/proyectorefugio/refugio-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1500, 750);
-        stage.setMinWidth(1500);
-        stage.setMinHeight(780);
+        Scene scene = new Scene(fxmlLoader.load(), 1500, 780);
         stage.setMaxWidth(1500);
         stage.setMaxHeight(780);
+        stage.setResizable(true);
         stage.setTitle("Refugio");
         stage.setScene(scene);
         stage.show();

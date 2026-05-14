@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="717.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.AnimalController">
+<AnchorPane fx:id="panelContenido" prefHeight="717.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.AnimalController">
    <children>
       <HBox layoutX="186.0" layoutY="185.0" prefHeight="291.0" prefWidth="648.0" spacing="150.0">
          <children>

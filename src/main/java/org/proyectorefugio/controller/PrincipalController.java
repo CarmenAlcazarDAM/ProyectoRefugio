@@ -30,8 +30,6 @@ public class PrincipalController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     /**
@@ -41,6 +39,7 @@ public class PrincipalController {
     public void abrirAnimales(ActionEvent event){
         cargarVista("/org/proyectorefugio/animales-view.fxml");
     }
+
     /**
      * Método que abre la ventana voluntario-view.fxml cuando pulsamos el botón Voluntarios en JavaFX
      * @param event --> evento de acción (clic del botón)
@@ -70,6 +69,6 @@ public class PrincipalController {
      */
     public void volverInicio(ActionEvent event) {
         cargarVista("/org/proyectorefugio/bienvenida-view.fxml");
-
     }
+
 }
