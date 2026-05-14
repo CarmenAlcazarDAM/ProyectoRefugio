@@ -4,6 +4,7 @@ package org.proyectorefugio.controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -25,6 +26,8 @@ public class GatoController {
 
     @FXML
     public Label informacionAdicional;
+    public CheckBox noAdoptado;
+    public CheckBox adoptado;
 
 
     @FXML
@@ -34,6 +37,33 @@ public class GatoController {
     private void initialize() {
         tablaGatos();
         mostrarInformacionAdicional();
+    }
+    @FXML
+    /**
+     * Selecciona el check de No adoptados y desmarca el de adoptados.
+     * Recarga la tabla.
+     */
+    private void seleccionNoAdoptado() {
+        if (noAdoptado.isSelected()) {
+            adoptado.setSelected(false);
+        } else {
+            adoptado.setSelected(true);
+        }
+        tablaGatos();
+    }
+
+    @FXML
+    /**
+     * Selecciona el check de Adoptados y desmarca el de no adoptados.
+     * Mantiene siempre la opción de No Adoptado activa y recarga la tabla
+     */
+    private void seleccionAdoptado() {
+        if (adoptado.isSelected()) {
+            noAdoptado.setSelected(false);
+        } else {
+            noAdoptado.setSelected(true);
+        }
+        tablaGatos();
     }
 
     /**
@@ -46,8 +76,14 @@ public class GatoController {
         sexoCol.setCellValueFactory(new PropertyValueFactory<>("sexo"));
         razaCol.setCellValueFactory(new PropertyValueFactory<>("raza"));
 
+        boolean buscarAdoptados;
+        if(noAdoptado.isSelected()){
+            buscarAdoptados = true;
+        }else{
+            buscarAdoptados = false;
+        }
         ObservableList<Gato> listaGatos =
-                FXCollections.observableArrayList(GatoDAO.findAll(false/*check de adoptado o no */));
+                FXCollections.observableArrayList(GatoDAO.findAll(buscarAdoptados));
 
         tablaGatos.setItems(listaGatos);
     }

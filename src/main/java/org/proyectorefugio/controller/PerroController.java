@@ -2,7 +2,9 @@ package org.proyectorefugio.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -24,6 +26,8 @@ public class PerroController {
 
     @FXML
     public Label informacionAdicional;
+    public CheckBox noAdoptado;
+    public CheckBox adoptado;
 
 
     @FXML
@@ -33,6 +37,34 @@ public class PerroController {
     private void initialize() {
         tablaPerros();
         mostrarInformacionAdicional();
+    }
+
+    @FXML
+    /**
+     * Selecciona el check de No adoptados y desmarca el de adoptados.
+     * Recarga la tabla.
+     */
+    private void seleccionNoAdoptado() {
+        if (noAdoptado.isSelected()) {
+            adoptado.setSelected(false);
+        } else {
+            adoptado.setSelected(true);
+        }
+        tablaPerros();
+    }
+
+    @FXML
+    /**
+     * Selecciona el check de Adoptados y desmarca el de no adoptados.
+     * Mantiene siempre la opción de No Adoptado activa y recarga la tabla
+     */
+    private void seleccionAdoptado() {
+        if (adoptado.isSelected()) {
+            noAdoptado.setSelected(false);
+        } else {
+            noAdoptado.setSelected(true);
+        }
+        tablaPerros();
     }
 
     /**
@@ -45,8 +77,15 @@ public class PerroController {
         sexoCol.setCellValueFactory(new PropertyValueFactory<>("sexo"));
         razaCol.setCellValueFactory(new PropertyValueFactory<>("raza"));
 
+       boolean buscarAdoptados;
+       if(noAdoptado.isSelected()){
+           buscarAdoptados = true;
+       }else{
+           buscarAdoptados = false;
+       }
+
         ObservableList<Perro> listaPerros =
-                FXCollections.observableArrayList(PerroDAO.findAll(false/*check de adoptado o no */));
+                FXCollections.observableArrayList(PerroDAO.findAll(buscarAdoptados));
 
         tablaPerros.setItems(listaPerros);
     }
@@ -87,6 +126,10 @@ public class PerroController {
                         informacionAdicional.setText(datosMostrar);
                     }
                 });
+    }
+
+    public boolean noAdoptado(ActionEvent event) {
+        return false;
     }
 }
 
