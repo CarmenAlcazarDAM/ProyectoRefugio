@@ -2,6 +2,7 @@ package org.proyectorefugio.model;
 
 import org.proyectorefugio.enums.Sexo;
 import org.proyectorefugio.interfaces.Acogible;
+import org.proyectorefugio.view.Mensajes;
 
 import java.util.Date;
 
@@ -70,5 +71,13 @@ public class Perro extends Animal implements Acogible {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Método que convierte en texto el boolean isAgresivo
+     * @return --> devuelve una cadena de texto
+     */
+    public String isAgresivoTexto(){
+        return Mensajes.afirmativoNegativo(this.agresivo);
     }
 }

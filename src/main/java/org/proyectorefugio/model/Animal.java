@@ -2,6 +2,7 @@ package org.proyectorefugio.model;
 
 import org.proyectorefugio.enums.Sexo;
 import org.proyectorefugio.utils.Utils;
+import org.proyectorefugio.view.Mensajes;
 
 import java.util.Date;
 
@@ -216,6 +217,13 @@ public class Animal {
         return nombre.toUpperCase() + " (Id: " + id + ", " + sexo + ", " + raza + ")";
     }
 
+    /**
+     * Método que convierte en texto el boolean isEsterilizado
+     * @return --> devuelve una cadena de texto
+     */
+    public String isEsterilizadoTexto(){
+        return Mensajes.afirmativoNegativo(this.esterilizado);
+    }
 
 
 }

@@ -1,6 +1,7 @@
 package org.proyectorefugio.model;
 
 import org.proyectorefugio.enums.Sexo;
+import org.proyectorefugio.view.Mensajes;
 
 import java.util.Date;
 
@@ -29,5 +30,13 @@ public class Gato extends Animal{
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    /**
+     * Método que convierte en texto el boolean isLeucemiaFelina
+     * @return --> devuelve una cadena de texto
+     */
+    public String isLeucemiaFelinaTexto(){
+        return Mensajes.positivoNegativo(this.leucemiaFelina);
     }
 }

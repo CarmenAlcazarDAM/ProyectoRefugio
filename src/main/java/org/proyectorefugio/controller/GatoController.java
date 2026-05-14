@@ -71,7 +71,7 @@ public class GatoController {
                         if (seleccionado.getNumeroChip() != null) {
                             datosMostrar += "Número Chip:  " + seleccionado.getNumeroChip() + "\n";
                         }
-                        datosMostrar += "Esterilizado: " + seleccionado.isEsterilizado() + "\n" +
+                        datosMostrar += "Esterilizado: " + seleccionado.isEsterilizadoTexto() + "\n" +
                                 "Fecha Ingreso: " + seleccionado.getFechaIngreso() + "\n";
                         if (seleccionado.getObservaciones() != null) {
                             datosMostrar += "Observaciones: " + seleccionado.getObservaciones() + "\n";
@@ -79,7 +79,7 @@ public class GatoController {
                         if (seleccionado.getHistoria() != null) {
                             datosMostrar += "Historia: " + seleccionado.getHistoria() + "\n";
                         }
-                        datosMostrar += "Leucemia: " + seleccionado.isLeucemiaFelina() + "\n";
+                        datosMostrar += "Leucemia: " + seleccionado.isLeucemiaFelinaTexto() + "\n";
 
                         if (seleccionado.getFechaAlta() != null) {
                             datosMostrar += "Fecha Alta: " + seleccionado.getFechaAlta();

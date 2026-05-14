@@ -66,12 +66,12 @@ public class PerroController {
                                 "Sexo: " + seleccionado.getSexo() + "\n" +
                                 "Raza: " + seleccionado.getRaza() + "\n" +
                                 "Color: " + seleccionado.getColor() + "\n" +
-                                "Peso: " + seleccionado.getPeso() + "\n";
+                                "Peso: " + seleccionado.getPeso() + " Kg \n";
 
                         if (seleccionado.getNumeroChip() != null) {
                             datosMostrar += "Número Chip:  " + seleccionado.getNumeroChip() + "\n";
                         }
-                        datosMostrar += "Esterilizado: " + seleccionado.isEsterilizado() + "\n" +
+                        datosMostrar += "Esterilizado: " + seleccionado.isEsterilizadoTexto() + "\n" +
                                 "Fecha Ingreso: " + seleccionado.getFechaIngreso() + "\n";
                         if (seleccionado.getObservaciones() != null) {
                             datosMostrar += "Observaciones: " + seleccionado.getObservaciones() + "\n";
@@ -79,7 +79,7 @@ public class PerroController {
                         if (seleccionado.getHistoria() != null) {
                             datosMostrar += "Historia: " + seleccionado.getHistoria() + "\n";
                         }
-                        datosMostrar += "Agresivo: " + seleccionado.isAgresivo() + "\n";
+                        datosMostrar += "Agresivo: " + seleccionado.isAgresivoTexto() + "\n";
 
                         if (seleccionado.getFechaAlta() != null) {
                             datosMostrar += "Fecha Alta: " + seleccionado.getFechaAlta();
