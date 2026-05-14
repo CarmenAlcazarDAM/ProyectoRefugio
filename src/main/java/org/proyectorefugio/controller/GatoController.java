@@ -34,7 +34,6 @@ public class GatoController {
     private void initialize() {
         tablaGatos();
         mostrarInformacionAdicional();
-
     }
 
     /**
@@ -61,23 +60,56 @@ public class GatoController {
         tablaGatos.getSelectionModel().selectedItemProperty().addListener(
                 (observable, anterior, seleccionado) -> {
                     if (seleccionado != null) {
-                        informacionAdicional.setText(
-                                "Id: " + seleccionado.getId() + "\n" +
-                                        "Nombre: " + seleccionado.getNombre() + "\n" +
-                                        "Color: " + seleccionado.getColor() + "\n" +
-                                        "Número Chip:  " + seleccionado.getNumeroChip() + "\n" +
-                                        "Esterilizado: " + seleccionado.isEsterilizado() + "\n" +
-                                        "Fecha Ingreso: " + seleccionado.getFechaIngreso() + "\n" +
-                                        "Observaciones: " + seleccionado.getObservaciones() + "\n" +
-                                        "Historia: " + seleccionado.getHistoria() + "\n"
-                        );
-                        if (seleccionado.getFechaAlta() != null) {
-                            informacionAdicional.setText("\n" + "Fecha Alta: " + seleccionado.getFechaAlta());
+
+                        String datosMostrar = "Id: " + seleccionado.getId() + "\n" +
+                                "Nombre: " + seleccionado.getNombre() + "\n" +
+                                "Edad: " + seleccionado.getEdad() + "\n" +
+                                "Sexo: " + seleccionado.getSexo() + "\n" +
+                                "Raza: " + seleccionado.getRaza() + "\n" +
+                                "Color: " + seleccionado.getColor() + "\n";
+
+                        if (seleccionado.getNumeroChip() != null) {
+                            datosMostrar += "Número Chip:  " + seleccionado.getNumeroChip() + "\n";
                         }
+                        datosMostrar += "Esterilizado: " + seleccionado.isEsterilizado() + "\n" +
+                                "Fecha Ingreso: " + seleccionado.getFechaIngreso() + "\n";
+                        if (seleccionado.getObservaciones() != null) {
+                            datosMostrar += "Observaciones: " + seleccionado.getObservaciones() + "\n";
+                        }
+                        if (seleccionado.getHistoria() != null) {
+                            datosMostrar += "Historia: " + seleccionado.getHistoria() + "\n";
+                        }
+                        datosMostrar += "Leucemia: " + seleccionado.isLeucemiaFelina() + "\n";
+
+                        if (seleccionado.getFechaAlta() != null) {
+                            datosMostrar += "Fecha Alta: " + seleccionado.getFechaAlta();
+                        }
+                        informacionAdicional.setText(datosMostrar);
                     }
                 });
     }
 }
+
+//informacionAdicional.setText(
+//                                "Id: " + seleccionado.getId() + "\n" +
+//        "Nombre: " + seleccionado.getNombre() + "\n" +
+//        "Color: " + seleccionado.getColor() + "\n");
+//        if (seleccionado.getNumeroChip() != null) {
+//        informacionAdicional.setText("Número Chip:  " + seleccionado.getNumeroChip() + "\n");
+//        }
+//        informacionAdicional.setText("Esterilizado: " + seleccionado.isEsterilizado() + "\n" +
+//        "Fecha Ingreso: " + seleccionado.getFechaIngreso() + "\n");
+//        if (seleccionado.getObservaciones() != null) {
+//        informacionAdicional.setText("Observaciones: " + seleccionado.getObservaciones() + "\n");
+//        }
+//        if (seleccionado.getHistoria() != null) {
+//        informacionAdicional.setText("Historia: " + seleccionado.getHistoria() + "\n");
+//        }
+//        informacionAdicional.setText("Leucemia: " + seleccionado.isLeucemiaFelina() + "\n");
+//
+//        if (seleccionado.getFechaAlta() != null) {
+//        informacionAdicional.setText("\n" + "Fecha Alta: " + seleccionado.getFechaAlta());
+//        }
 
 
 

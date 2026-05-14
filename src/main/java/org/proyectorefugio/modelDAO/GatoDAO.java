@@ -43,11 +43,9 @@ public class GatoDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     int id = rs.getInt("id");
-                    String nombre = rs.getString("nombre");
-                    String raza = rs.getString("raza");
-                    Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
+                    Animal a = AnimalDAO.findByID(id);
 
-                    gato = new Gato(id, nombre, raza, sexo);
+                    gato = rellenarDatosGato(a);
                     listaGatos.add(gato);
                 }
             }

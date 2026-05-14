@@ -22,11 +22,11 @@ public class AnimalDAO {
     private final static String SQL_FIND_BY_ID = "SELECT * FROM animal WHERE id = ?";
     private final static String SQL_FIND_BY_CHIP = "SELECT * FROM animal WHERE numeroChip = ?";
 
-    private final static String SQL_FIND_BY_NAME = "SELECT id, nombre, raza, sexo FROM animal WHERE nombre LIKE ? AND adoptado = ?";
+    private final static String SQL_FIND_BY_NAME = "SELECT * FROM animal WHERE nombre LIKE ? AND adoptado = ?";
 
-    private final static String SQL_FIND_BY_BREED = "SELECT id, nombre, raza, sexo FROM animal WHERE raza LIKE ? AND adoptado = ?";
+    private final static String SQL_FIND_BY_BREED = "SELECT * FROM animal WHERE raza LIKE ? AND adoptado = ?";
 
-    private final static String SQL_FIND_BY_COLOUR = "SELECT id, nombre, raza, sexo FROM animal WHERE color LIKE ? AND adoptado = ? AND id IN (SELECT idGato FROM gato)";
+    private final static String SQL_FIND_BY_COLOUR = "SELECT * FROM animal WHERE color LIKE ? AND adoptado = ? AND id IN (SELECT idGato FROM gato)";
 
     private final static String SQL_FIND_BY_UBICACION_AND_ALTA = "SELECT * FROM animal WHERE idUbicacion = ? AND fechaALTA IS NULL";
 
@@ -62,9 +62,25 @@ public class AnimalDAO {
                 String nombre = rs.getString("nombre");
                 String raza = rs.getString("raza");
                 Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
+                String color = rs.getString("color");
+                String edad = rs.getString("edad");
+                String marcasDistintivas = rs.getString("marcasDistintivas");
+                String numeroChip = rs.getString("numeroChip");
+                Boolean esterilizado = rs.getBoolean("esterilizado");
+                String historia = rs.getString("historia");
+                String observaciones = rs.getString("observaciones");
+                Date fechaIngreso = rs.getDate("fechaIngreso");
+                Boolean adoptado = rs.getBoolean("adoptado");
+                Date fechaAlta = rs.getDate("fechaAlta");
+                String dniAdoptante = rs.getString("dniAdoptante");
+                int idUbicacion = rs.getInt("idUbicacion");
 
-                animal = new Animal(id, nombre, raza, sexo);
+
+                animal = new Animal(id, nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip,
+                        esterilizado, historia, observaciones, fechaIngreso, adoptado, fechaAlta,
+                        dniAdoptante, idUbicacion);
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

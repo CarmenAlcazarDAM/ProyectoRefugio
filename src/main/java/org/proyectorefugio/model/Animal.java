@@ -11,6 +11,7 @@ public class Animal {
     private String raza;
     private Sexo sexo;
     private String color;
+    private String edad;
     private String marcasDistintivas;
     private String numeroChip;
     private boolean esterilizado = false;
@@ -44,11 +45,32 @@ public class Animal {
         this.idUbicacion = idUbicacion;
     }
 
-    public Animal(String nombre, String raza, Sexo sexo,String color,String marcasDistintivas, String numeroChip, boolean esterilizado, String historia, String observaciones, int idUbicacion) {
+    //este se usa en AnimalDAO
+    public Animal(int id, String nombre, String raza, Sexo sexo, String color, String edad, String marcasDistintivas, String numeroChip, boolean esterilizado, String historia, String observaciones, Date fechaIngreso, boolean adoptado, Date fechaAlta, String dniAdoptante, int idUbicacion) {
+        this.id = id;
         this.nombre = nombre;
         this.raza = raza;
         this.sexo = sexo;
         this.color = color;
+        this.edad = edad;
+        this.marcasDistintivas = marcasDistintivas;
+        this.numeroChip = numeroChip;
+        this.esterilizado = esterilizado;
+        this.historia = historia;
+        this.observaciones = observaciones;
+        this.fechaIngreso = fechaIngreso;
+        this.adoptado = adoptado;
+        this.fechaAlta = fechaAlta;
+        this.dniAdoptante = dniAdoptante;
+        this.idUbicacion = idUbicacion;
+    }
+
+    public Animal(String nombre, String raza, Sexo sexo, String color, String edad, String marcasDistintivas, String numeroChip, boolean esterilizado, String historia, String observaciones, int idUbicacion) {
+        this.nombre = nombre;
+        this.raza = raza;
+        this.sexo = sexo;
+        this.color = color;
+        this.edad = edad;
         this.marcasDistintivas = marcasDistintivas;
         this.numeroChip = numeroChip;
         this.esterilizado = esterilizado;
@@ -96,6 +118,14 @@ public class Animal {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getEdad() {
+        return edad;
+    }
+
+    public void setEdad(String edad) {
+        this.edad = edad;
     }
 
     public String getMarcasDistintivas() {
