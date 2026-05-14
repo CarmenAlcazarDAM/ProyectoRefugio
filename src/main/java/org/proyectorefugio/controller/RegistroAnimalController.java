@@ -7,16 +7,23 @@ import javafx.scene.text.Text;
 
 public class RegistroAnimalController {
 
+    //Cuando el correspondiente controlador inicie el formulario
+    // le va a dar a tipo un valor "perro" o "gato".
+    public static String tipo;
+
+    @FXML
     public TextField infoNombre;
     public CheckBox checkVariable;
     public Text peso;
     public TextField pesoField;
 
-    public static String tipo;
-
-
 
     @FXML
+    /**
+     * Método que inicia el formulario.
+     * Dependiendo del tipo que sea mostrará los datos a rellenar propios de Perro
+     * o de Gato
+     */
     public void initialize() {
         if ("perro".equals(tipo)) {
             checkVariable.setText("¿Es agresivo?");
