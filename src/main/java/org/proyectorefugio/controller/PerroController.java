@@ -127,9 +127,6 @@ public class PerroController {
                 });
     }
 
-    public boolean noAdoptado(ActionEvent event) {
-        return false;
-    }
 
     public void botonInsertarPerro(ActionEvent event) {
         RegistroAnimalController.tipo = "perro";
