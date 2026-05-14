@@ -125,6 +125,10 @@ public class GatoController {
                 });
     }
 
+    /**
+     * Método que cuando al pulsar el botón Añadir abrirá el formulario correspondiente
+     * @param event --> acción que se va a llevar a cabo
+     */
     public void botonInsertarGato(ActionEvent event) {
         RegistroAnimalController.tipo = "gato";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/registroAnimal-view.fxml", "Formulario de Registro");
