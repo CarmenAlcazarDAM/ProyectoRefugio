@@ -90,26 +90,5 @@ public class GatoController {
     }
 }
 
-//informacionAdicional.setText(
-//                                "Id: " + seleccionado.getId() + "\n" +
-//        "Nombre: " + seleccionado.getNombre() + "\n" +
-//        "Color: " + seleccionado.getColor() + "\n");
-//        if (seleccionado.getNumeroChip() != null) {
-//        informacionAdicional.setText("Número Chip:  " + seleccionado.getNumeroChip() + "\n");
-//        }
-//        informacionAdicional.setText("Esterilizado: " + seleccionado.isEsterilizado() + "\n" +
-//        "Fecha Ingreso: " + seleccionado.getFechaIngreso() + "\n");
-//        if (seleccionado.getObservaciones() != null) {
-//        informacionAdicional.setText("Observaciones: " + seleccionado.getObservaciones() + "\n");
-//        }
-//        if (seleccionado.getHistoria() != null) {
-//        informacionAdicional.setText("Historia: " + seleccionado.getHistoria() + "\n");
-//        }
-//        informacionAdicional.setText("Leucemia: " + seleccionado.isLeucemiaFelina() + "\n");
-//
-//        if (seleccionado.getFechaAlta() != null) {
-//        informacionAdicional.setText("\n" + "Fecha Alta: " + seleccionado.getFechaAlta());
-//        }
-
 
 
