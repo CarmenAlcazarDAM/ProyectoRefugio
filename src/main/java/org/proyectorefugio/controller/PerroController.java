@@ -4,13 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.proyectorefugio.model.Perro;
 import org.proyectorefugio.modelDAO.PerroDAO;
+import org.proyectorefugio.view.SceneManager;
 
 public class PerroController {
     @FXML
@@ -28,6 +26,7 @@ public class PerroController {
     public Label informacionAdicional;
     public CheckBox noAdoptado;
     public CheckBox adoptado;
+    public Button añadirPerroBD;
 
 
     @FXML
@@ -130,6 +129,10 @@ public class PerroController {
 
     public boolean noAdoptado(ActionEvent event) {
         return false;
+    }
+
+    public void botonInsertarPerro(ActionEvent event) {
+        SceneManager.abrirVentanaEmergente("/org/proyectorefugio/registroAnimal-view.fxml", "Formulario de Registro");
     }
 }
 
