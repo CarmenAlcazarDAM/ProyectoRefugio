@@ -37,7 +37,7 @@
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="42.0" layoutY="176.0" prefHeight="32.0" prefWidth="190.0" promptText=" Ej: Firulais" />
+      <TextField fx:id="infoNombre" layoutX="42.0" layoutY="176.0" prefHeight="32.0" prefWidth="190.0" promptText=" Ej: Firulais" />
       <Text layoutX="257.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SEXO" wrappingWidth="104.447265625">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
@@ -117,18 +117,18 @@
       <TextArea layoutX="45.0" layoutY="560.0" prefHeight="69.0" prefWidth="355.0" promptText="¿Dónde se encontraba?, ¿Cómo llegó al refugio?,..." />
       <HBox layoutX="45.0" layoutY="648.0" prefHeight="37.0" prefWidth="157.0" style="-fx-border-color: c4c3ad;">
          <children>
-            <CheckBox layoutX="42.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="142.0" />
+            <CheckBox fx:id="checkVariable" layoutX="42.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="142.0" />
          </children>
          <padding>
             <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
          </padding>
       </HBox>
-      <Text layoutX="232.0" layoutY="651.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PESO (Kg)" visible="false" wrappingWidth="104.447265625">
+      <Text fx:id="peso" layoutX="232.0" layoutY="651.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PESO (Kg)" visible="false" wrappingWidth="104.447265625">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="232.0" layoutY="655.0" prefHeight="32.0" prefWidth="163.0" visible="false" />
+      <TextField fx:id="pesoField" layoutX="232.0" layoutY="655.0" prefHeight="32.0" prefWidth="163.0" visible="false" />
       <Text fill="#750000" layoutX="327.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />

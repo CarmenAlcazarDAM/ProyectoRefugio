@@ -23,6 +23,7 @@ public class SceneManager {
             stage.setTitle(titulo);
             stage.setScene(new Scene(root));
 
+
             // Bloquea la ventana principal hasta que se cierre esta
             stage.initModality(Modality.APPLICATION_MODAL);
 

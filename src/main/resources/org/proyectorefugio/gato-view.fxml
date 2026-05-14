@@ -26,7 +26,7 @@
       <Button layoutX="524.0" layoutY="155.0" mnemonicParsing="false" text="Adoptar" />
       <HBox layoutX="74.0" layoutY="632.0" prefHeight="29.0" prefWidth="413.0" spacing="15.0">
          <children>
-            <Button mnemonicParsing="false" text="Añadir" />
+            <Button fx:id="añadirGatoBD" mnemonicParsing="false" onAction="#botonInsertarGato" text="Añadir" />
             <Button mnemonicParsing="false" text="Buscar" />
             <Button mnemonicParsing="false" text="Modificar" />
             <Button mnemonicParsing="false" text="Eliminar" />
