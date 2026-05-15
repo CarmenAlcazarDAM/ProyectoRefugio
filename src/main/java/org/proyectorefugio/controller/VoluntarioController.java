@@ -3,6 +3,7 @@ package org.proyectorefugio.controller;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -14,6 +15,7 @@ import org.proyectorefugio.model.Ayuda;
 import org.proyectorefugio.model.Voluntario;
 import org.proyectorefugio.modelDAO.AyudaDAO;
 import org.proyectorefugio.modelDAO.VoluntarioDAO;
+import org.proyectorefugio.view.SceneManager;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -93,6 +95,15 @@ public class VoluntarioController {
                 );
             }
         });
+    }
+
+    /**
+     * Método que cuando al pulsar el botón "Nuevo Voluntario" abrirá el formulario correspondiente
+     * @param event --> acción que se va a llevar a cabo
+     */
+    public void botonInsertarVoluntario(ActionEvent event) {
+        FormularioPersonaYAdoptarController.persona = "voluntario";
+        SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
     }
 
 

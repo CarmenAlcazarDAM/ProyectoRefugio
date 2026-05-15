@@ -23,7 +23,7 @@
       </TableView>
       <CheckBox fx:id="adoptado" layoutX="519.0" layoutY="120.0" mnemonicParsing="false" onAction="#seleccionAdoptado" prefHeight="17.0" prefWidth="105.0" text="Adoptados" />
       <CheckBox fx:id="noAdoptado" layoutX="519.0" layoutY="97.0" mnemonicParsing="false" onAction="#seleccionNoAdoptado" prefWidth="142.0" selected="true" text="No adoptados" />
-      <Button layoutX="519.0" layoutY="151.0" mnemonicParsing="false" text="Adoptar" />
+      <Button layoutX="519.0" layoutY="151.0" mnemonicParsing="false" onAction="#botonAdoptar" text="Adoptar" />
       <HBox layoutX="65.0" layoutY="599.0" prefHeight="29.0" prefWidth="413.0" spacing="15.0">
          <children>
             <Button fx:id="añadirPerroBD" mnemonicParsing="false" onAction="#botonInsertarPerro" text="Añadir" />
