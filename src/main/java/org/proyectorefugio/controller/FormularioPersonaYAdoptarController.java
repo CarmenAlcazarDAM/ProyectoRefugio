@@ -60,10 +60,17 @@ public class FormularioPersonaYAdoptarController {
             String correo = infoCorreo.getText();
             String domicilio = infoDireccion.getText();
 
+
+            if (nombre.trim().isEmpty() || apellidos.trim().isEmpty() ||
+                    dni.trim().isEmpty() || telefono.trim().isEmpty()) { //.trim() --> elimina los espacios del principio y del final, no los entre palabras
+               //todo --> aqui puedo añadir alertas de campos obligatorios
+                return null;
+            }
             return new Persona(dni, nombre, apellidos, telefono, correo, domicilio);
+
         } catch (Exception e) {
             System.out.println("Ocurrió un error al intentar guardar el registro: " + e.getMessage());
-            e.printStackTrace();
+
             //todo -> alertas de error
         }
         return null;
@@ -76,6 +83,9 @@ public class FormularioPersonaYAdoptarController {
      */
     public void botonGuardarInformacion(ActionEvent event) {
         Persona registrar = obtenerInformacionPersonaDelFormulario();
+        if(registrar==null){
+            return;
+        }
         PersonaDAO.addPersona(registrar);
         if ("adoptante".equals(persona)) {
             AdoptanteDAO.addAdoptante(registrar);
