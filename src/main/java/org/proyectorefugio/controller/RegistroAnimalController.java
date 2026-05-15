@@ -46,7 +46,7 @@ public class RegistroAnimalController {
 
     @FXML
     /**
-     * Método que inicia el formulario.
+     * Metodo que inicia el formulario.
      * Dependiendo del tipo que sea mostrará los datos a rellenar propios de Perro
      * o de Gato
      */
@@ -58,7 +58,7 @@ public class RegistroAnimalController {
     }
 
     /**
-     * Método que asigna las opciones de sexo al ComboBox
+     * Metodo que asigna las opciones de sexo al ComboBox
      */
     public void asignarOpcionesSexo() {
         ObservableList<String> opciones = FXCollections.observableArrayList(
@@ -69,7 +69,7 @@ public class RegistroAnimalController {
     }
 
     /**
-     * Método que recibe que tipo de animal está abriendo el formulario
+     * Metodo que recibe que tipo de animal está abriendo el formulario
      */
     public void definirTipoAnimal() {
         if ("perro".equals(tipo)) {
@@ -83,7 +83,7 @@ public class RegistroAnimalController {
     }
 
     /**
-     * Método que va a recoger toda la información procedente de del formulario
+     * Metodo que va a recoger toda la información procedente de del formulario
      */
     //todo -> edad no se ha guardado
     //todo --> este método se puede refactorizar
@@ -126,7 +126,7 @@ public class RegistroAnimalController {
     }
 
     /**
-     * Método que guarda en la base de datos la información de los animales
+     * Metodo que guarda en la base de datos la información de los animales
      * @param event --> evento que ocurre cuando pulsas el boton
      */
     public void guardarInformacion(ActionEvent event) {
@@ -162,12 +162,33 @@ public class RegistroAnimalController {
                 GatoDAO.addGato(gatoInsertar, animalInsertado);
                 System.out.println(textoConfirmacion);
             }
-
             // todo ->  añadir un Alert flotante confirmando el éxito y cierre el formulario
+            limpiarCampos();
 
         } catch (Exception e) {
             System.err.println("Ocurrió un error al intentar guardar el registro: " + e.getMessage());
             e.printStackTrace();
+            //todo -> alertas de error
         }
+    }
+
+    /**
+     * Metodo que limpia los campos del formulario
+     */
+    public void limpiarCampos(){
+        infoNombre.clear();
+        checkVariable.setSelected(false);
+        pesoField.clear();
+        opcionesSexo.setValue(null);
+        infoRaza.clear();
+        infoColor.clear();
+        infoEdad.clear();
+        infoChip.clear();
+        infoFecha.setValue(null);
+        infoEsterilizado.setSelected(false);
+        infoUbicacion.clear();
+        infoObservaciones.clear();
+        infoHistoria.clear();
+        infoMarcas.clear();
     }
 }
