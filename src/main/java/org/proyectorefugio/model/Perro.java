@@ -25,7 +25,6 @@ public class Perro extends Animal implements Acogible {
     public Perro(int id, String nombre, String raza, Sexo sexo) {
         super(id, nombre, raza, sexo);
     }
-
     public Perro(int id, String nombre, String raza, Sexo sexo, double peso, boolean agresivo) {
         super(id, nombre, raza, sexo);
 

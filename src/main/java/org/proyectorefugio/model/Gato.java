@@ -8,8 +8,9 @@ import java.util.Date;
 public class Gato extends Animal{
     private boolean leucemiaFelina;
 
-    public Gato(int id, String nombre, String raza, Sexo sexo){
+    public Gato(int id, String nombre, String raza, Sexo sexo, boolean lucemiaFelina){
         super(id,nombre, raza,sexo);
+        this.leucemiaFelina =lucemiaFelina;
 
     }
     public Gato(int id, String nombre, String raza, Sexo sexo, String marcasDistintivas,

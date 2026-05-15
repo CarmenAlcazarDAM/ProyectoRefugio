@@ -13,8 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="797.0" prefWidth="435.0" style="-fx-background-color: #f2eddc;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.RegistroAnimalController">
+<AnchorPane prefHeight="855.0" prefWidth="435.0" style="-fx-background-color: #f2eddc;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.RegistroAnimalController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3b668c" height="136.0" stroke="#3b668c" strokeType="INSIDE" strokeWidth="0.0" width="435.0" />
       <Text fill="WHITE" layoutX="107.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Completa los datos para el registro" textAlignment="CENTER" wrappingWidth="231.13671875">
@@ -103,19 +102,19 @@
          </font>
       </Text>
       <TextField fx:id="infoUbicacion" layoutX="232.0" layoutY="420.0" prefHeight="32.0" prefWidth="163.0" promptText="Chenil / Jaula" />
-      <Text layoutX="42.0" layoutY="477.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OBSERVACIONES" wrappingWidth="140.0">
+      <Text layoutX="42.0" layoutY="534.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OBSERVACIONES" wrappingWidth="140.0">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextArea fx:id="infoObservaciones" layoutX="42.0" layoutY="482.0" prefHeight="53.0" prefWidth="355.0" promptText="Característica / Cicatriz / Cosas importantes a tener en cuenta..." />
-      <Text layoutX="45.0" layoutY="555.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HISTORIA" wrappingWidth="140.0">
+      <TextArea fx:id="infoObservaciones" layoutX="42.0" layoutY="539.0" prefHeight="53.0" prefWidth="355.0" promptText="Cosas importantes a tener en cuenta..." />
+      <Text layoutX="45.0" layoutY="612.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HISTORIA" wrappingWidth="140.0">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextArea fx:id="infoHistoria" layoutX="45.0" layoutY="560.0" prefHeight="69.0" prefWidth="355.0" promptText="¿Dónde se encontraba?, ¿Cómo llegó al refugio?,..." />
-      <HBox layoutX="45.0" layoutY="648.0" prefHeight="37.0" prefWidth="157.0" style="-fx-border-color: c4c3ad;">
+      <TextArea fx:id="infoHistoria" layoutX="45.0" layoutY="617.0" prefHeight="69.0" prefWidth="355.0" promptText="¿Dónde se encontraba?, ¿Cómo llegó al refugio?,..." />
+      <HBox layoutX="45.0" layoutY="705.0" prefHeight="37.0" prefWidth="157.0" style="-fx-border-color: c4c3ad;">
          <children>
             <CheckBox fx:id="checkVariable" layoutX="42.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="142.0" />
          </children>
@@ -134,7 +133,7 @@
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <HBox layoutX="78.0" layoutY="712.0" prefHeight="69.0" prefWidth="290.0" spacing="20.0">
+      <HBox layoutX="78.0" layoutY="769.0" prefHeight="69.0" prefWidth="290.0" spacing="20.0">
          <children>
             <Button cancelButton="true" mnemonicParsing="false" prefHeight="61.0" prefWidth="159.0" style="-fx-background-color: NONE; -fx-border-color: C4C3AD;" text="CANCELAR">
                <font>
@@ -154,5 +153,11 @@
             </Button>
          </children>
       </HBox>
+      <Text layoutX="42.0" layoutY="475.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OBSERVACIONES" wrappingWidth="140.0">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+      </Text>
+      <TextArea fx:id="infoMarcas" layoutX="42.0" layoutY="480.0" prefHeight="32.0" prefWidth="355.0" promptText="Característica / Cicatriz..." />
    </children>
 </AnchorPane>
