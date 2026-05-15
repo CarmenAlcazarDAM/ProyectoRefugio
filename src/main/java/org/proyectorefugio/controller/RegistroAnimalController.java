@@ -41,6 +41,7 @@ public class RegistroAnimalController {
     public TextArea infoHistoria;
     public TextArea infoMarcas;
     public Button botonGuardar;
+    @FXML
     public Button botonCancelar;
 
     double pesoNumero = 0.0;
@@ -127,6 +128,7 @@ public class RegistroAnimalController {
         return new Animal(nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion);
     }
 
+    @FXML
     /**
      * Metodo que guarda en la base de datos la información de los animales
      * @param event --> evento que ocurre cuando pulsas el boton

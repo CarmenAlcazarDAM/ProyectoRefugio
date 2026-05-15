@@ -11,7 +11,7 @@
    <children>
       <HBox layoutX="186.0" layoutY="185.0" prefHeight="291.0" prefWidth="648.0" spacing="150.0">
          <children>
-            <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#selectPerros" prefHeight="252.0" prefWidth="257.0" text="Perros" textAlignment="CENTER">
+            <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#seleccionarPerro" prefHeight="252.0" prefWidth="257.0" text="Perros" textAlignment="CENTER">
                <graphic>
                   <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -23,7 +23,7 @@
                   <Font name="Calibri Bold Italic" size="24.0" />
                </font>
             </Button>
-            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#selectGatos" text="Gatos" textAlignment="CENTER">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#seleccionarGato" text="Gatos" textAlignment="CENTER">
                <graphic>
                   <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                      <image>

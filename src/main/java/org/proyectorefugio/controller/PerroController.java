@@ -135,5 +135,12 @@ public class PerroController {
         RegistroAnimalController.tipo = "perro";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/registroAnimal-view.fxml", "Formulario de Registro");
     }
+
+    public void botonAdoptar(ActionEvent event) {
+        FormularioPersonaYAdoptarController.persona = "adoptante";
+        SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
+
+
+    }
 }
 

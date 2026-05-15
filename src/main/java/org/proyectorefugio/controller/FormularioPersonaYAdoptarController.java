@@ -29,6 +29,7 @@ public class FormularioPersonaYAdoptarController {
     public TextField infoTelefono;
     public TextField infoCorreo;
     public TextField infoDireccion;
+    @FXML
     public Button botonCancelar;
 
     public void initialize() {
@@ -75,13 +76,13 @@ public class FormularioPersonaYAdoptarController {
         }
         return null;
     }
-
+    @FXML
     /**
      * Metodo que guarda en la base de datos la información de los voluntarios o adoptantes
      *
      * @param event --> evento que ocurre cuando pulsas el boton
      */
-    public void botonGuardarInformacion(ActionEvent event) {
+    public void guardarInformacion(ActionEvent event) {
         Persona registrar = obtenerInformacionPersonaDelFormulario();
         if(registrar==null){
             return;

@@ -124,7 +124,7 @@ public class GatoController {
                     }
                 });
     }
-
+    @FXML
     /**
      * Método que cuando al pulsar el botón Añadir abrirá el formulario correspondiente
      * @param event --> acción que se va a llevar a cabo
@@ -132,6 +132,13 @@ public class GatoController {
     public void botonInsertarGato(ActionEvent event) {
         RegistroAnimalController.tipo = "gato";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/registroAnimal-view.fxml", "Formulario de Registro");
+    }
+
+    public void botonAdoptar(ActionEvent event) {
+        FormularioPersonaYAdoptarController.persona = "adoptante";
+        SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
+
+
     }
 }
 
