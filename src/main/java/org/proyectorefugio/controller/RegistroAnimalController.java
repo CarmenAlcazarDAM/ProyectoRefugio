@@ -125,7 +125,10 @@ public class RegistroAnimalController {
         return new Animal(nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion);
     }
 
-
+    /**
+     * Método que guarda en la base de datos la información de los animales
+     * @param event --> evento que ocurre cuando pulsas el boton
+     */
     public void guardarInformacion(ActionEvent event) {
         try {
             boolean variable;
