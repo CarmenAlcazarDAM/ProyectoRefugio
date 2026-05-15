@@ -101,6 +101,7 @@ public class VoluntarioController {
      * Método que cuando al pulsar el botón "Nuevo Voluntario" abrirá el formulario correspondiente
      * @param event --> acción que se va a llevar a cabo
      */
+    //todo -> podria hacer una opcion que pregunte antes si se ha registrado anteriormente como voluntario o adoptante
     public void botonInsertarVoluntario(ActionEvent event) {
         FormularioPersonaYAdoptarController.persona = "voluntario";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");

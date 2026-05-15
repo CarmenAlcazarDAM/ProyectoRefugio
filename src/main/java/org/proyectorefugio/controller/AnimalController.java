@@ -30,7 +30,6 @@ public class AnimalController {
 
     public void selectPerros(ActionEvent event) {
         cargarVista("/org/proyectorefugio/perro-view.fxml");
-
     }
 
     public void selectGatos(ActionEvent event) {
