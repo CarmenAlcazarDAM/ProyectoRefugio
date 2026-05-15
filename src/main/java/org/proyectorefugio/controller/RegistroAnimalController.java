@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.proyectorefugio.enums.Sexo;
 import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Gato;
@@ -40,6 +41,7 @@ public class RegistroAnimalController {
     public TextArea infoHistoria;
     public TextArea infoMarcas;
     public Button botonGuardar;
+    public Button botonCancelar;
 
     double pesoNumero = 0.0;
 
@@ -190,5 +192,15 @@ public class RegistroAnimalController {
         infoObservaciones.clear();
         infoHistoria.clear();
         infoMarcas.clear();
+
+    }
+
+    @FXML
+    /**
+     * Metodo para cerrar la ventana cuando pulsamos cancelar
+     */
+    public void accionCancelar(ActionEvent event) {
+        Stage stage = (Stage)botonCancelar.getScene().getWindow();
+        stage.close();
     }
 }

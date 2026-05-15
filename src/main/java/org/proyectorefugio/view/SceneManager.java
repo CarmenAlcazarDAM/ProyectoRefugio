@@ -1,5 +1,6 @@
 package org.proyectorefugio.view;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,4 +35,5 @@ public class SceneManager {
             e.printStackTrace();
         }
     }
+
 }

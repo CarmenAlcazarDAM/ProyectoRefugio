@@ -135,7 +135,7 @@
       </Text>
       <HBox layoutX="78.0" layoutY="715.0" prefHeight="69.0" prefWidth="290.0" spacing="20.0">
          <children>
-            <Button cancelButton="true" mnemonicParsing="false" prefHeight="61.0" prefWidth="159.0" style="-fx-background-color: NONE; -fx-border-color: C4C3AD;" text="CANCELAR">
+            <Button fx:id="botonCancelar" cancelButton="true" mnemonicParsing="false" onAction="#accionCancelar" prefHeight="61.0" prefWidth="159.0" style="-fx-background-color: NONE; -fx-border-color: C4C3AD;" text="CANCELAR">
                <font>
                   <Font name="Segoe UI Semibold" size="18.0" />
                </font>
