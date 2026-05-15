@@ -1,9 +1,12 @@
 package org.proyectorefugio.controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Persona;
 import org.proyectorefugio.modelDAO.AdoptanteDAO;
@@ -26,6 +29,7 @@ public class FormularioPersonaYAdoptarController {
     public TextField infoTelefono;
     public TextField infoCorreo;
     public TextField infoDireccion;
+    public Button botonCancelar;
 
     public void initialize() {
         definirTipoPersona();
@@ -62,6 +66,7 @@ public class FormularioPersonaYAdoptarController {
             e.printStackTrace();
             //todo -> alertas de error
         }
+        return null;
     }
 
     /**
@@ -94,5 +99,14 @@ public class FormularioPersonaYAdoptarController {
         infoTelefono.clear();
         infoCorreo.clear();
         infoDireccion.clear();
+    }
+
+    @FXML
+    /**
+     * Metodo para cerrar la ventana cuando pulsamos cancelar
+     */
+    public void accionCancelar(ActionEvent event) {
+        Stage stage = (Stage)botonCancelar.getScene().getWindow();
+        stage.close();
     }
 }
