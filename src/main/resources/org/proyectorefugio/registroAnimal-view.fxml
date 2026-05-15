@@ -13,77 +13,77 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="855.0" prefWidth="435.0" style="-fx-background-color: #f2eddc;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.RegistroAnimalController">
+<AnchorPane prefHeight="791.0" prefWidth="435.0" style="-fx-background-color: #f2eddc;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.RegistroAnimalController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3b668c" height="136.0" stroke="#3b668c" strokeType="INSIDE" strokeWidth="0.0" width="435.0" />
-      <Text fill="WHITE" layoutX="107.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Completa los datos para el registro" textAlignment="CENTER" wrappingWidth="231.13671875">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#3b668c" height="88.0" stroke="#3b668c" strokeType="INSIDE" strokeWidth="0.0" width="435.0" />
+      <Text fill="WHITE" layoutX="107.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Completa los datos para el registro" textAlignment="CENTER" wrappingWidth="231.13671875">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="107.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REGISTRO" textAlignment="CENTER" wrappingWidth="231.13671875">
+      <Text fill="WHITE" layoutX="107.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REGISTRO" textAlignment="CENTER" wrappingWidth="231.13671875">
          <font>
             <Font name="Arial Black" size="30.0" />
          </font>
       </Text>
-      <Text layoutX="42.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NOMBRE " wrappingWidth="104.447265625">
+      <Text layoutX="42.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NOMBRE " wrappingWidth="104.447265625">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <Text fill="#750000" layoutX="103.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+      <Text fill="#750000" layoutX="103.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="infoNombre" layoutX="42.0" layoutY="176.0" prefHeight="32.0" prefWidth="190.0" promptText=" Ej: Firulais" />
-      <Text layoutX="257.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SEXO" wrappingWidth="104.447265625">
+      <TextField fx:id="infoNombre" layoutX="42.0" layoutY="122.0" prefHeight="32.0" prefWidth="190.0" promptText=" Ej: Firulais" />
+      <Text layoutX="257.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SEXO" wrappingWidth="104.447265625">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <Text fill="#750000" layoutX="296.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+      <Text fill="#750000" layoutX="296.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <ComboBox fx:id="opcionesSexo" layoutX="253.0" layoutY="177.0" prefHeight="25.0" prefWidth="140.0" />
-      <Text layoutX="42.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RAZA" wrappingWidth="104.447265625">
+      <ComboBox fx:id="opcionesSexo" layoutX="253.0" layoutY="123.0" prefHeight="25.0" prefWidth="140.0" />
+      <Text layoutX="42.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RAZA" wrappingWidth="104.447265625">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <Text fill="#750000" layoutX="82.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+      <Text fill="#750000" layoutX="82.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="infoRaza" layoutX="42.0" layoutY="236.0" prefHeight="32.0" prefWidth="163.0" promptText=" Ej: Cruce" />
-      <Text layoutX="232.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COLOR" wrappingWidth="104.447265625">
+      <TextField fx:id="infoRaza" layoutX="42.0" layoutY="182.0" prefHeight="32.0" prefWidth="163.0" promptText=" Ej: Cruce" />
+      <Text layoutX="232.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COLOR" wrappingWidth="104.447265625">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="infoColor" layoutX="232.0" layoutY="235.0" prefHeight="32.0" prefWidth="163.0" />
-      <Text layoutX="42.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EDAD (aprox)" wrappingWidth="104.447265625">
+      <TextField fx:id="infoColor" layoutX="232.0" layoutY="181.0" prefHeight="32.0" prefWidth="163.0" />
+      <Text layoutX="42.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EDAD (aprox)" wrappingWidth="104.447265625">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="infoEdad" layoutX="42.0" layoutY="294.0" prefHeight="32.0" prefWidth="163.0" promptText=" Ej: 5 años" />
-      <Text layoutX="232.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NÚMERO CHIP" wrappingWidth="104.447265625">
+      <TextField fx:id="infoEdad" layoutX="42.0" layoutY="240.0" prefHeight="32.0" prefWidth="163.0" promptText=" Ej: 5 años" />
+      <Text layoutX="232.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NÚMERO CHIP" wrappingWidth="104.447265625">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="infoChip" layoutX="232.0" layoutY="294.0" prefHeight="32.0" prefWidth="163.0" promptText="15 dígitos" />
-      <Text layoutX="42.0" layoutY="351.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FECHA INGRESO" wrappingWidth="118.447265625">
+      <TextField fx:id="infoChip" layoutX="232.0" layoutY="240.0" prefHeight="32.0" prefWidth="163.0" promptText="15 dígitos" />
+      <Text layoutX="42.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FECHA INGRESO" wrappingWidth="118.447265625">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <DatePicker fx:id="infoFecha" layoutX="42.0" layoutY="361.0" prefHeight="32.0" prefWidth="355.0" />
-      <HBox layoutX="42.0" layoutY="413.0" prefHeight="37.0" prefWidth="157.0" style="-fx-border-color: c4c3ad;">
+      <DatePicker fx:id="infoFecha" layoutX="42.0" layoutY="307.0" prefHeight="32.0" prefWidth="355.0" />
+      <HBox layoutX="42.0" layoutY="359.0" prefHeight="37.0" prefWidth="157.0" style="-fx-border-color: c4c3ad;">
          <children>
             <CheckBox fx:id="infoEsterilizado" layoutX="42.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="142.0" text="¿Está esterilizado?" />
          </children>
@@ -91,30 +91,30 @@
             <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
          </padding>
       </HBox>
-      <Text fill="#750000" layoutX="151.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+      <Text fill="#750000" layoutX="151.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <Text layoutX="232.0" layoutY="416.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID UBICACIÓN" wrappingWidth="104.447265625">
+      <Text layoutX="232.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID UBICACIÓN" wrappingWidth="104.447265625">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="infoUbicacion" layoutX="232.0" layoutY="420.0" prefHeight="32.0" prefWidth="163.0" promptText="Chenil / Jaula" />
-      <Text layoutX="42.0" layoutY="534.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OBSERVACIONES" wrappingWidth="140.0">
+      <TextField fx:id="infoUbicacion" layoutX="232.0" layoutY="366.0" prefHeight="32.0" prefWidth="163.0" promptText="Chenil / Jaula" />
+      <Text layoutX="42.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OBSERVACIONES" wrappingWidth="140.0">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextArea fx:id="infoObservaciones" layoutX="42.0" layoutY="539.0" prefHeight="53.0" prefWidth="355.0" promptText="Cosas importantes a tener en cuenta..." />
-      <Text layoutX="45.0" layoutY="612.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HISTORIA" wrappingWidth="140.0">
+      <TextArea fx:id="infoObservaciones" layoutX="42.0" layoutY="485.0" prefHeight="53.0" prefWidth="355.0" promptText="Cosas importantes a tener en cuenta..." />
+      <Text layoutX="45.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HISTORIA" wrappingWidth="140.0">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextArea fx:id="infoHistoria" layoutX="45.0" layoutY="617.0" prefHeight="69.0" prefWidth="355.0" promptText="¿Dónde se encontraba?, ¿Cómo llegó al refugio?,..." />
-      <HBox layoutX="45.0" layoutY="705.0" prefHeight="37.0" prefWidth="157.0" style="-fx-border-color: c4c3ad;">
+      <TextArea fx:id="infoHistoria" layoutX="45.0" layoutY="563.0" prefHeight="69.0" prefWidth="355.0" promptText="¿Dónde se encontraba?, ¿Cómo llegó al refugio?,..." />
+      <HBox layoutX="45.0" layoutY="651.0" prefHeight="37.0" prefWidth="157.0" style="-fx-border-color: c4c3ad;">
          <children>
             <CheckBox fx:id="checkVariable" layoutX="42.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="142.0" />
          </children>
@@ -122,18 +122,18 @@
             <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
          </padding>
       </HBox>
-      <Text fx:id="peso" layoutX="232.0" layoutY="651.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PESO (Kg)" visible="false" wrappingWidth="104.447265625">
+      <Text fx:id="peso" layoutX="232.0" layoutY="656.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PESO (Kg)" wrappingWidth="104.447265625">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextField fx:id="pesoField" layoutX="232.0" layoutY="655.0" prefHeight="32.0" prefWidth="163.0" visible="false" />
-      <Text fill="#750000" layoutX="327.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
+      <TextField fx:id="pesoField" layoutX="232.0" layoutY="660.0" prefHeight="32.0" prefWidth="163.0" />
+      <Text fill="#750000" layoutX="327.0" layoutY="361.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <HBox layoutX="78.0" layoutY="769.0" prefHeight="69.0" prefWidth="290.0" spacing="20.0">
+      <HBox layoutX="78.0" layoutY="715.0" prefHeight="69.0" prefWidth="290.0" spacing="20.0">
          <children>
             <Button cancelButton="true" mnemonicParsing="false" prefHeight="61.0" prefWidth="159.0" style="-fx-background-color: NONE; -fx-border-color: C4C3AD;" text="CANCELAR">
                <font>
@@ -143,7 +143,7 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="61.0" prefWidth="159.0" style="-fx-background-color: #3b668c;" text="GUARDAR" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="botonGuardar" mnemonicParsing="false" onAction="#guardarInformacion" prefHeight="61.0" prefWidth="159.0" style="-fx-background-color: #3b668c;" text="GUARDAR" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Semibold" size="18.0" />
                </font>
@@ -153,11 +153,11 @@
             </Button>
          </children>
       </HBox>
-      <Text layoutX="42.0" layoutY="475.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OBSERVACIONES" wrappingWidth="140.0">
+      <Text layoutX="42.0" layoutY="421.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OBSERVACIONES" wrappingWidth="140.0">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>
       </Text>
-      <TextArea fx:id="infoMarcas" layoutX="42.0" layoutY="480.0" prefHeight="32.0" prefWidth="355.0" promptText="Característica / Cicatriz..." />
+      <TextArea fx:id="infoMarcas" layoutX="42.0" layoutY="426.0" prefHeight="32.0" prefWidth="355.0" promptText="Característica / Cicatriz..." />
    </children>
 </AnchorPane>

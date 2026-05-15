@@ -2,6 +2,7 @@ package org.proyectorefugio.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
@@ -14,8 +15,7 @@ import org.proyectorefugio.modelDAO.GatoDAO;
 import org.proyectorefugio.modelDAO.PerroDAO;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Locale;
+
 
 public class RegistroAnimalController {
 
@@ -27,7 +27,7 @@ public class RegistroAnimalController {
     public TextField infoNombre;
     public CheckBox checkVariable;
     public Text peso;
-    public static TextField pesoField;
+    public TextField pesoField;
     public ComboBox opcionesSexo;
     public TextField infoRaza;
     public TextField infoColor;
@@ -39,6 +39,9 @@ public class RegistroAnimalController {
     public TextArea infoObservaciones;
     public TextArea infoHistoria;
     public TextArea infoMarcas;
+    public Button botonGuardar;
+
+    double pesoNumero = 0.0;
 
 
     @FXML
@@ -82,17 +85,18 @@ public class RegistroAnimalController {
     /**
      * Método que va a recoger toda la información procedente de del formulario
      */
+    //todo -> edad no se ha guardado
     //todo --> este método se puede refactorizar
     //todo -> validaciones de entrada
-    public void obtenerInformacionGenericaDelFormulario() {
+    public Animal obtenerInformacionGenericaDelFormulario() {
         String nombre = infoNombre.getText();
-        String opSexo = opcionesSexo.getValue().toString();
+        String opSexo = opcionesSexo.getValue().toString().toLowerCase();
         Sexo sexo = null;
-            if (opSexo.equals("hembra")) {
-                sexo = Sexo.hembra;
-            } else if (opSexo.equals("macho")) {
-                sexo = Sexo.macho;
-            }
+        if (opSexo.equals("hembra")) {
+            sexo = Sexo.hembra;
+        } else if (opSexo.equals("macho")) {
+            sexo = Sexo.macho;
+        }
         String raza = infoRaza.getText();
         String color = infoColor.getText();
         String edad = infoEdad.getText();
@@ -101,11 +105,11 @@ public class RegistroAnimalController {
         LocalDate fechaIngreso = infoFecha.getValue();
 
         Boolean esterilizado;
-            if(infoEsterilizado.isSelected()){
-                esterilizado = true;
-            }else{
-                esterilizado = false;
-            }
+        if (infoEsterilizado.isSelected()) {
+            esterilizado = true;
+        } else {
+            esterilizado = false;
+        }
 
         int idUbicacion;
         String textoUbi = infoUbicacion.getText();
@@ -113,38 +117,54 @@ public class RegistroAnimalController {
 
         String observaciones = infoObservaciones.getText();
         String historia = infoHistoria.getText();
-        Boolean variable;
-
-        //Independientemente de la información que pida, si está seleccionado será true.
-        if(checkVariable.isSelected()){
-            variable = true;
-        }else{
-            variable = false;
-        }
-        Animal animal = new Animal(nombre,raza,sexo,color,edad,marcasDistintivas,numeroChip,esterilizado,historia,observaciones,idUbicacion);
-        AnimalDAO.addAnimal(animal);
-        if ("perro".equals(tipo)) {
-            double peso = obtenerInformacionPerroDelFormulario();
-            Perro perroInsertar = new Perro(animal.getId(), animal.getNombre(), animal.getRaza(), animal.getSexo(),peso,variable);
-            PerroDAO.addPerro(perroInsertar,animal);
-        }else if("gato".equals(tipo)){
-            Gato gatoInsertar = new Gato(animal.getId(), animal.getNombre(), animal.getRaza(), animal.getSexo(), variable);
-            GatoDAO.addGato(gatoInsertar,animal);
-        }
-    }
-
-    /**
-     * Método que va a recoger la información específica del peso
-     */
-    public static Double obtenerInformacionPerroDelFormulario() {
-        Double peso;
         String pesoTexto = pesoField.getText();
         if (pesoTexto.isEmpty()) {
-
-            return Double.parseDouble(pesoTexto);
+            pesoNumero =  Double.parseDouble(pesoTexto);
         }
-        return null;
+
+        return new Animal(nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion);
     }
 
 
+    public void guardarInformacion(ActionEvent event) {
+        try {
+            boolean variable;
+            //Independientemente de la información que pida, si está seleccionado será true.
+            if (checkVariable.isSelected()) {
+                variable = true;
+            } else {
+                variable = false;
+            }
+
+            Animal animalBase = obtenerInformacionGenericaDelFormulario();
+
+            Animal animalInsertado = AnimalDAO.addAnimal(animalBase);
+
+            String textoConfirmacion = "Registrado correctamente.";
+            if ("perro".equals(tipo)) {
+                double pesoPerro = pesoNumero;
+
+                Perro perroInsertar = new Perro(animalInsertado.getId(), animalInsertado.getNombre(),
+                        animalInsertado.getRaza(), animalInsertado.getSexo(),
+                        pesoPerro, variable);
+
+                PerroDAO.addPerro(perroInsertar, animalInsertado);
+                System.out.println(textoConfirmacion);
+
+            } else if ("gato".equals(tipo)) {
+                Gato gatoInsertar = new Gato(animalInsertado.getId(), animalInsertado.getNombre(),
+                        animalInsertado.getRaza(), animalInsertado.getSexo(),
+                        variable);
+
+                GatoDAO.addGato(gatoInsertar, animalInsertado);
+                System.out.println(textoConfirmacion);
+            }
+
+            // todo ->  añadir un Alert flotante confirmando el éxito y cierre el formulario
+
+        } catch (Exception e) {
+            System.err.println("Ocurrió un error al intentar guardar el registro: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
