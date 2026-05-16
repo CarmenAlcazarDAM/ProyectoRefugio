@@ -179,7 +179,6 @@ public class PerroController {
         if (idAnimalTexto != null) {
             idAnimal = Utils.conversorInt(idAnimalTexto);
         }
-        ;
         String nombreAnimal = buscarNombre.getText();
         String chipAnimal = buscarChip.getText();
         String razaAnimal = buscarRaza.getText();

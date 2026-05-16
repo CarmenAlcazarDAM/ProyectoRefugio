@@ -2,10 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
@@ -35,7 +37,7 @@
                </HBox.margin>
             </Button>
             <Button mnemonicParsing="false" text="Añadir Tarea" />
-            <Button mnemonicParsing="false" text="Buscar" />
+            <Button mnemonicParsing="false" onAction="#botonBusqueda" text="Busqueda" />
             <Button mnemonicParsing="false" text="Modificar" />
             <Button mnemonicParsing="false" text="Eliminar" />
          </children>
@@ -45,5 +47,44 @@
             <Font name="Arial" size="14.0" />
          </font>
       </Label>
+      <AnchorPane fx:id="ventanaBuscar" layoutX="464.0" layoutY="82.0" prefHeight="61.0" prefWidth="478.0">
+         <children>
+            <Text layoutX="26.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DNI / NIE" wrappingWidth="104.447265625">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="buscarDNI" layoutX="26.0" layoutY="31.0" prefHeight="32.0" prefWidth="190.0" />
+            <Text layoutX="232.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NOMBRE " wrappingWidth="104.447265625">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="buscarNombre" layoutX="232.0" layoutY="31.0" prefHeight="32.0" prefWidth="190.0" />
+            <Text layoutX="26.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="APELLIDOS" wrappingWidth="104.447265625">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="buscarApellidos" layoutX="26.0" layoutY="100.0" prefHeight="32.0" prefWidth="190.0" />
+            <Text layoutX="232.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID UBICACIÓN" wrappingWidth="104.447265625">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="buscarUbicacion" layoutX="232.0" layoutY="100.0" prefHeight="32.0" prefWidth="190.0" />
+            <Text layoutX="26.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FECHA" wrappingWidth="104.447265625">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <Button layoutX="232.0" layoutY="161.0" mnemonicParsing="false" onAction="#botonContinuarBusqueda" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: #3b668c;" text="Continuar" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Button>
+            <DatePicker fx:id="buscarFecha" layoutX="26.0" layoutY="161.0" prefHeight="32.0" prefWidth="190.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

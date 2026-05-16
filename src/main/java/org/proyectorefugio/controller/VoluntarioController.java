@@ -5,20 +5,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.proyectorefugio.model.Ayuda;
+import org.proyectorefugio.model.Perro;
 import org.proyectorefugio.model.Voluntario;
 import org.proyectorefugio.modelDAO.AyudaDAO;
 import org.proyectorefugio.modelDAO.VoluntarioDAO;
+import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.SceneManager;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -42,6 +42,14 @@ public class VoluntarioController {
 
     @FXML
     public Label informacionAdicional;
+    public AnchorPane ventanaBuscar;
+
+    @FXML
+    public TextField buscarDNI;
+    public TextField buscarNombre;
+    public TextField buscarApellidos;
+    public TextField buscarUbicacion;
+    public DatePicker buscarFecha;
 
     @FXML
     private void initialize() {
@@ -50,7 +58,7 @@ public class VoluntarioController {
         mostrarInformacionAdicional();
     }
 
-    public void iniciarTabla(){
+    public void iniciarTabla() {
         voluntarioCol.setCellValueFactory(cellData -> {
             String dni = cellData.getValue().getDniVoluntario();
 
@@ -74,7 +82,7 @@ public class VoluntarioController {
         tablaAyuda.setItems(listaAyudas);
     }
 
-    public void iniciarListaVoluntarios(){
+    public void iniciarListaVoluntarios() {
         ObservableList<Voluntario> observable = FXCollections.observableList(VoluntarioDAO.findAll());
         listaVoluntarios.setItems(observable);
     }
@@ -84,6 +92,7 @@ public class VoluntarioController {
      * La información aparece en un recuadro Label que aparece cuando das el primer click.
      */
     public void mostrarInformacionAdicional() {
+        ventanaBuscar.setVisible(false);
         listaVoluntarios.getSelectionModel().selectedItemProperty().addListener((observable, anterior, seleccionado) -> {
             if (seleccionado != null) {
                 informacionAdicional.setText(
@@ -99,6 +108,7 @@ public class VoluntarioController {
 
     /**
      * Método que cuando al pulsar el botón "Nuevo Voluntario" abrirá el formulario correspondiente
+     *
      * @param event --> acción que se va a llevar a cabo
      */
     //todo -> podria hacer una opcion que pregunte antes si se ha registrado anteriormente como voluntario o adoptante
@@ -107,5 +117,106 @@ public class VoluntarioController {
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
     }
 
+    public void botonBusqueda(ActionEvent event) {
+        informacionAdicional.setVisible(false);
+        ventanaBuscar.setVisible(true);
+    }
 
+    public List<Ayuda> buscarTarea() {
+        String dniVoluntario = buscarDNI.getText();
+        String nombreVoluntario = buscarNombre.getText();
+        String apellidoVoluntario = buscarApellidos.getText();
+        String ubicacionTexto = buscarUbicacion.getText();
+        int idUbicacion = 0;
+        if (ubicacionTexto != null) {
+            idUbicacion = Utils.conversorInt(ubicacionTexto);
+        }
+        LocalDate fecha = buscarFecha.getValue();
+
+
+        List<Ayuda> tareasEncontradas = new ArrayList<>();
+
+        if ((dniVoluntario != null && !dniVoluntario.isEmpty()) && (idUbicacion != 0) && (buscarFecha.getValue() != null)) {
+            tareasEncontradas.clear();
+            tareasEncontradas.add(AyudaDAO.findSingle(dniVoluntario, idUbicacion, fecha));
+            return tareasEncontradas;
+        }
+
+        if (dniVoluntario != null && !dniVoluntario.isEmpty()) {
+            List<Ayuda> resultados = AyudaDAO.findByDniVoluntario(dniVoluntario);
+            return resultados;
+        }
+
+        if (nombreVoluntario != null && !nombreVoluntario.isEmpty()) {
+            List<Voluntario> voluntariosEncontrados = VoluntarioDAO.findByName(nombreVoluntario);
+
+            for (Voluntario v : voluntariosEncontrados) {
+                List<Ayuda> ayudasVoluntario = AyudaDAO.findByDniVoluntario(v.getDni());
+                tareasEncontradas.addAll(ayudasVoluntario);
+            }
+            return tareasEncontradas;
+        }
+        if (apellidoVoluntario != null && !apellidoVoluntario.isEmpty()) {
+            List<Voluntario> voluntariosEncontrados = VoluntarioDAO.findByLastName(apellidoVoluntario);
+
+            for (Voluntario v : voluntariosEncontrados) {
+                List<Ayuda> ayudasVoluntario = AyudaDAO.findByDniVoluntario(v.getDni());
+                tareasEncontradas.addAll(ayudasVoluntario);
+            }
+            return tareasEncontradas;
+        }
+
+        if (idUbicacion != 0) {
+            List<Ayuda> resultados = AyudaDAO.findByIdUbicacion(idUbicacion);
+            return resultados;
+        }
+        if (buscarFecha.getValue() != null) {
+            List<Ayuda> resultados = AyudaDAO.findByFecha(fecha);
+            return resultados;
+        }
+        return null;
+    }
+
+    public List<Voluntario> buscarVoluntario() {
+        //todo-> validaciones y alert
+        //todo -> ¿que pasa si no rellenas nada?
+        //todo -> si no rellenas nada volver a la informacion inicial
+
+        String dniVoluntario = buscarDNI.getText();
+        String nombreVoluntario = buscarNombre.getText();
+        String apellidoVoluntario = buscarApellidos.getText();
+
+        List<Voluntario> voluntariosEncontrados = new ArrayList<>();
+
+        if (dniVoluntario != null && !dniVoluntario.isEmpty()) {
+            voluntariosEncontrados.clear();
+            voluntariosEncontrados.add(VoluntarioDAO.findByDni(dniVoluntario));
+            return voluntariosEncontrados;
+        }
+        if (nombreVoluntario != null && !nombreVoluntario.isEmpty()) {
+            List<Voluntario> resultados = VoluntarioDAO.findByName(nombreVoluntario);
+            return resultados;
+        }
+        if (apellidoVoluntario != null && !apellidoVoluntario.isEmpty()) {
+            List<Voluntario> resultados = VoluntarioDAO.findByLastName(apellidoVoluntario);
+            return resultados;
+        }
+
+        return null;
+    }
+
+
+    public void botonContinuarBusqueda(ActionEvent event) {
+        ObservableList<Ayuda> resultados =
+                FXCollections.observableArrayList(buscarTarea());
+
+
+        tablaAyuda.setItems(resultados);
+
+        ObservableList<Voluntario> resultadosVoluntarios =
+                FXCollections.observableArrayList(buscarVoluntario());
+
+        listaVoluntarios.setItems(resultadosVoluntarios);
+
+    }
 }
