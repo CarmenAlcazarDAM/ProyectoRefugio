@@ -216,8 +216,6 @@ public class PerroController {
 
         }
 
-        //todo-> comprobar si filtra por campos rellenos
-
         HashSet<Perro> busquedaFinal = new HashSet<>(resultadosEncontrados);
         busquedaFinal.remove(null);
         return new ArrayList<>(busquedaFinal);
