@@ -2,6 +2,7 @@ package org.proyectorefugio.modelDAO;
 
 import org.proyectorefugio.dataAccess.ConnectionBD;
 import org.proyectorefugio.model.Animal;
+import org.proyectorefugio.model.Gato;
 import org.proyectorefugio.model.Perro;
 import org.proyectorefugio.enums.Sexo;
 
@@ -9,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class PerroDAO {
@@ -217,6 +219,29 @@ public class PerroDAO {
             }
         }
         return updated;
+    }
+
+    /**
+     * Método que busca a los perros que tengan unos colores específicos
+     *
+     * @param colour --> color a buscar, introducido por el usuario
+     * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
+     * @return --> devuelve una lista con los perros que tengan esos colores
+     */
+    public static List<Perro> findByColour(String colour, boolean isAdopted) {
+        List<Perro> listaPerros = new ArrayList<>();
+
+        List<Animal> animalesEncontrados = AnimalDAO.findByColour(colour, isAdopted);
+
+        for (Animal a : animalesEncontrados) {
+            Perro p = rellenarDatosPerro(a);
+
+            if (p != null) {
+                listaPerros.add(p);
+            }
+        }
+
+        return listaPerros;
     }
 }
 

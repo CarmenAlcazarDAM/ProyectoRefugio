@@ -7,9 +7,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Perro;
 import org.proyectorefugio.modelDAO.PerroDAO;
 import org.proyectorefugio.view.SceneManager;
+
+import java.util.List;
 
 public class PerroController {
     @FXML
@@ -152,6 +155,7 @@ public class PerroController {
         boolean adoptado1 = adoptado.isSelected();
         BuscarController.estaAdoptado = adoptado1;
         SceneManager.cargarVista(ventanaBuscar, "/org/proyectorefugio/buscar-view.fxml");
+
     }
 }
 
