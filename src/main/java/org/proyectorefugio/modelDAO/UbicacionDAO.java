@@ -19,6 +19,7 @@ public class UbicacionDAO {
     private final static String SQL_FIND_ALL = "SELECT * FROM ubicacion";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM ubicacion WHERE id = ?";
     private final static String SQL_FIND_BY_HOUR = "SELECT * FROM ubicacion WHERE horaRecreo = ?";
+    private final static String SQL_FIND_BY_TYPE ="SELECT* FROM ubicacion WHERE tipo LIKE ?";
 
     private final static String SQL_INSERT = "INSERT INTO ubicacion (tipo, horaRecreo, minutosRecreo, capacidad) VALUES(?,?,?,?)";
 
@@ -35,7 +36,7 @@ public class UbicacionDAO {
 
     /////////////////////// FIND ///////////////////////
     /**
-     * Método que busca y devuelve un objeto de tipo Ubicacion según su id
+     * Metodo que busca y devuelve un objeto de tipo Ubicacion según su id
      *
      * @param id --> id a buscar pasada por parámetro
      * @return --> devuelve el objeto Ubicacion si lo encuentra, null si no
@@ -70,7 +71,7 @@ public class UbicacionDAO {
     }
 
     /**
-     * Método que crea una lista con todos los objetos de tipo Ubicaciones de la base de datos
+     * Metodo que crea una lista con todos los objetos de tipo Ubicaciones de la base de datos
      *
      * @return --> devuelve una lista con todas las ubicaciones
      */
@@ -93,7 +94,7 @@ public class UbicacionDAO {
     }
 
     /**
-     * Método que crea una lista con las Ubicaciones que salen a una hora determinada
+     * Metodo que crea una lista con las Ubicaciones que salen a una hora determinada
      *
      * @param hora --> hora de recreo a buscar
      * @return --> devuelve una lista con las ubicaciones que salen a la hora indicada
@@ -119,9 +120,35 @@ public class UbicacionDAO {
         return ubicaciones;
     }
 
+    /**
+     * Metodo que busca y devuelve un objeto de tipo Ubicacion según su tipo (nombre)
+     *
+     * @param type --> tipo(nombre) a buscar pasada por parámetro
+     * @return --> devuelve el objeto Ubicacion si lo encuentra, null si no
+     */
+    public static List<Ubicacion> findByType(String type){
+        List<Ubicacion> ubicaciones = new ArrayList<>();
+
+        Ubicacion u = null;
+
+        try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_TYPE)) {
+            ps.setString(1, "%" + type + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                u = findById(id);
+                ubicaciones.add(u);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ubicaciones;
+    }
+
     /// ////////////////// ADD ///////////////////////
     /**
-     * Método que inserta una nueva ubicación en la base de datos
+     * Metodo que inserta una nueva ubicación en la base de datos
      *
      * @param u --> Objeto Ubicacion a insertar
      * @return --> devuelve el objeto añadido
@@ -149,7 +176,7 @@ public class UbicacionDAO {
 
     /////////////////////// DELETE ///////////////////////
     /**
-     * Método que borra un objeto Ubicacion de la base de datos ubicacion,
+     * Metodo que borra un objeto Ubicacion de la base de datos ubicacion,
      *
      * @param id --> id específica de la ubicación que queremos borrar
      * @return --> devuelve true si se borra correctamente, false si no se borra
@@ -171,7 +198,7 @@ public class UbicacionDAO {
 
     /// //////////////////// UPDATE ///////////////////////
     /**
-     * Método que actualiza la hora de recreo de una ubicacion
+     * Metodo que actualiza la hora de recreo de una ubicacion
      * @param u --> ubicacion a la que queremos actualizar la información
      * @param horaRecreo --> hora de recreo pasada por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
@@ -194,7 +221,7 @@ public class UbicacionDAO {
         return updated;
     }
     /**
-     * Método que actualiza la cantidad de minutos de recreo de una ubicacion
+     * Metodo que actualiza la cantidad de minutos de recreo de una ubicacion
      * @param u --> ubicacion a la que queremos actualizar la información
      * @param minutos --> minutos de recreo pasado por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
@@ -216,6 +243,5 @@ public class UbicacionDAO {
         }
         return updated;
     }
-
 
 }
