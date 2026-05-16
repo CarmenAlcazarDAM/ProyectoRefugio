@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.proyectorefugio.controller.BuscarController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="375.0" prefWidth="477.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.BuscarController">
+   <children>
+      <Text layoutX="253.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NOMBRE " wrappingWidth="104.447265625">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="buscarNombre" layoutX="253.0" layoutY="54.0" prefHeight="32.0" prefWidth="190.0" promptText=" Ej: Firulais" />
+      <Text layoutX="30.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" wrappingWidth="104.447265625">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="buscarId" layoutX="30.0" layoutY="54.0" prefHeight="32.0" prefWidth="190.0" promptText="Ej: 1" />
+      <Text layoutX="30.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NÚMERO CHIP" wrappingWidth="104.447265625">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="buscarChip" layoutX="30.0" layoutY="124.0" prefHeight="32.0" prefWidth="190.0" promptText="15 dígitos" />
+      <Text layoutX="253.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="RAZA" wrappingWidth="104.447265625">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="buscarRaza" layoutX="253.0" layoutY="124.0" prefHeight="32.0" prefWidth="190.0" promptText=" Ej: Cruce" />
+      <Text layoutX="30.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="COLOR" wrappingWidth="104.447265625">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="buscarColor" layoutX="30.0" layoutY="193.0" prefHeight="32.0" prefWidth="190.0" />
+      <Text layoutX="253.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID UBICACIÓN" wrappingWidth="104.447265625">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+      </Text>
+      <TextField fx:id="buscarUbicacion" layoutX="253.0" layoutY="193.0" prefHeight="32.0" prefWidth="190.0" />
+   </children>
 </AnchorPane>

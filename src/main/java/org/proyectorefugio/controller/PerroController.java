@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import org.proyectorefugio.model.Perro;
 import org.proyectorefugio.modelDAO.PerroDAO;
 import org.proyectorefugio.view.SceneManager;
@@ -27,6 +28,8 @@ public class PerroController {
     public CheckBox noAdoptado;
     public CheckBox adoptado;
     public Button añadirPerroBD;
+    public AnchorPane ventanaBuscar;
+    public Button botonBuscar;
 
 
     @FXML
@@ -140,7 +143,15 @@ public class PerroController {
         FormularioPersonaYAdoptarController.persona = "adoptante";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
 
+    }
 
+    public void botonBuscarAnimal(ActionEvent event) {
+        informacionAdicional.setVisible(false);
+        ventanaBuscar.setVisible(true);
+        BuscarController.tipo = "animal";
+        boolean adoptado1 = adoptado.isSelected();
+        BuscarController.estaAdoptado = adoptado1;
+        SceneManager.cargarVista(ventanaBuscar, "/org/proyectorefugio/buscar-view.fxml");
     }
 }
 

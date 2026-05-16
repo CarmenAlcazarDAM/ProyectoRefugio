@@ -27,7 +27,7 @@
       <HBox layoutX="65.0" layoutY="599.0" prefHeight="29.0" prefWidth="413.0" spacing="15.0">
          <children>
             <Button fx:id="añadirPerroBD" mnemonicParsing="false" onAction="#botonInsertarPerro" text="Añadir" />
-            <Button mnemonicParsing="false" text="Buscar" />
+            <Button fx:id="botonBuscar" mnemonicParsing="false" onAction="#botonBuscarAnimal" text="Buscar" />
             <Button mnemonicParsing="false" text="Modificar" />
             <Button mnemonicParsing="false" text="Eliminar" />
          </children>
@@ -37,5 +37,6 @@
             <Font name="Arial" size="14.0" />
          </font>
       </Label>
+      <AnchorPane fx:id="ventanaBuscar" layoutX="519.0" layoutY="224.0" prefHeight="363.0" prefWidth="478.0" visible="false" />
    </children>
 </AnchorPane>
