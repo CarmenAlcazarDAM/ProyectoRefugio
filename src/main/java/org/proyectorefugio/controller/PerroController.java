@@ -9,10 +9,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Perro;
+import org.proyectorefugio.modelDAO.AnimalDAO;
 import org.proyectorefugio.modelDAO.PerroDAO;
+import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.SceneManager;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+
 
 public class PerroController {
     @FXML
@@ -32,7 +37,14 @@ public class PerroController {
     public CheckBox adoptado;
     public Button añadirPerroBD;
     public AnchorPane ventanaBuscar;
-    public Button botonBuscar;
+
+
+    @FXML
+    public TextField buscarId;
+    public TextField buscarNombre;
+    public TextField buscarChip;
+    public TextField buscarRaza;
+    public TextField buscarColor;
 
 
     @FXML
@@ -82,12 +94,12 @@ public class PerroController {
         sexoCol.setCellValueFactory(new PropertyValueFactory<>("sexo"));
         razaCol.setCellValueFactory(new PropertyValueFactory<>("raza"));
 
-       boolean buscarAdoptados;
-       if(noAdoptado.isSelected()){
-           buscarAdoptados = true;
-       }else{
-           buscarAdoptados = false;
-       }
+        boolean buscarAdoptados;
+        if (noAdoptado.isSelected()) {
+            buscarAdoptados = true;
+        } else {
+            buscarAdoptados = false;
+        }
 
         ObservableList<Perro> listaPerros =
                 FXCollections.observableArrayList(PerroDAO.findAll(buscarAdoptados));
@@ -95,11 +107,13 @@ public class PerroController {
         tablaPerros.setItems(listaPerros);
     }
 
+
     /**
      * Método que muestra toda la información del Perro cuando seleccionas sobre él en la tabla
      * La información aparece en un recuadro Label que aparece cuando das el primer click.
      */
     public void mostrarInformacionAdicional() {
+        ventanaBuscar.setVisible(false);
         tablaPerros.getSelectionModel().selectedItemProperty().addListener(
                 (observable, anterior, seleccionado) -> {
                     if (seleccionado != null) {
@@ -135,6 +149,7 @@ public class PerroController {
 
     /**
      * Método que cuando al pulsar el botón Añadir abrirá el formulario correspondiente
+     *
      * @param event --> acción que se va a llevar a cabo
      */
     public void botonInsertarPerro(ActionEvent event) {
@@ -142,20 +157,80 @@ public class PerroController {
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/registroAnimal-view.fxml", "Formulario de Registro");
     }
 
+    /**
+     * Método que cuando al pulsar el botón Adoptar abrirá el formulario correspondiente
+     *
+     * @param event --> acción que se va a llevar a cabo
+     */
     public void botonAdoptar(ActionEvent event) {
         FormularioPersonaYAdoptarController.persona = "adoptante";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
 
     }
 
-    public void botonBuscarAnimal(ActionEvent event) {
+    public void botonBusqueda(ActionEvent event) {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(true);
-        BuscarController.tipo = "animal";
-        boolean adoptado1 = adoptado.isSelected();
-        BuscarController.estaAdoptado = adoptado1;
-        SceneManager.cargarVista(ventanaBuscar, "/org/proyectorefugio/buscar-view.fxml");
+    }
+
+    public List<Perro> buscarAnimal() {
+        String idAnimalTexto = buscarId.getText();
+        int idAnimal = 0;
+        if (idAnimalTexto != null) {
+            idAnimal = Utils.conversorInt(idAnimalTexto);
+        }
+        ;
+        String nombreAnimal = buscarNombre.getText();
+        String chipAnimal = buscarChip.getText();
+        String razaAnimal = buscarRaza.getText();
+        String colorAnimal = buscarColor.getText();
+
+        boolean buscarNoAdoptados = noAdoptado.isSelected();
+
+        List<Perro> resultadosEncontrados = new ArrayList<>();
+
+        if (idAnimalTexto != null && !idAnimalTexto.isEmpty() && idAnimal != 0) {
+            Perro p = PerroDAO.findByID(idAnimal);
+            if (p != null) {
+                resultadosEncontrados.add(p);
+                return resultadosEncontrados;
+            }
+        }
+        if (chipAnimal != null && !chipAnimal.isEmpty()) {
+            Perro p = PerroDAO.findByChip(chipAnimal);
+            if (p != null) {
+                resultadosEncontrados.add(p);
+                return resultadosEncontrados;
+            }
+        }
+        if (nombreAnimal != null && !nombreAnimal.isEmpty()) {
+            resultadosEncontrados.addAll(PerroDAO.findByName(nombreAnimal, buscarNoAdoptados));
+        }
+
+        if (razaAnimal != null && !razaAnimal.isEmpty()) {
+            resultadosEncontrados.addAll(PerroDAO.findByBreed(razaAnimal, buscarNoAdoptados));
+
+        }
+        if (colorAnimal != null && !colorAnimal.isEmpty()) {
+            resultadosEncontrados.addAll(PerroDAO.findByColour(colorAnimal, buscarNoAdoptados));
+
+        }
+
+        //todo-> comprobar si filtra por campos rellenos
+
+        HashSet<Perro> busquedaFinal = new HashSet<>(resultadosEncontrados);
+        busquedaFinal.remove(null);
+        return new ArrayList<>(busquedaFinal);
 
     }
+
+    public void botonContinuarBusqueda(ActionEvent event) {
+        ObservableList<Perro> resultados =
+                FXCollections.observableArrayList(buscarAnimal());
+
+
+        tablaPerros.setItems(resultados);
+    }
 }
+
 

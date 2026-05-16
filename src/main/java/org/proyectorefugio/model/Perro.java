@@ -5,6 +5,7 @@ import org.proyectorefugio.interfaces.Acogible;
 import org.proyectorefugio.view.Mensajes;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Perro extends Animal implements Acogible {
 
@@ -47,6 +48,19 @@ public class Perro extends Animal implements Acogible {
 
     public void setAgresivo(boolean agresivo) {
         this.agresivo = agresivo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Perro perro = (Perro) o;
+        return idPerro == perro.idPerro && Double.compare(peso, perro.peso) == 0 && agresivo == perro.agresivo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), idPerro, peso, agresivo);
     }
 
     @Override

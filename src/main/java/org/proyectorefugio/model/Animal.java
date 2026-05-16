@@ -5,6 +5,7 @@ import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.Mensajes;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Animal {
     private int id;
@@ -210,6 +211,18 @@ public class Animal {
 
     public void setIdUbicacion(int idUbicacion) {
         this.idUbicacion = idUbicacion;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Animal animal = (Animal) o;
+        return id == animal.id && esterilizado == animal.esterilizado && adoptado == animal.adoptado && idUbicacion == animal.idUbicacion && Objects.equals(nombre, animal.nombre) && Objects.equals(raza, animal.raza) && sexo == animal.sexo && Objects.equals(color, animal.color) && Objects.equals(edad, animal.edad) && Objects.equals(marcasDistintivas, animal.marcasDistintivas) && Objects.equals(numeroChip, animal.numeroChip) && Objects.equals(historia, animal.historia) && Objects.equals(observaciones, animal.observaciones) && Objects.equals(fechaIngreso, animal.fechaIngreso) && Objects.equals(fechaAlta, animal.fechaAlta) && Objects.equals(dniAdoptante, animal.dniAdoptante);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, fechaIngreso, adoptado, fechaAlta, dniAdoptante, idUbicacion);
     }
 
     @Override

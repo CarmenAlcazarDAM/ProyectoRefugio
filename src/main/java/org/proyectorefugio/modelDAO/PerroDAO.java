@@ -62,6 +62,17 @@ public class PerroDAO {
         return listaPerros;
     }
 
+    public static Perro findByID(int id) {
+        Animal a = AnimalDAO.findByID(id);
+        if (a == null) return null;
+        return rellenarDatosPerro(a);
+    }
+    public static Perro findByChip(String chip) {
+        Animal a = AnimalDAO.findByChip(chip);
+        if (a == null) return null;
+        return rellenarDatosPerro(a);
+    }
+
     /**
      * Método que busca a los perros que tengan un nombre específico
      *

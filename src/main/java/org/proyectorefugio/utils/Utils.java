@@ -32,4 +32,16 @@ public class Utils {
         }
         return false;
     }
+    /**
+     * Metodo que convierte el texto introducido por teclado a tipo de dato int
+     *
+     * @param convertir --> texto introducido por teclado
+     * @return --> devuelve el texto convertido en int
+     */
+    public static int conversorInt(String convertir) {
+        if (convertir == null || convertir.isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(convertir);
+    }
 }
