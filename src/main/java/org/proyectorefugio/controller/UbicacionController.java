@@ -10,6 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.layout.AnchorPane;
 import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Ubicacion;
 import org.proyectorefugio.modelDAO.AnimalDAO;
@@ -36,6 +37,7 @@ public class UbicacionController {
 
     @FXML
     public TableColumn<Ubicacion, Integer> capacidadCol;
+    public AnchorPane panelInsertar;
 
 
     @FXML
@@ -44,6 +46,7 @@ public class UbicacionController {
      */
     private void initialize() {
         iniciarTabla();
+        panelInsertar.setVisible(false);
     }
 
     /**
