@@ -4,6 +4,7 @@ import org.proyectorefugio.dataAccess.ConnectionBD;
 import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Gato;
 import org.proyectorefugio.enums.Sexo;
+import org.proyectorefugio.model.Perro;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -53,6 +54,26 @@ public class GatoDAO {
             throw new RuntimeException(e);
         }
         return listaGatos;
+    }
+    /**
+     * Método que busca un Gato por id en la base de datos y extrae toda su informacion
+     * @param id --> id pasado por parámetro
+     * @return --> devuelve el objeto Gato encontrado o null si no lo encuentra
+     */
+    public static Gato findByID(int id) {
+        Animal a = AnimalDAO.findByID(id);
+        if (a == null) return null;
+        return rellenarDatosGato(a);
+    }
+    /**
+     * Método que busca un Gato por chip en la base de datos y extrae toda su informacion
+     * @param chip --> número del chip pasado por parámetro
+     * @return --> devuelve el objeto Gato encontrado o null si no lo encuentra
+     */
+    public static Gato findByChip(String chip) {
+        Animal a = AnimalDAO.findByChip(chip);
+        if (a == null) return null;
+        return rellenarDatosGato(a);
     }
 
     /**

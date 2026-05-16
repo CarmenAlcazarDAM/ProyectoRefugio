@@ -7,9 +7,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import org.proyectorefugio.model.Gato;
 import org.proyectorefugio.modelDAO.GatoDAO;
+import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.SceneManager;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class GatoController {
     @FXML
@@ -28,6 +34,15 @@ public class GatoController {
     public CheckBox noAdoptado;
     public CheckBox adoptado;
     public Button añadirGatoBD;
+    public AnchorPane ventanaBuscar;
+
+
+    @FXML
+    public TextField buscarId;
+    public TextField buscarNombre;
+    public TextField buscarChip;
+    public TextField buscarRaza;
+    public TextField buscarColor;
 
 
     @FXML
@@ -93,6 +108,7 @@ public class GatoController {
      * La información aparece en un recuadro Label que aparece cuando das el primer click.
      */
     public void mostrarInformacionAdicional() {
+        ventanaBuscar.setVisible(false);
         tablaGatos.getSelectionModel().selectedItemProperty().addListener(
                 (observable, anterior, seleccionado) -> {
                     if (seleccionado != null) {
@@ -139,6 +155,66 @@ public class GatoController {
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
 
 
+    }
+    public void botonBusqueda(ActionEvent event) {
+        informacionAdicional.setVisible(false);
+        ventanaBuscar.setVisible(true);
+    }
+
+    public List<Gato> buscarAnimal() {
+        String idAnimalTexto = buscarId.getText();
+        int idAnimal = 0;
+        if (idAnimalTexto != null) {
+            idAnimal = Utils.conversorInt(idAnimalTexto);
+        }
+        ;
+        String nombreAnimal = buscarNombre.getText();
+        String chipAnimal = buscarChip.getText();
+        String razaAnimal = buscarRaza.getText();
+        String colorAnimal = buscarColor.getText();
+
+        boolean buscarNoAdoptados = noAdoptado.isSelected();
+
+        List<Gato> resultadosEncontrados = new ArrayList<>();
+
+        if (idAnimalTexto != null && !idAnimalTexto.isEmpty() && idAnimal != 0) {
+            Gato p = GatoDAO.findByID(idAnimal);
+            if (p != null) {
+                resultadosEncontrados.add(p);
+                return resultadosEncontrados;
+            }
+        }
+        if (chipAnimal != null && !chipAnimal.isEmpty()) {
+            Gato g = GatoDAO.findByChip(chipAnimal);
+            if (g != null) {
+                resultadosEncontrados.add(g);
+                return resultadosEncontrados;
+            }
+        }
+        if (nombreAnimal != null && !nombreAnimal.isEmpty()) {
+            resultadosEncontrados.addAll(GatoDAO.findByName(nombreAnimal, buscarNoAdoptados));
+        }
+
+        if (razaAnimal != null && !razaAnimal.isEmpty()) {
+            resultadosEncontrados.addAll(GatoDAO.findByBreed(razaAnimal, buscarNoAdoptados));
+
+        }
+        if (colorAnimal != null && !colorAnimal.isEmpty()) {
+            resultadosEncontrados.addAll(GatoDAO.findByColour(colorAnimal, buscarNoAdoptados));
+
+        }
+
+        HashSet<Gato> busquedaFinal = new HashSet<>(resultadosEncontrados);
+        busquedaFinal.remove(null);
+        return new ArrayList<>(busquedaFinal);
+        //todo --> alertas
+    }
+
+    public void botonContinuarBusqueda(ActionEvent event) {
+        ObservableList<Gato> resultados =
+                FXCollections.observableArrayList(buscarAnimal());
+
+        tablaGatos.setItems(resultados);
     }
 }
 

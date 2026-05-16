@@ -62,11 +62,21 @@ public class PerroDAO {
         return listaPerros;
     }
 
+    /**
+     * Método que busca un Perro por id en la base de datos y extrae toda su informacion
+     * @param id --> id pasado por parámetro
+     * @return --> devuelve el objeto Perro encontrado o null si no lo encuentra
+     */
     public static Perro findByID(int id) {
         Animal a = AnimalDAO.findByID(id);
         if (a == null) return null;
         return rellenarDatosPerro(a);
     }
+    /**
+     * Método que busca un Perro por chip en la base de datos y extrae toda su informacion
+     * @param chip --> número del chip pasado por parámetro
+     * @return --> devuelve el objeto Perro encontrado o null si no lo encuentra
+     */
     public static Perro findByChip(String chip) {
         Animal a = AnimalDAO.findByChip(chip);
         if (a == null) return null;
