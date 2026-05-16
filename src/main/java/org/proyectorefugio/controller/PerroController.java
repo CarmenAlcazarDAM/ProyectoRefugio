@@ -219,13 +219,12 @@ public class PerroController {
         HashSet<Perro> busquedaFinal = new HashSet<>(resultadosEncontrados);
         busquedaFinal.remove(null);
         return new ArrayList<>(busquedaFinal);
-
+        //todo --> alertas
     }
 
     public void botonContinuarBusqueda(ActionEvent event) {
         ObservableList<Perro> resultados =
                 FXCollections.observableArrayList(buscarAnimal());
-
 
         tablaPerros.setItems(resultados);
     }
