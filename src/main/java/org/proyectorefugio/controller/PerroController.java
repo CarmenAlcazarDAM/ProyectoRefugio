@@ -8,8 +8,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.proyectorefugio.model.Animal;
+import org.proyectorefugio.model.Ayuda;
 import org.proyectorefugio.model.Perro;
+import org.proyectorefugio.model.Voluntario;
 import org.proyectorefugio.modelDAO.AnimalDAO;
+import org.proyectorefugio.modelDAO.AyudaDAO;
 import org.proyectorefugio.modelDAO.PerroDAO;
 import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.SceneManager;
@@ -384,6 +387,29 @@ public class PerroController {
         limpiarCampos();
         tablaPerros();
     }
+    //endregion
+
+
+
+    //region---------------ELIMINAR PERRO -------------------
+
+
+    public void botonEliminar(ActionEvent event) {
+        informacionAdicional.setVisible(false);
+        ventanaBuscar.setVisible(false);
+        Animal animalSeleccionado = tablaPerros.getSelectionModel().getSelectedItem();
+        // todo -> confirmacion de alerta de si quiere borrar o no
+
+        if (animalSeleccionado == null) {
+            // todo -> alerta: selecciona un elemento primero
+            return;
+        }
+
+        //todo-> confirmacion
+        AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
+        initialize();
+    }
+    //endregion
 }
 
 

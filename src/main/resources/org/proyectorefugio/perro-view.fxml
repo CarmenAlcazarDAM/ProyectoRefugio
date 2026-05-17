@@ -33,7 +33,7 @@
             <Button fx:id="añadirPerroBD" mnemonicParsing="false" onAction="#botonInsertarPerro" text="Añadir" />
             <Button mnemonicParsing="false" onAction="#botonBusqueda" text="Busqueda" />
             <Button mnemonicParsing="false" onAction="#botonModificar" text="Modificar" />
-            <Button mnemonicParsing="false" text="Eliminar" />
+            <Button mnemonicParsing="false" onAction="#botonEliminar" text="Eliminar" />
          </children>
       </HBox>
       <Label fx:id="informacionAdicional" layoutX="519.0" layoutY="218.0" lineSpacing="10.0" prefHeight="375.0" prefWidth="477.0" wrapText="true">

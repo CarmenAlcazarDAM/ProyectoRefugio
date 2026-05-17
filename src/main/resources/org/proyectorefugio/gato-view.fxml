@@ -2,9 +2,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -29,8 +32,8 @@
          <children>
             <Button fx:id="añadirGatoBD" mnemonicParsing="false" onAction="#botonInsertarGato" text="Añadir" />
             <Button mnemonicParsing="false" onAction="#botonBusqueda" text="Buscar" />
-            <Button mnemonicParsing="false" text="Modificar" />
-            <Button mnemonicParsing="false" text="Eliminar" />
+            <Button mnemonicParsing="false" onAction="#botonModificar" text="Modificar" />
+            <Button mnemonicParsing="false" onAction="#botonEliminar" text="Eliminar" />
          </children>
       </HBox>
       <Label fx:id="informacionAdicional" layoutX="527.0" layoutY="214.0" lineSpacing="10.0" prefHeight="375.0" prefWidth="477.0" wrapText="true">
@@ -38,7 +41,7 @@
             <Font name="Arial" size="14.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="ventanaBuscar" layoutX="519.0" layoutY="224.0" prefHeight="61.0" prefWidth="478.0">
+      <AnchorPane fx:id="ventanaBuscar" layoutX="519.0" layoutY="224.0" prefHeight="61.0" prefWidth="478.0" visible="false">
          <children>
             <Text layoutX="26.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" wrappingWidth="104.447265625">
                <font>
@@ -75,6 +78,61 @@
                   <Font name="Segoe UI Semibold" size="14.0" />
                </font>
             </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="panelModificacion" layoutX="529.0" layoutY="244.0" prefHeight="324.0" prefWidth="478.0">
+         <children>
+            <Text layoutX="26.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NÚMERO DE CHIP" wrappingWidth="150.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="modificarChip" layoutX="26.0" layoutY="31.0" prefHeight="32.0" prefWidth="190.0" promptText="15 dígitos" />
+            <Button layoutX="232.0" layoutY="284.0" mnemonicParsing="false" onAction="#botonGuardarModificacion" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: #3b668c;" text="Guardar" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Button>
+            <Text layoutX="232.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FECHA DE BAJA" wrappingWidth="150.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <DatePicker fx:id="modificarFecha" layoutX="232.0" layoutY="31.0" prefHeight="32.0" prefWidth="190.0" />
+            <Text layoutX="26.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OBSERVACIONES" wrappingWidth="150.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextArea fx:id="modificarObservaciones" layoutX="26.0" layoutY="91.0" prefHeight="52.0" prefWidth="395.0" />
+            <CheckBox fx:id="modificarEsterilizado" layoutX="26.0" layoutY="224.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="142.0" text="ESTERILIZADO">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </CheckBox>
+            <Text layoutX="232.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DNI / NIE ADOPTANTE" wrappingWidth="150.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="modificarDniAdoptante" layoutX="232.0" layoutY="174.0" prefHeight="32.0" prefWidth="190.0" />
+            <Spinner fx:id="modificarUbicacion" layoutX="26.0" layoutY="174.0" prefHeight="32.0" />
+            <Text layoutX="26.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID UBICACIÓN" wrappingWidth="150.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <Text fx:id="textoPeso" layoutX="232.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PESO (Kg)" wrappingWidth="150.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="modificarPeso" layoutX="232.0" layoutY="231.0" prefHeight="32.0" prefWidth="190.0" />
+            <CheckBox fx:id="modificarLeucemia" layoutX="26.0" layoutY="257.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="117.0" text="LEUCEMIA">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </CheckBox>
          </children>
       </AnchorPane>
    </children>
