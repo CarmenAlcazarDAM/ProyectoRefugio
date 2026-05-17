@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UbicacionController {
+    //region ------------------- FXML-------------------
+
     @FXML
     public TableView<Ubicacion> tablaUbicaciones;
 
@@ -58,6 +60,7 @@ public class UbicacionController {
     public Text cabeceraCapacidad;
     public Button botonActualizar;
 
+    //endregion
 
     @FXML
     /**
@@ -123,7 +126,9 @@ public class UbicacionController {
         return animalesEnUbicacion.size();
     }
 
-    /*-------------------------------GESTIÓN INSERTAR UBICACIÓN------------------------------------*/
+
+
+    //region ------------------- GESTIÓN INSERTAR UBICACIÓN-------------------
 
     /**
      * Metodo que extrae los datos obtenidos por teclado y llama a UbicacionDAO para insertar
@@ -197,8 +202,10 @@ public class UbicacionController {
         initialize();
         limpiarCampos();
     }
+    //endregion
 
-    /*-------------------------------GESTIÓN BUSCAR UBICACIÓN------------------------------------*/
+
+    //region ------------------- GESTIÓN BUSCAR UBICACIÓN-------------------
 
     /**
      * Metodo que activa y desactiva los paneles necesarios
@@ -277,8 +284,11 @@ public class UbicacionController {
         tablaUbicaciones.setItems(resultados);
         limpiarCampos();
     }
+//endregion
 
-    /*-------------------------------GESTIÓN MODIFICAR UBICACIÓN------------------------------------*/
+
+
+//region ------------------- GESTIÓN MODIFICAR UBICACIÓN -------------------
 
     /**
      * Metodo que activa y desactiva los paneles necesarios
@@ -343,6 +353,10 @@ public class UbicacionController {
         }
 
     }
+    //endregion
+
+
+    //region ------------------- GESTIÓN ELIMINAR UBICACIÓN-------------------
 
     public void botonEliminar(ActionEvent event) {
         Ubicacion seleccionada = tablaUbicaciones.getSelectionModel().getSelectedItem();
@@ -351,4 +365,5 @@ public class UbicacionController {
         UbicacionDAO.deleteUbicacionById(seleccionada.getId());
         iniciarTabla();
     }
+    //endregion
 }
