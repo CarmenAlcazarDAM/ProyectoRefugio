@@ -20,7 +20,7 @@ public class PersonaDAO {
 
     private final static  String SQL_INSERT = "INSERT INTO persona (dni, nombre, apellidos, telefono, correo, direccion) VALUES (?, ?, ?, ?, ?, ?)";
 
-    private final static String SQL_DELETE = "DELETE persona FROM persona  WHERE dni = ?";
+    private final static String SQL_DELETE = "DELETE FROM persona WHERE dni = ?";
 
     private final static String SQL_UPDATE_TELEFONO = "UPDATE persona SET telefono = ? WHERE dni = ?";
     private final static String SQL_UPDATE_CORREO = "UPDATE persona SET correo = ? WHERE dni = ?";
@@ -198,7 +198,6 @@ public class PersonaDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
             }catch (SQLException e){
                 throw new RuntimeException(e);
             }
@@ -222,7 +221,6 @@ public class PersonaDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
             }catch (SQLException e){
                 throw new RuntimeException(e);
             }
@@ -246,7 +244,7 @@ public class PersonaDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
+
             }catch (SQLException e){
                 throw new RuntimeException(e);
             }

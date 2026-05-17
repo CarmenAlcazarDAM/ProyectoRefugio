@@ -90,10 +90,11 @@ public class AnimalDAO {
     /**
      * Método que busca un Animal por su numero de chip en caso de que lo tenga,
      * el número de chip de cada animal es una secuencia de 15 números e irrepetible
+     *
      * @param chip --> número de chip pasado por parámetro
      * @return --> devuelve al Animal con dicho número de chip en caso de encontrarlo
      */
-    public static Animal findByChip(String chip){
+    public static Animal findByChip(String chip) {
         Animal animal = null;
 
         try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_FIND_BY_CHIP)) {
@@ -111,7 +112,8 @@ public class AnimalDAO {
 
     /**
      * Método que busca los Animales que compartan el mismo nombre
-     * @param name --> nombre a buscar
+     *
+     * @param name      --> nombre a buscar
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
      * @return --> devuelve una lista con todos los Animales encontrados
      */
@@ -139,7 +141,8 @@ public class AnimalDAO {
 
     /**
      * Método que busca los Animales que compartan la misma raza
-     * @param breed --> raza a buscar
+     *
+     * @param breed     --> raza a buscar
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
      * @return --> devuelve una lista con todos los Animales encontrados
      */
@@ -167,7 +170,8 @@ public class AnimalDAO {
 
     /**
      * Método que busca los Animales que compartan el mismo color
-     * @param colour --> color a buscar
+     *
+     * @param colour    --> color a buscar
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
      * @return --> devuelve una lista con todos los Animales encontrados
      */
@@ -196,6 +200,7 @@ public class AnimalDAO {
      * Método que busca todos los animales que están en una ubicacion determinada
      * y no se han dado de Alta en el registro es decir, aún se encuentran
      * en el refugio
+     *
      * @param idUbicacion --> id de la ubicación a buscar
      * @return --> devuelve una lista con los animales que habitan en una ubicacion
      * en este momento.
@@ -232,7 +237,7 @@ public class AnimalDAO {
     public static Animal addAnimal(Animal animal) {
         Animal añadido = null;
 
-        if ((animal != null) && findByChip(animal.getNumeroChip())==null) {
+        if ((animal != null) && findByChip(animal.getNumeroChip()) == null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT_ANIMAL)) {
                 ps.setString(1, animal.getNombre());
                 ps.setString(2, animal.getRaza());
@@ -282,22 +287,23 @@ public class AnimalDAO {
     /// //////////////////// UPDATE ///////////////////////
     /**
      * Método que actualiza la informacion del numero de chip de un animal
-     * @param a --> animal al que vamos a actualizar la información
+     *
+     * @param a          --> animal al que vamos a actualizar la información
      * @param numeroChip --> número del chip pasado por parámetro (dos animales no pueden tener el mismo número de chip)
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
     public static boolean updateNumeroChip(Animal a, String numeroChip) {
         boolean updated = false;
-        if ((a != null) && findByID(a.getId()) != null && findByChip(numeroChip) == null){
+        if ((a != null) && findByID(a.getId()) != null && findByChip(numeroChip) == null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_CHIP)) {
-                ps.setString(1,numeroChip);
+                ps.setString(1, numeroChip);
                 ps.setInt(2, a.getId());
 
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
                 updated = true;
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -306,22 +312,23 @@ public class AnimalDAO {
 
     /**
      * Método que actualiza la informacion de Observaciones del animal
-     * @param a --> animal al que vamos a actualizar la información
+     *
+     * @param a             --> animal al que vamos a actualizar la información
      * @param observaciones --> observacion que vamos a añadir
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
     public static boolean updateObservaciones(Animal a, String observaciones) {
         boolean updated = false;
-        if ((a != null) && findByID(a.getId()) != null){
+        if ((a != null) && findByID(a.getId()) != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_OBSERVACIONES)) {
-                ps.setString(1,observaciones);
+                ps.setString(1, observaciones);
                 ps.setInt(2, a.getId());
 
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
                 updated = true;
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -329,23 +336,24 @@ public class AnimalDAO {
     }
 
     /**
-     *Método que actualiza si se esteriliza a un animal
-     * @param a --> animal al que vamos a actualizar la información
+     * Método que actualiza si se esteriliza a un animal
+     *
+     * @param a          --> animal al que vamos a actualizar la información
      * @param estelizado --> información de esterilizacion pasada por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
     public static boolean updateEsterilizado(Animal a, boolean estelizado) {
         boolean updated = false;
-        if ((a != null) && findByID(a.getId()) != null){
+        if ((a != null) && findByID(a.getId()) != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_ESTERILIZADO)) {
-                ps.setBoolean(1,estelizado);
+                ps.setBoolean(1, estelizado);
                 ps.setInt(2, a.getId());
 
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
                 updated = true;
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -354,13 +362,14 @@ public class AnimalDAO {
 
     /**
      * Método que actualiza la fecha de alta de un animal
-     * @param a --> animal al que vamos a actualizar la información
+     *
+     * @param a         --> animal al que vamos a actualizar la información
      * @param fechaAlta --> fecha en la que se dará de alta el animal
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
     public static boolean updateFechaAlta(Animal a, LocalDate fechaAlta) {
         boolean updated = false;
-        if ((a != null) && findByID(a.getId()) != null){
+        if ((a != null) && findByID(a.getId()) != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_FECHA_ALTA)) {
                 ps.setDate(1, Date.valueOf(fechaAlta));
                 ps.setInt(2, a.getId());
@@ -369,7 +378,7 @@ public class AnimalDAO {
                 updated = (filasAfectadas > 0);
 
                 updated = true;
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -378,22 +387,23 @@ public class AnimalDAO {
 
     /**
      * Método que actualiza la informacion de la ubicación del animal
-     * @param a --> animal al que vamos a actualizar la información
+     *
+     * @param a           --> animal al que vamos a actualizar la información
      * @param idUbicacion --> id de la ubicacion pasado por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
     public static boolean updateUbicacion(Animal a, int idUbicacion) {
         boolean updated = false;
-        if ((a != null) && findByID(a.getId()) != null){
+        if ((a != null) && findByID(a.getId()) != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_UBICACION)) {
-                ps.setInt(1,idUbicacion);
+                ps.setInt(1, idUbicacion);
                 ps.setInt(2, a.getId());
 
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
                 updated = true;
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -402,22 +412,23 @@ public class AnimalDAO {
 
     /**
      * Método que actualiza la informacion del adoptante
-     * @param a --> animal al que vamos a actualizar la información
+     *
+     * @param a            --> animal al que vamos a actualizar la información
      * @param dniAdoptante --> dni del adoptante pasado por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
     public static boolean updateAdoptante(Animal a, String dniAdoptante) {
         boolean updated = false;
-        if ((a != null) && findByID(a.getId()) != null){
+        if ((a != null) && findByID(a.getId()) != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_ADOPTANTE)) {
-                ps.setString(1,dniAdoptante);
+                ps.setString(1, dniAdoptante);
                 ps.setInt(2, a.getId());
 
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
                 updated = true;
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }

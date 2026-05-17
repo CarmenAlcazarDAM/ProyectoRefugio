@@ -40,8 +40,8 @@
             </Button>
             <Button mnemonicParsing="false" onAction="#botonAñadirTarea" text="Añadir Tarea" />
             <Button mnemonicParsing="false" onAction="#botonBusqueda" text="Busqueda" />
-            <Button mnemonicParsing="false" text="Modificar" />
-            <Button mnemonicParsing="false" onAction="#botonEliminar" text="Eliminar" />
+            <Button mnemonicParsing="false" onAction="#botonModificar" text="Modificar" />
+            <Button mnemonicParsing="false" onAction="#botonEliminar" text="Eliminar Tarea" />
          </children>
       </HBox>
       <Label fx:id="informacionAdicional" layoutX="464.0" layoutY="53.0" lineSpacing="10.0" prefHeight="252.0" prefWidth="546.0" wrapText="true">
@@ -88,7 +88,7 @@
             <DatePicker fx:id="buscarFecha" layoutX="26.0" layoutY="161.0" prefHeight="32.0" prefWidth="190.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ventanaAñadirTarea" layoutX="466.0" layoutY="87.0" prefHeight="210.0" prefWidth="657.0" style="-fx-border-color: #9c9c9c;">
+      <AnchorPane fx:id="ventanaAñadirTarea" layoutX="466.0" layoutY="87.0" prefHeight="210.0" prefWidth="657.0" visible="false">
          <children>
             <TextArea fx:id="insertarTareaTexto" layoutY="138.0" prefHeight="62.0" prefWidth="659.0" promptText="Escriba aquí la tarea..." />
             <Text layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TAREA REALIZADA" wrappingWidth="152.447265625">
@@ -96,7 +96,7 @@
                   <Font name="Segoe UI Semibold" size="14.0" />
                </font>
             </Text>
-            <Text layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VOLUNTARIO (DNI / NIE)" wrappingWidth="174.0472412109375">
+            <Text fx:id="textoDni" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VOLUNTARIO (DNI / NIE)" wrappingWidth="174.0472412109375">
                <font>
                   <Font name="Segoe UI Semibold" size="14.0" />
                </font>
@@ -116,7 +116,12 @@
             </Text>
          </children>
       </AnchorPane>
-      <Button fx:id="botonGuardarTarea" layoutX="934.0" layoutY="308.0" mnemonicParsing="false" onAction="#botonGuardarTarea" prefHeight="21.0" prefWidth="190.0" style="-fx-background-color: #3b668c;" text="Guardar" textFill="WHITE">
+      <Button fx:id="botonGuardarTarea" layoutX="972.0" layoutY="308.0" mnemonicParsing="false" onAction="#botonGuardarTarea" prefHeight="30.0" prefWidth="152.0" style="-fx-background-color: #3b668c;" text="Guardar" textFill="WHITE" visible="false">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="botonGuardarModificacion" layoutX="973.0" layoutY="308.0" mnemonicParsing="false" onAction="#botonGuardarModificacion" prefHeight="26.0" prefWidth="152.0" style="-fx-background-color: #3b668c;" text="Guardar" textFill="WHITE">
          <font>
             <Font name="Segoe UI Semibold" size="14.0" />
          </font>

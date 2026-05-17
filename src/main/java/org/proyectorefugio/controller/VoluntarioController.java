@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import org.proyectorefugio.model.*;
 import org.proyectorefugio.modelDAO.*;
 import org.proyectorefugio.utils.Utils;
@@ -61,6 +62,7 @@ public class VoluntarioController {
         iniciarTabla();
         iniciarListaVoluntarios();
         mostrarInformacionAdicional();
+
     }
 
     /**
@@ -107,6 +109,8 @@ public class VoluntarioController {
      */
     public void mostrarInformacionAdicional() {
         ventanaBuscar.setVisible(false);
+        ventanaAñadirTarea.setVisible(false);
+
         listaVoluntarios.getSelectionModel().selectedItemProperty().addListener((observable, anterior, seleccionado) -> {
             if (seleccionado != null) {
                 informacionAdicional.setText(
@@ -132,8 +136,10 @@ public class VoluntarioController {
      */
     //todo -> podria hacer una opcion que pregunte antes si se ha registrado anteriormente como voluntario o adoptante
     public void botonInsertarVoluntario(ActionEvent event) {
+
         FormularioPersonaYAdoptarController.persona = "voluntario";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
+        initialize();
     }
     //endregion
 
@@ -148,6 +154,9 @@ public class VoluntarioController {
     public void botonBusqueda(ActionEvent event) {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(true);
+        ventanaAñadirTarea.setVisible(false);
+        botonGuardarTarea.setVisible(false);
+
     }
 
     /**
@@ -319,7 +328,8 @@ public class VoluntarioController {
             throw new RuntimeException(e);
         }
     }
-    public void limpiarCampos(){
+
+    public void limpiarCampos() {
         insertarTareaTexto.clear();
         insertarTareaDni.clear();
         insertarTareaUbicacion.getValueFactory().setValue(0);
@@ -333,6 +343,83 @@ public class VoluntarioController {
         iniciarTabla();
         iniciarListaVoluntarios();
     }
+
+    //endregion
+
+
+    //region ------------------- GESTIÓN MODIFICAR AYUDA -------------------
+    public Button botonGuardarModificacion;
+    public Text textoDni;
+
+
+    public void botonModificar(ActionEvent event) {
+        informacionAdicional.setVisible(false);
+        ventanaBuscar.setVisible(false);
+        ventanaAñadirTarea.setVisible(true);
+        botonGuardarTarea.setVisible(false);
+        botonGuardarModificacion.setVisible(true);
+        textoDni.setVisible(false);
+        insertarTareaDni.setVisible(false);
+        insertarTareaUbicacion.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0));
+
+    }
+
+    public boolean modificarAyuda() {
+        Ayuda a = tablaAyuda.getSelectionModel().getSelectedItem();
+        if (a == null) {
+            // todo -> alerta: selecciona un elemento primero
+            return false;
+        }
+        String tarea = insertarTareaTexto.getText();
+        int idUbicacion = (int) insertarTareaUbicacion.getValue();
+        LocalDate fecha = insertarTareaFecha.getValue();
+
+        if ((tarea == null || tarea.trim().isEmpty()) &&  idUbicacion <= 0 && fecha == null){
+            // todo -> alerta: no ha rellenado ningun campo
+            return false;
+        }
+        boolean actualizado = false;
+        if (tarea != null && !tarea.trim().isEmpty()) {
+            if (AyudaDAO.updateTarea(a, tarea)) {
+                // todo -> alerta éxito — tarea actualizada correctamente
+                actualizado = true;
+            } else {
+                // todo -> alerta error — no se pudo actualizar la tarea
+            }
+        }
+
+        if (idUbicacion >= 1) {
+            if (AyudaDAO.updateUbicacion(a, idUbicacion)) {
+                // todo -> alerta éxito — ubicación actualizada correctamente
+                actualizado = true;
+
+            } else {
+                // todo -> alerta error — no se pudo actualizar la ubicación
+            }
+        }
+
+        if (fecha != null) {
+            if (!Utils.validarFecha(fecha)) {
+                // todo -> alerta error — la fecha no puede ser futura
+                return false;
+            } else if (AyudaDAO.updateFecha(a, fecha)) {
+                // todo -> alerta éxito — fecha actualizada correctamente
+                actualizado = true;
+
+            } else {
+                // todo -> alerta error — no se pudo actualizar la fecha
+            }
+        }
+        return actualizado;
+    }
+
+    public void botonGuardarModificacion(ActionEvent event) {
+        modificarAyuda();
+        limpiarCampos();
+        iniciarTabla();
+        iniciarListaVoluntarios();
+    }
+
 
     //endregion
 
@@ -354,26 +441,17 @@ public class VoluntarioController {
         Voluntario voluntarioSeleccionado = listaVoluntarios.getSelectionModel().getSelectedItem();
         // todo -> confirmacion de alerta de si quiere borrar o no
 
-        if (ayudaSeleccionada == null || voluntarioSeleccionado == null) {
+        if (ayudaSeleccionada == null && voluntarioSeleccionado == null) {
             // todo -> alerta: selecciona un elemento primero
             return;
         }
 
         // todo -> confirmación de alerta de si quiere borrar o no
-
-        AyudaDAO.deleteAyuda(ayudaSeleccionada.getDniVoluntario(), ayudaSeleccionada.getIdUbicacion(), ayudaSeleccionada.getFecha());
-
-        VoluntarioDAO.deleteVoluntario(voluntarioSeleccionado.getDni());
-        Adoptante a = AdoptanteDAO.findByDni(voluntarioSeleccionado.getDni());
-        if (a == null) {
-
-            PersonaDAO.deletePersona(voluntarioSeleccionado.getDni());
+        if (ayudaSeleccionada != null) {
+            AyudaDAO.deleteAyuda(ayudaSeleccionada.getDniVoluntario(), ayudaSeleccionada.getIdUbicacion(), ayudaSeleccionada.getFecha());
         }
-
-        iniciarTabla();
-        iniciarListaVoluntarios();
+        initialize();
     }
-
 
     //endregion
 

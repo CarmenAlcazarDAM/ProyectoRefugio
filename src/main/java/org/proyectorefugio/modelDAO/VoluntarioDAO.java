@@ -19,9 +19,6 @@ public class VoluntarioDAO {
 
     private final static String SQL_INSERT = "INSERT INTO voluntario VALUES(?)";
 
-    private final static String SQL_DELETE = "DELETE voluntario FROM dniVoluntario  WHERE dni = ?";
-
-
     /**
      * ------------------------------------------------------
      **/
@@ -162,24 +159,6 @@ public class VoluntarioDAO {
         }
         return false;
     }
-    //////////////////////// DELETE ////////////////////
-    /**
-     * Método que borra un volunatario de la base de datos
-     * @param dni --> dni del voluntario pasado por parámetro
-     * @return --> devuelve true si se borra correctamente, false si no se borra
-     */
-    public static boolean deleteVoluntario(String dni) {
-        if (findByDni(dni) != null) {
-            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_DELETE)) {
-                ps.setString(1, dni);
-                ps.executeUpdate();
-                return true;
 
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return false;
-    }
 
 }
