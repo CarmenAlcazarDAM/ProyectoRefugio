@@ -18,6 +18,7 @@ import org.proyectorefugio.model.Ayuda;
 import org.proyectorefugio.model.Ubicacion;
 import org.proyectorefugio.model.Voluntario;
 import org.proyectorefugio.modelDAO.AnimalDAO;
+import org.proyectorefugio.modelDAO.AyudaDAO;
 import org.proyectorefugio.modelDAO.UbicacionDAO;
 import org.proyectorefugio.utils.Utils;
 
@@ -50,9 +51,9 @@ public class UbicacionController {
 
     @FXML
     public AnchorPane panelInsertar;
-    public ComboBox insertarTipo;
-    public Spinner insertarTiempo;
-    public Spinner insertarCapacidad;
+    public ComboBox<String> insertarTipo;
+    public Spinner<Integer> insertarTiempo;
+    public Spinner<Integer> insertarCapacidad;
     public TextField insertarHoraSalida;
     public Button botonInsertado;
     public Button botonContinuar;
@@ -147,6 +148,11 @@ public class UbicacionController {
 
             Ubicacion u = new Ubicacion(tipo, hora, minutos, capacidad);
             UbicacionDAO.addUbicacion(u);
+            Ubicacion encontrada = UbicacionDAO.findById(u.getId());
+
+            if (encontrada != null) {
+                //todo --> mensaje confirmacion
+            }
 
 
         } catch (Exception e) {

@@ -5,8 +5,10 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -36,7 +38,7 @@
                   <Insets />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Añadir Tarea" />
+            <Button mnemonicParsing="false" onAction="#botonAñadirTarea" text="Añadir Tarea" />
             <Button mnemonicParsing="false" onAction="#botonBusqueda" text="Busqueda" />
             <Button mnemonicParsing="false" text="Modificar" />
             <Button mnemonicParsing="false" onAction="#botonEliminar" text="Eliminar" />
@@ -47,7 +49,7 @@
             <Font name="Arial" size="14.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="ventanaBuscar" layoutX="464.0" layoutY="82.0" prefHeight="61.0" prefWidth="478.0">
+      <AnchorPane fx:id="ventanaBuscar" layoutX="464.0" layoutY="82.0" prefHeight="219.0" prefWidth="659.0" visible="false">
          <children>
             <Text layoutX="26.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DNI / NIE" wrappingWidth="104.447265625">
                <font>
@@ -86,5 +88,38 @@
             <DatePicker fx:id="buscarFecha" layoutX="26.0" layoutY="161.0" prefHeight="32.0" prefWidth="190.0" />
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="ventanaAñadirTarea" layoutX="466.0" layoutY="87.0" prefHeight="210.0" prefWidth="657.0" style="-fx-border-color: #9c9c9c;">
+         <children>
+            <TextArea fx:id="insertarTareaTexto" layoutY="138.0" prefHeight="62.0" prefWidth="659.0" promptText="Escriba aquí la tarea..." />
+            <Text layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TAREA REALIZADA" wrappingWidth="152.447265625">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VOLUNTARIO (DNI / NIE)" wrappingWidth="174.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="insertarTareaDni" layoutY="67.0" prefHeight="32.0" prefWidth="190.0" promptText="Introduzca su DNI / NIE" />
+            <Text layoutX="220.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UBICACION (Nº id)" wrappingWidth="174.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <Spinner fx:id="insertarTareaUbicacion" layoutX="220.0" layoutY="67.0" prefHeight="32.0" prefWidth="166.0" />
+            <DatePicker fx:id="insertarTareaFecha" layoutX="416.0" layoutY="67.0" prefHeight="32.0" prefWidth="166.0" />
+            <Text layoutX="416.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FECHA" wrappingWidth="174.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <Button fx:id="botonGuardarTarea" layoutX="934.0" layoutY="308.0" mnemonicParsing="false" onAction="#botonGuardarTarea" prefHeight="21.0" prefWidth="190.0" style="-fx-background-color: #3b668c;" text="Guardar" textFill="WHITE">
+         <font>
+            <Font name="Segoe UI Semibold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

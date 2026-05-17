@@ -49,6 +49,7 @@ public class VoluntarioController {
     public TextField buscarUbicacion;
     public DatePicker buscarFecha;
 
+
     //endregion
 
 
@@ -274,10 +275,65 @@ public class VoluntarioController {
     }
     //endregion
 
+    //region ------------------- GESTIÓN AÑADIR TAREA -------------------
+
+    @FXML
+    public AnchorPane ventanaAñadirTarea;
+    public TextArea insertarTareaTexto;
+    public TextField insertarTareaDni;
+    public Spinner<Integer> insertarTareaUbicacion;
+    public DatePicker insertarTareaFecha;
+    public Button botonGuardarTarea;
+
+
+    public void botonAñadirTarea(ActionEvent event) {
+        ventanaBuscar.setVisible(false);
+        ventanaAñadirTarea.setVisible(true);
+        botonGuardarTarea.setVisible(true);
+        insertarTareaUbicacion.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0));
+
+    }
+
+    public void insertarTarea() {
+        try {
+            String tarea = insertarTareaTexto.getText();
+            String dniVoluntario = insertarTareaDni.getText();
+            int idUbicacion = (int) insertarTareaUbicacion.getValue();
+            LocalDate fecha = insertarTareaFecha.getValue();
+
+            if (tarea == null || tarea.trim().isEmpty() || dniVoluntario == null ||
+                    dniVoluntario.trim().isEmpty() || fecha == null || idUbicacion <= 0) {
+                // todo -> alerta, campos obligatorios vacíos
+                return;
+            }
+            Ayuda a = new Ayuda(dniVoluntario, idUbicacion, fecha, tarea);
+            AyudaDAO.addAyuda(a);
+            Ayuda encontrada = AyudaDAO.findSingle(dniVoluntario, idUbicacion, fecha);
+
+            if (encontrada != null) {
+                //todo --> mensaje confirmacion
+            }
+
+        } catch (Exception e) {
+            //todo --> alertas y la excepción -> illegalException
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void botonGuardarTarea(ActionEvent event) {
+        insertarTarea();
+        iniciarTabla();
+        iniciarListaVoluntarios();
+    }
+
+    //endregion
+
+
     //region ------------------- GESTIÓN DELETE VOLUNTARIO/AYUDA -------------------
 
     /**
-     * Metodo que elimina una AYUDA o un VOLUNTARIO seleccionada de la BBDD
+     * Metodo que elimina una AYUDA o un VOLUNTARIO seleccionado de la BBDD
      * Comprueba también si el voluntario es, además, adoptante. En caso de no ser
      * adoptante borra al Voluntario también de Persona, eliminando cualquier registro de
      * la BBDD.
@@ -311,6 +367,8 @@ public class VoluntarioController {
         iniciarListaVoluntarios();
     }
 
+
     //endregion
+
 
 }
