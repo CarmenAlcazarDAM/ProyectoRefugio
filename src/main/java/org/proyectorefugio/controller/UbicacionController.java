@@ -201,7 +201,7 @@ public class UbicacionController {
     /*-------------------------------GESTIÓN BUSCAR UBICACIÓN------------------------------------*/
 
     /**
-     * Método que activa y desactiva los paneles necesarios
+     * Metodo que activa y desactiva los paneles necesarios
      *
      * @param event -> acción de pulsar el botón
      */
@@ -256,6 +256,10 @@ public class UbicacionController {
 
     }
 
+    /**
+     * Metodo que gestiona que aparezcan los resultados de la busqueda en la tabla
+     * @param event --> accion que se realiza cuando se pulsa el botón
+     */
     public void botonContinuarBusqueda(ActionEvent event) {
         ObservableList<Ubicacion> resultados =
                 FXCollections.observableArrayList(busquedaAccion());
@@ -268,4 +272,23 @@ public class UbicacionController {
         tablaUbicaciones.setItems(resultados);
         limpiarCampos();
     }
+
+    /*-------------------------------GESTIÓN MODIFICAR UBICACIÓN------------------------------------*/
+    /**
+     * Metodo que activa y desactiva los paneles necesarios
+     * @param event -> acción de pulsar el botón
+     */
+    public void botonModificar(ActionEvent event) {
+        panelInsertar.setVisible(true);
+        botonInsertado.setVisible(true);
+        botonContinuar.setVisible(false);
+        asignarTiposUbicacion();
+        cabeceraTiempo.setText("TIEMPO (min)");
+        cabeceraCapacidad.setVisible(true);
+        insertarCapacidad.setVisible(true);
+        insertarTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
+        insertarCapacidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
+    }
+
+
 }
