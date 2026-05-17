@@ -139,7 +139,7 @@ public class VoluntarioController {
     //endregion
 
 
-    //region ------------------- GESTIÓN DE BUSQUEDA DE TAREAS -------------------
+    //region ------------------- GESTIÓN DE BÚSQUEDA DE TAREAS -------------------
 
     /**
      * Metodo que gestiona lo que aparece en pantalla al pulsar el botón Busqueda
