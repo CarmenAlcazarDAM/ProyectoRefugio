@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class VoluntarioController {
+    //region ------------------- FXML-------------------
     @FXML
     public TableView<Ayuda> tablaAyuda;
 
@@ -51,13 +52,23 @@ public class VoluntarioController {
     public TextField buscarUbicacion;
     public DatePicker buscarFecha;
 
+    //endregion
+
+
     @FXML
+    /**
+     * Gestiona que es lo primero que aparece cuando abrimos el archivo.fxml
+     */
     private void initialize() {
         iniciarTabla();
         iniciarListaVoluntarios();
         mostrarInformacionAdicional();
     }
 
+    /**
+     * Metodo que extrae todos los datos de la BBDD y organiza la información
+     * en las columnas de la tabla
+     */
     public void iniciarTabla() {
         voluntarioCol.setCellValueFactory(cellData -> {
             String dni = cellData.getValue().getDniVoluntario();
@@ -82,10 +93,15 @@ public class VoluntarioController {
         tablaAyuda.setItems(listaAyudas);
     }
 
+    /**
+     * Metodo que rellena la tabla con todos los datos encontrados en la base de datos
+     */
     public void iniciarListaVoluntarios() {
         ObservableList<Voluntario> observable = FXCollections.observableList(VoluntarioDAO.findAll());
         listaVoluntarios.setItems(observable);
     }
+
+    //region ------------------- LABEL INFORMACIÓN ADICIONAL-------------------
 
     /**
      * Método que muestra toda la información del Voluntario cuando seleccionas sobre él en la tabla
@@ -106,9 +122,13 @@ public class VoluntarioController {
         });
     }
 
+    //endregion
+
+
+    //region ------------------- INSERTAR VOLUNTARIO -------------------
+
     /**
      * Método que cuando al pulsar el botón "Nuevo Voluntario" abrirá el formulario correspondiente
-     *
      * @param event --> acción que se va a llevar a cabo
      */
     //todo -> podria hacer una opcion que pregunte antes si se ha registrado anteriormente como voluntario o adoptante
@@ -116,12 +136,25 @@ public class VoluntarioController {
         FormularioPersonaYAdoptarController.persona = "voluntario";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
     }
+    //endregion
 
+
+    //region ------------------- GESTIÓN DE BUSQUEDA DE TAREAS -------------------
+
+    /**
+     * Metodo que gestiona lo que aparece en pantalla al pulsar el botón Busqueda
+     * @param event --> acción que tiene lugar cuando pulsas el botón
+     */
     public void botonBusqueda(ActionEvent event) {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(true);
     }
 
+    /**
+     * Metodo que busca a los tareas que coincidan con los parametros
+     * introducidos por teclado.
+     * @return --> devuelve una lista con los resultados obtenidos
+     */
     public List<Ayuda> buscarTarea() {
         String dniVoluntario = buscarDNI.getText();
         String nombreVoluntario = buscarNombre.getText();
@@ -177,6 +210,15 @@ public class VoluntarioController {
         return null;
     }
 
+    //endregion
+
+    //region ------------------- GESTIÓN DE BÚSQUEDA DE VOLUNTARIO -------------------
+
+    /**
+     * Metodo que busca a los voluntarios que coincidan con los parametros
+     * introducidos por teclado
+     * @return --> devuelve una lista con los resultados obtenidos
+     */
     public List<Voluntario> buscarVoluntario() {
         //todo-> validaciones y alert
         //todo -> ¿que pasa si no rellenas nada?
@@ -205,7 +247,16 @@ public class VoluntarioController {
         return null;
     }
 
+    //endregion
 
+
+    //region ------------------- BOTÓN CONTINUAR BÚSQUEDA -------------------
+
+    /**
+     * Metodo que gestiona lo que ocurre al pulsar el botón Continuar cuando estamos
+     * realizando busqueda
+     * @param event --> acción que tiene lugar cuando pulsas el botón
+     */
     public void botonContinuarBusqueda(ActionEvent event) {
         ObservableList<Ayuda> resultados =
                 FXCollections.observableArrayList(buscarTarea());
@@ -219,4 +270,5 @@ public class VoluntarioController {
         listaVoluntarios.setItems(resultadosVoluntarios);
 
     }
+    //endregion
 }

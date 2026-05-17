@@ -70,7 +70,6 @@ public class UbicacionController {
         iniciarTabla();
         panelInsertar.setVisible(false);
         botonInsertado.setVisible(false);
-
     }
 
 
