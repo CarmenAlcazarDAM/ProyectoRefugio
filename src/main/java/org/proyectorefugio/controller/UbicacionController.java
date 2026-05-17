@@ -56,6 +56,7 @@ public class UbicacionController {
     public Button botonContinuar;
     public Text cabeceraTiempo;
     public Text cabeceraCapacidad;
+    public Button botonActualizar;
 
 
     @FXML
@@ -219,6 +220,7 @@ public class UbicacionController {
 
     /**
      * Metodo que recoge los datos obtenidos por teclado y llama a los metodos find correspondiente de UbicacionDAO
+     *
      * @return --> devuelve una lista con los datos encontrados
      */
     public List<Ubicacion> busquedaAccion() {
@@ -230,20 +232,20 @@ public class UbicacionController {
             int minutos = (int) insertarTiempo.getValue();
 
 
-            if(minutos>0){
-                List<Ubicacion> resultadoUnico =  new ArrayList<>();
+            if (minutos > 0) {
+                List<Ubicacion> resultadoUnico = new ArrayList<>();
                 resultadoUnico.add(UbicacionDAO.findById(minutos));
                 return resultadoUnico;
             }
 
             List<Ubicacion> resultadosEncontrados = new ArrayList<>();
 
-            if(insertarTipo.getValue() != null){
-                resultadosEncontrados.addAll( UbicacionDAO.findByType(insertarTipo.getValue().toString().toUpperCase()));
+            if (insertarTipo.getValue() != null) {
+                resultadosEncontrados.addAll(UbicacionDAO.findByType(insertarTipo.getValue().toString().toUpperCase()));
             }
 
-            if(hora != null){
-                resultadosEncontrados.addAll( UbicacionDAO.findByHour(Time.valueOf(hora)));
+            if (hora != null) {
+                resultadosEncontrados.addAll(UbicacionDAO.findByHour(Time.valueOf(hora)));
             }
 
             return resultadosEncontrados;
@@ -258,6 +260,7 @@ public class UbicacionController {
 
     /**
      * Metodo que gestiona que aparezcan los resultados de la busqueda en la tabla
+     *
      * @param event --> accion que se realiza cuando se pulsa el botón
      */
     public void botonContinuarBusqueda(ActionEvent event) {
@@ -266,6 +269,9 @@ public class UbicacionController {
 
         if (resultados == null || resultados.isEmpty()) {
             // todo -> alerta: no se encontraron resultados
+
+            //al no encontrar resultados devuelve la lista entera otra vez
+            iniciarTabla();
             return;
         }
 
@@ -274,20 +280,46 @@ public class UbicacionController {
     }
 
     /*-------------------------------GESTIÓN MODIFICAR UBICACIÓN------------------------------------*/
+
     /**
      * Metodo que activa y desactiva los paneles necesarios
+     *
      * @param event -> acción de pulsar el botón
      */
     public void botonModificar(ActionEvent event) {
         panelInsertar.setVisible(true);
-        botonInsertado.setVisible(true);
+        botonInsertado.setVisible(false);
         botonContinuar.setVisible(false);
+        botonActualizar.setVisible(true);
         asignarTiposUbicacion();
         cabeceraTiempo.setText("TIEMPO (min)");
         cabeceraCapacidad.setVisible(true);
         insertarCapacidad.setVisible(true);
         insertarTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
         insertarCapacidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
+    }
+
+    public boolean accionModificar() {
+        Ubicacion seleccionada = tablaUbicaciones.getSelectionModel().getSelectedItem();
+        LocalTime hora = Utils.validarHora(insertarHoraSalida.getText());
+        boolean actualizada = false;
+
+        if (seleccionada == null) {
+            // todo -> alerta: selecciona un elemento primero
+            return false;
+        }
+
+        if (!insertarHoraSalida.getText().isEmpty() && insertarHoraSalida.getText() != null) {
+            actualizada = UbicacionDAO.updateRecessTime(seleccionada, Time.valueOf(hora));
+
+        }
+        if ((int) insertarTiempo.getValue() > 0 && (int) insertarTiempo.getValue() < 999) {
+            actualizada = UbicacionDAO.updateMinutes(seleccionada, (int) insertarTiempo.getValue());
+        }
+        if ((int) insertarCapacidad.getValue() > 0 && (int) insertarCapacidad.getValue() < 999) {
+            actualizada = UbicacionDAO.updateCapacidad(seleccionada, (int) insertarCapacidad.getValue());
+        }
+        return actualizada;
     }
 
 

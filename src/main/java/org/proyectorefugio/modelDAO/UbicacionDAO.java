@@ -27,6 +27,7 @@ public class UbicacionDAO {
 
     private static String SQL_UPDATE_RECESS_TIME = "UPDATE ubicacion SET horaRecreo = ? WHERE id = ?";
     private static String SQL_UPDATE_MINUTES = "UPDATE ubicacion SET minutosRecreo = ? WHERE id = ?";
+    private static String SQL_UPDATE_CAPACIDAD = "UPDATE ubicacion SET capacidad = ? WHERE id = ?";
 
 
 
@@ -231,6 +232,29 @@ public class UbicacionDAO {
         if ((u != null) && findById(u.getId()) != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_MINUTES)) {
                 ps.setInt(1, minutos);
+                ps.setInt(2, u.getId());
+
+                int filasAfectadas = ps.executeUpdate();
+                updated = (filasAfectadas > 0);
+
+                updated = true;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return updated;
+    }
+    /**
+     * Metodo que actualiza la capacidad de una ubicacion
+     * @param u --> ubicacion a la que queremos actualizar la información
+     * @param capacidad --> capacidad pasada por parámetro
+     * @return --> devuelve true si se actualiza correctamente, false si no lo hace
+     */
+    public static boolean updateCapacidad(Ubicacion u, int capacidad) {
+        boolean updated = false;
+        if ((u != null) && findById(u.getId()) != null) {
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_CAPACIDAD)) {
+                ps.setInt(1, capacidad);
                 ps.setInt(2, u.getId());
 
                 int filasAfectadas = ps.executeUpdate();
