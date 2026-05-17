@@ -8,11 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import org.proyectorefugio.model.Ayuda;
-import org.proyectorefugio.model.Perro;
-import org.proyectorefugio.model.Voluntario;
-import org.proyectorefugio.modelDAO.AyudaDAO;
-import org.proyectorefugio.modelDAO.VoluntarioDAO;
+import org.proyectorefugio.model.*;
+import org.proyectorefugio.modelDAO.*;
 import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.SceneManager;
 
@@ -129,6 +126,7 @@ public class VoluntarioController {
 
     /**
      * Método que cuando al pulsar el botón "Nuevo Voluntario" abrirá el formulario correspondiente
+     *
      * @param event --> acción que se va a llevar a cabo
      */
     //todo -> podria hacer una opcion que pregunte antes si se ha registrado anteriormente como voluntario o adoptante
@@ -143,6 +141,7 @@ public class VoluntarioController {
 
     /**
      * Metodo que gestiona lo que aparece en pantalla al pulsar el botón Busqueda
+     *
      * @param event --> acción que tiene lugar cuando pulsas el botón
      */
     public void botonBusqueda(ActionEvent event) {
@@ -153,6 +152,7 @@ public class VoluntarioController {
     /**
      * Metodo que busca a los tareas que coincidan con los parametros
      * introducidos por teclado.
+     *
      * @return --> devuelve una lista con los resultados obtenidos
      */
     public List<Ayuda> buscarTarea() {
@@ -217,6 +217,7 @@ public class VoluntarioController {
     /**
      * Metodo que busca a los voluntarios que coincidan con los parametros
      * introducidos por teclado
+     *
      * @return --> devuelve una lista con los resultados obtenidos
      */
     public List<Voluntario> buscarVoluntario() {
@@ -255,6 +256,7 @@ public class VoluntarioController {
     /**
      * Metodo que gestiona lo que ocurre al pulsar el botón Continuar cuando estamos
      * realizando busqueda
+     *
      * @param event --> acción que tiene lugar cuando pulsas el botón
      */
     public void botonContinuarBusqueda(ActionEvent event) {
@@ -271,4 +273,44 @@ public class VoluntarioController {
 
     }
     //endregion
+
+    //region ------------------- GESTIÓN DELETE VOLUNTARIO/AYUDA -------------------
+
+    /**
+     * Metodo que elimina una AYUDA o un VOLUNTARIO seleccionada de la BBDD
+     * Comprueba también si el voluntario es, además, adoptante. En caso de no ser
+     * adoptante borra al Voluntario también de Persona, eliminando cualquier registro de
+     * la BBDD.
+     *
+     * @param event --> acción que ocurre cuando se pulsa el boton
+     */
+    public void botonEliminar(ActionEvent event) {
+        informacionAdicional.setVisible(false);
+        ventanaBuscar.setVisible(false);
+        Ayuda ayudaSeleccionada = tablaAyuda.getSelectionModel().getSelectedItem();
+        Voluntario voluntarioSeleccionado = listaVoluntarios.getSelectionModel().getSelectedItem();
+        // todo -> confirmacion de alerta de si quiere borrar o no
+
+        if (ayudaSeleccionada == null || voluntarioSeleccionado == null) {
+            // todo -> alerta: selecciona un elemento primero
+            return;
+        }
+
+        // todo -> confirmación de alerta de si quiere borrar o no
+
+        AyudaDAO.deleteAyuda(ayudaSeleccionada.getDniVoluntario(), ayudaSeleccionada.getIdUbicacion(), ayudaSeleccionada.getFecha());
+
+        VoluntarioDAO.deleteVoluntario(voluntarioSeleccionado.getDni());
+        Adoptante a = AdoptanteDAO.findByDni(voluntarioSeleccionado.getDni());
+        if (a == null) {
+
+            PersonaDAO.deletePersona(voluntarioSeleccionado.getDni());
+        }
+
+        iniciarTabla();
+        iniciarListaVoluntarios();
+    }
+
+    //endregion
+
 }
