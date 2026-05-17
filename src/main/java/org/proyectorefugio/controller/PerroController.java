@@ -8,11 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.proyectorefugio.model.Animal;
-import org.proyectorefugio.model.Ayuda;
 import org.proyectorefugio.model.Perro;
-import org.proyectorefugio.model.Voluntario;
 import org.proyectorefugio.modelDAO.AnimalDAO;
-import org.proyectorefugio.modelDAO.AyudaDAO;
 import org.proyectorefugio.modelDAO.PerroDAO;
 import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.SceneManager;
@@ -196,11 +193,22 @@ public class PerroController {
 
     //region---------------BUSCAR ANIMAL-------------------
 
+    @FXML
+    /**
+     * Oculta el panel de información adicional y muestra el panel de búsqueda.
+     * @param event --> acción que se va a llevar a cabo
+     */
     public void botonBusqueda(ActionEvent event) {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(true);
     }
 
+    /**
+     * Busca perros en la base de datos según los filtros introducidos (id, chip, nombre, raza, color).
+     * Prioriza la búsqueda por id y por chip al ser identificadores únicos.
+     * Elimina duplicados usando un HashSet antes de devolver los resultados.
+     * @return lista de perros que coinciden con los criterios de búsqueda
+     */
     public List<Perro> buscarAnimal() {
         String idAnimalTexto = buscarId.getText();
         int idAnimal = 0;
@@ -249,6 +257,11 @@ public class PerroController {
         //todo --> alertas
     }
 
+    @FXML
+    /**
+     * Metodo que ejecuta la búsqueda y actualiza la tabla con los resultados obtenidos.
+     * @param event --> acción que se va a llevar a cabo
+     */
     public void botonContinuarBusqueda(ActionEvent event) {
         ObservableList<Perro> resultados =
                 FXCollections.observableArrayList(buscarAnimal());
@@ -259,6 +272,12 @@ public class PerroController {
 
     //region---------------MODIFICAR-------------------
 
+    @FXML
+/**
+ * Muestra el panel de modificación, oculta los demás paneles
+ * e inicializa el Spinner de ubicación.
+ * @param event --> acción que se va a llevar a cabo
+ */
     public void botonModificar(ActionEvent event) {
         panelModificacion.setVisible(true);
         ventanaBuscar.setVisible(false);
@@ -266,7 +285,13 @@ public class PerroController {
         modificarUbicacion.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
         //todo --> cargar datos
     }
-    
+
+    /**
+     * Recoge los campos del panel de modificación y actualiza en la base de datos
+     * únicamente los campos que han sido rellenados.
+     * Valida que haya un perro seleccionado y que al menos un campo esté relleno.
+     * @return true si al menos un campo fue actualizado correctamente, false en caso contrario
+     */
     public boolean modificarAnimal(){
         Perro pSeleccionado = tablaPerros.getSelectionModel().getSelectedItem();
         Animal aSeleccionado = tablaPerros.getSelectionModel().getSelectedItem();
@@ -370,6 +395,10 @@ public class PerroController {
         return actualizado;
 
     }
+
+    /**
+     * Limpia todos los campos del formulario de modificación dejándolos en su estado inicial.
+     */
     public void limpiarCampos() {
         modificarChip.clear();
         modificarFecha.setValue(null);
@@ -381,7 +410,11 @@ public class PerroController {
         modificarAgresivo.setSelected(false);
     }
 
-
+    @FXML
+    /**
+     * Guarda los cambios del formulario de modificación, limpia los campos y recarga la tabla.
+     * @param event --> acción que se va a llevar a cabo
+     */
     public void botonGuardarModificacion(ActionEvent event) {
         modificarAnimal();
         limpiarCampos();
@@ -393,7 +426,13 @@ public class PerroController {
 
     //region---------------ELIMINAR PERRO -------------------
 
-
+    @FXML
+    /**
+     * Elimina de la base de datos el perro seleccionado en la tabla,
+     * verificando previamente que existe en PerroDAO.
+     * Si no hay ningún perro seleccionado, cancela la operación.
+     * @param event --> acción que se va a llevar a cabo
+     */
     public void botonEliminar(ActionEvent event) {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(false);
@@ -405,9 +444,12 @@ public class PerroController {
             return;
         }
 
+        if (PerroDAO.findByID(animalSeleccionado.getId()) != null) {
         //todo-> confirmacion
-        AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
-        initialize();
+            AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
+        }else{
+            //todo -> alerta: ese animal no es un gato
+        }        initialize();
     }
     //endregion
 }
