@@ -319,10 +319,17 @@ public class VoluntarioController {
             throw new RuntimeException(e);
         }
     }
+    public void limpiarCampos(){
+        insertarTareaTexto.clear();
+        insertarTareaDni.clear();
+        insertarTareaUbicacion.getValueFactory().setValue(0);
+        insertarTareaFecha.setValue(null);
+    }
 
     @FXML
     public void botonGuardarTarea(ActionEvent event) {
         insertarTarea();
+        limpiarCampos();
         iniciarTabla();
         iniciarListaVoluntarios();
     }
