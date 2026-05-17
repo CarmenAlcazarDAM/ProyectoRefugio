@@ -245,7 +245,7 @@ public class AyudaDAO {
 
     /**
      * Método que actualiza la fecha de una Ayuda
-     * @param a --> Ayuda que vamos a actualizar pasada porparámetro
+     * @param a --> Ayuda que vamos a actualizar pasada por parámetro
      * @param fecha --> nueva fecha que queremos actualizar
      * @return --> devuelve true si se actualiza correctamente
      */
