@@ -1,5 +1,6 @@
 package org.proyectorefugio.utils;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -48,11 +49,30 @@ public class Utils {
         return Integer.parseInt(convertir);
     }
 
+    /**
+     * Metodo que valida la hora introducida que esté en el formato correcto
+     * @param hora --> hora a comprobar pasada por parámetro
+     * @return --> devuelve la hora introducida como String y
+     * la devuelve validada en formato LocalTime
+     */
     public static LocalTime validarHora (String hora){
         if(hora==null){return null;}
         if (hora.matches("([01]?[0-9]|2[0-3]):([0-5][0-9])")) {
             return LocalTime.parse(hora, DateTimeFormatter.ofPattern("H:mm"));
         }
         return null;
+    }
+
+    /**
+     * Metodo que valida  una fecha introducida para que no sea posterior
+     * al día actual del sistema
+     * @param fecha --> fecha a comprobar pasada por parámetro
+     * @return --> devuelve true si la fecha introducida es correcta
+     */
+    public static boolean validarFecha(LocalDate fecha) {
+        if (fecha == null) {
+            return false;
+        }
+        return !fecha.isAfter(LocalDate.now());
     }
 }
