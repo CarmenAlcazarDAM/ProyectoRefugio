@@ -128,6 +128,9 @@ public class FormularioPersonaYAdoptarController {
         // todo ->  añadir un Alert flotante confirmando el éxito y cierre el formulario
         limpiarCampos();
 
+        Stage stage = (Stage) botonCancelar.getScene().getWindow();
+        stage.close();
+
     }
 
     /**

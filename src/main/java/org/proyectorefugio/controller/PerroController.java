@@ -52,6 +52,7 @@ public class PerroController {
      * Metodo que inicia la vista del fxml cuando abrimos la ventana
      */
     private void initialize() {
+        noAdoptado.setSelected(true);
         tablaPerros();
         mostrarInformacionAdicional();
     }
@@ -94,12 +95,7 @@ public class PerroController {
         sexoCol.setCellValueFactory(new PropertyValueFactory<>("sexo"));
         razaCol.setCellValueFactory(new PropertyValueFactory<>("raza"));
 
-        boolean buscarAdoptados;
-        if (noAdoptado.isSelected()) {
-            buscarAdoptados = true;
-        } else {
-            buscarAdoptados = false;
-        }
+        boolean buscarAdoptados = adoptado.isSelected();
 
         ObservableList<Perro> listaPerros =
                 FXCollections.observableArrayList(PerroDAO.findAll(buscarAdoptados));
@@ -165,7 +161,7 @@ public class PerroController {
     public void botonAdoptar(ActionEvent event) {
         FormularioPersonaYAdoptarController.persona = "adoptante";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
-        initialize();
+        tablaPerros();
     }
 
     public void botonBusqueda(ActionEvent event) {
