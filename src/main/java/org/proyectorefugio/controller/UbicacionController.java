@@ -49,22 +49,24 @@ public class UbicacionController {
     public Spinner insertarTiempo;
     public Spinner insertarCapacidad;
     public TextField insertarHoraSalida;
+    public Button botonInsertado;
 
 
     @FXML
     /**
-     * Método que inicia la vista del fxml cuando abrimos la ventana
+     * Metodo que inicia la vista del fxml cuando abrimos la ventana
      */
     private void initialize() {
         iniciarTabla();
         panelInsertar.setVisible(false);
+        botonInsertado.setVisible(false);
 
 
     }
 
 
     /**
-     * Método que extrae los datos de las ubicaciones de la base de datos y clasifica la
+     * Metodo que extrae los datos de las ubicaciones de la base de datos y clasifica la
      * información por columnas en una tabla.
      */
     public void iniciarTabla() {
@@ -103,7 +105,7 @@ public class UbicacionController {
     }
 
     /**
-     * Método que obtiene la cantidad de animales que hay en la actualidad en una determinada
+     * Metodo que obtiene la cantidad de animales que hay en la actualidad en una determinada
      * ubicacion
      *
      * @param idUbicacion --> id de la ubicacion de la que vamos a obtener la cantidad
@@ -117,6 +119,10 @@ public class UbicacionController {
 
     /*-------------------------------GESTIÓN INSERTAR UBICACIÓN------------------------------------*/
 
+    /**
+     * Metodo que extrae los datos obtenidos por teclado y llama a UbicacionDAO para insertar
+     * una nueva Ubicacion
+     */
     public void insertarUbicacion() {
         try {
             if (insertarTipo.getValue() == null || (int) insertarCapacidad.getValue() < 1) {
@@ -138,6 +144,10 @@ public class UbicacionController {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Metodo que vacía los campos TextField una vez se ha realizado correctamente la inserción de la ubicación
+     */
     public void limpiarCampos(){
         insertarTipo.setValue(null);
         insertarHoraSalida.clear();
@@ -146,6 +156,7 @@ public class UbicacionController {
     }
     public void botonAñadirUbicacion(ActionEvent event) {
         panelInsertar.setVisible(true);
+        botonInsertado.setVisible(true);
         asignarTiposUbicacion();
         insertarTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
         insertarCapacidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
@@ -178,6 +189,7 @@ public class UbicacionController {
 
     /*-------------------------------GESTIÓN BUSCAR UBICACIÓN------------------------------------*/
 
-
+/*panelInsertar.setVisible(true);
+        botonInsertado.setVisible(true);*/
 
 }
