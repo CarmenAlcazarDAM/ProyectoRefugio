@@ -68,7 +68,6 @@ public class UbicacionController {
         panelInsertar.setVisible(false);
         botonInsertado.setVisible(false);
 
-
     }
 
 
@@ -299,20 +298,25 @@ public class UbicacionController {
         insertarCapacidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
     }
 
+    /**
+     * Metodo que recoge los datos obtenidos por teclado y llama a los metodos update correspondiente de UbicacionDAO
+     *
+     * @return --> devuelve true si se modifica algo y false si no
+     */
     public boolean accionModificar() {
         Ubicacion seleccionada = tablaUbicaciones.getSelectionModel().getSelectedItem();
-        LocalTime hora = Utils.validarHora(insertarHoraSalida.getText());
-        boolean actualizada = false;
-
         if (seleccionada == null) {
             // todo -> alerta: selecciona un elemento primero
             return false;
         }
 
-        if (!insertarHoraSalida.getText().isEmpty() && insertarHoraSalida.getText() != null) {
-            actualizada = UbicacionDAO.updateRecessTime(seleccionada, Time.valueOf(hora));
+        LocalTime hora = Utils.validarHora(insertarHoraSalida.getText());
+        boolean actualizada = false;
 
+        if (hora != null) {
+            actualizada = UbicacionDAO.updateRecessTime(seleccionada, Time.valueOf(hora));
         }
+
         if ((int) insertarTiempo.getValue() > 0 && (int) insertarTiempo.getValue() < 999) {
             actualizada = UbicacionDAO.updateMinutes(seleccionada, (int) insertarTiempo.getValue());
         }
@@ -322,5 +326,29 @@ public class UbicacionController {
         return actualizada;
     }
 
+    /**
+     * Metodo que gestiona que aparezcan mensaje de error si no se actuliza y de sí se ha actualizado correctamente
+     * También actualiza la tabla inicial
+     *
+     * @param event --> accion que se realiza cuando se pulsa el botón
+     */
+    public void botonActualizarModificacion(ActionEvent event) {
+        boolean modificado = accionModificar();
+        if (modificado) {
+            //todo -> mensaje de "Actualizado correctamente"
+            iniciarTabla();
+            limpiarCampos();
+        } else {
+            // todo -> alerta: "No se pudo actualizar o no hay cambios"
+        }
 
+    }
+
+    public void botonEliminar(ActionEvent event) {
+        Ubicacion seleccionada = tablaUbicaciones.getSelectionModel().getSelectedItem();
+        panelInsertar.setVisible(false);
+        // todo -> confirmacion de alerta de si quiere borrar o no
+        UbicacionDAO.deleteUbicacionById(seleccionada.getId());
+        iniciarTabla();
+    }
 }

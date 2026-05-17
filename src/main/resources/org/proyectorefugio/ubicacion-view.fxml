@@ -28,7 +28,7 @@
             <Button mnemonicParsing="false" onAction="#botonAñadirUbicacion" text="Añadir Ubicación" />
             <Button mnemonicParsing="false" onAction="#botonBusqueda" text="Busqueda" />
             <Button mnemonicParsing="false" onAction="#botonModificar" text="Modificar" />
-            <Button mnemonicParsing="false" text="Eliminar" />
+            <Button mnemonicParsing="false" onAction="#botonEliminar" text="Eliminar" />
          </children>
       </HBox>
       <AnchorPane fx:id="panelInsertar" layoutX="64.0" layoutY="87.0" prefHeight="75.0" prefWidth="1051.0">
