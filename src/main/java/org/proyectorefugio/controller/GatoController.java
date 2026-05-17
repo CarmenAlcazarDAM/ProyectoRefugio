@@ -50,6 +50,7 @@ public class GatoController {
      * Metodo que inicia la vista del fxml cuando abrimos la ventana
      */
     private void initialize() {
+        noAdoptado.setSelected(true);
         tablaGatos();
         mostrarInformacionAdicional();
     }
@@ -91,12 +92,7 @@ public class GatoController {
         sexoCol.setCellValueFactory(new PropertyValueFactory<>("sexo"));
         razaCol.setCellValueFactory(new PropertyValueFactory<>("raza"));
 
-        boolean buscarAdoptados;
-        if(noAdoptado.isSelected()){
-            buscarAdoptados = true;
-        }else{
-            buscarAdoptados = false;
-        }
+        boolean buscarAdoptados = adoptado.isSelected(); //
         ObservableList<Gato> listaGatos =
                 FXCollections.observableArrayList(GatoDAO.findAll(buscarAdoptados));
 
@@ -153,8 +149,7 @@ public class GatoController {
     public void botonAdoptar(ActionEvent event) {
         FormularioPersonaYAdoptarController.persona = "adoptante";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
-
-
+        tablaGatos();
     }
     public void botonBusqueda(ActionEvent event) {
         informacionAdicional.setVisible(false);

@@ -3,8 +3,7 @@ package org.proyectorefugio.modelDAO;
 import org.proyectorefugio.dataAccess.ConnectionBD;
 import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Gato;
-import org.proyectorefugio.enums.Sexo;
-import org.proyectorefugio.model.Perro;
+
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -187,7 +186,7 @@ public class GatoDAO {
     //////////////////////// ADD ///////////////////////
     /**
      * Método que inserta un GATO en la base de datos dentro de la tabla gato
-     *
+     * @param g --> objeto Gato pasado como parámetro
      * @param a --> objeto Animal pasado como parámetro
      * @return --> devuelve true si se ha insertado correctamente, false si no se ha insertado
      */
