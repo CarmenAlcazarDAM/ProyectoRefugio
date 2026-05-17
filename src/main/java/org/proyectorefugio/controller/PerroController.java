@@ -165,7 +165,7 @@ public class PerroController {
     public void botonAdoptar(ActionEvent event) {
         FormularioPersonaYAdoptarController.persona = "adoptante";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
-
+        initialize();
     }
 
     public void botonBusqueda(ActionEvent event) {

@@ -187,7 +187,11 @@ public class Animal {
     }
 
     public void setAdoptado(boolean adoptado) {
-        this.adoptado = adoptado;
+        if(this.dniAdoptante!=null){
+            this.adoptado = true;
+        }else {
+            this.adoptado = adoptado;
+        }
     }
 
     public Date getFechaAlta() {

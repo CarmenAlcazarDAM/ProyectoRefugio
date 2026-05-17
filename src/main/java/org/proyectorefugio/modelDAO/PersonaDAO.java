@@ -22,6 +22,7 @@ public class PersonaDAO {
 
     private final static String SQL_DELETE = "DELETE FROM persona WHERE dni = ?";
 
+    private final static String SQL_UPDATE_PERSON = "UPDATE persona SET nombre=?, apellidos=?, telefono=?, correo=?, direccion=? WHERE dni=?";
     private final static String SQL_UPDATE_TELEFONO = "UPDATE persona SET telefono = ? WHERE dni = ?";
     private final static String SQL_UPDATE_CORREO = "UPDATE persona SET correo = ? WHERE dni = ?";
     private final static String SQL_UPDATE_DIRECCION = "UPDATE persona SET direccion = ? WHERE dni = ?";
@@ -246,6 +247,32 @@ public class PersonaDAO {
 
 
             }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+        }
+        return updated;
+    }
+
+    /**
+     * Método que actualiza toda la información de una persona
+     * @param p --> Persona a la que vamos a actualizar la información
+     * @return --> devuelve true si se actualiza correctamente, false si no lo hace
+     */
+    public static boolean updatePerson(Persona p) {
+        boolean updated = false;
+        if ((p != null) && findByDni(p.getDni()) != null) {
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_PERSON)) {
+                ps.setString(1, p.getNombre());
+                ps.setString(2, p.getApellidos());
+                ps.setString(3, p.getTelefono());
+                ps.setString(4, p.getCorreo());
+                ps.setString(5, p.getDireccion());
+                ps.setString(6, p.getDni());
+
+                int filasAfectadas = ps.executeUpdate();
+                updated = (filasAfectadas > 0);
+
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }

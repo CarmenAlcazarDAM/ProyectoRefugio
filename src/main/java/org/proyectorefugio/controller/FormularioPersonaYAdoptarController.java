@@ -8,10 +8,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.proyectorefugio.model.Animal;
+import org.proyectorefugio.model.Perro;
 import org.proyectorefugio.model.Persona;
-import org.proyectorefugio.modelDAO.AdoptanteDAO;
-import org.proyectorefugio.modelDAO.PersonaDAO;
-import org.proyectorefugio.modelDAO.VoluntarioDAO;
+import org.proyectorefugio.modelDAO.*;
+import org.proyectorefugio.utils.Utils;
+
+import java.time.LocalDate;
 
 public class FormularioPersonaYAdoptarController {
     //Cuando el correspondiente controlador inicie el formulario
@@ -34,6 +36,16 @@ public class FormularioPersonaYAdoptarController {
 
     public void initialize() {
         definirTipoPersona();
+        infoDNI.textProperty().addListener((observable, oldValue, newValue) -> {
+            Persona p =PersonaDAO.findByDni(newValue);
+            if(p!=null){
+                    infoNombre.setText(p.getNombre());
+                    infoApellidos.setText(p.getApellidos());
+                    infoTelefono.setText(p.getTelefono());
+                    infoCorreo.setText(p.getCorreo());
+                    infoDireccion.setText(p.getDireccion());
+            }
+        });
     }
 
     /**
@@ -76,6 +88,8 @@ public class FormularioPersonaYAdoptarController {
         }
         return null;
     }
+
+
     @FXML
     /**
      * Metodo que guarda en la base de datos la información de los voluntarios o adoptantes
@@ -87,13 +101,29 @@ public class FormularioPersonaYAdoptarController {
         if(registrar==null){
             return;
         }
-        PersonaDAO.addPersona(registrar);
+        if (PersonaDAO.findByDni(registrar.getDni()) != null) {
+            PersonaDAO.updatePerson(registrar);
+        } else {
+            PersonaDAO.addPersona(registrar);
+        }
+
         if ("adoptante".equals(persona)) {
-            AdoptanteDAO.addAdoptante(registrar);
+            if (AdoptanteDAO.findByDni(registrar.getDni()) == null) {
+                AdoptanteDAO.addAdoptante(registrar);
+            }
 
-        } else if ("voluntario".equals(persona)) {
-            VoluntarioDAO.addVoluntario(registrar);
+            Animal a = AnimalDAO.findByID(Utils.conversorInt(infoIdAnimal.getText()));
+            if (a != null) {
+                AnimalDAO.updateAdoptante(a, registrar.getDni());
+                AnimalDAO.updateFechaAlta(a, LocalDate.now());
+            }
+        }
 
+
+        if ("voluntario".equals(persona)) {
+            if (VoluntarioDAO.findByDni(registrar.getDni()) == null) {
+                VoluntarioDAO.addVoluntario(registrar);
+            }
         }
         // todo ->  añadir un Alert flotante confirmando el éxito y cierre el formulario
         limpiarCampos();
@@ -110,6 +140,7 @@ public class FormularioPersonaYAdoptarController {
         infoTelefono.clear();
         infoCorreo.clear();
         infoDireccion.clear();
+        infoIdAnimal.clear();
     }
 
     @FXML

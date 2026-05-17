@@ -40,7 +40,7 @@ public class AnimalDAO {
     private static String SQL_UPDATE_ESTERILIZADO = "UPDATE animal SET esterilizado = ? WHERE id = ?";
     private static String SQL_UPDATE_FECHA_ALTA = "UPDATE animal SET fechaAlta = ? WHERE id = ?";
     private static String SQL_UPDATE_UBICACION = "UPDATE animal SET idUbicacion = ? WHERE id = ?";
-    private static String SQL_UPDATE_ADOPTANTE = "UPDATE animal SET dniAdoptante = ? WHERE id = ?";
+    private static String SQL_UPDATE_ADOPTANTE = "UPDATE animal SET dniAdoptante = ?, adoptado = true WHERE id = ?";
 
 
     /**------------------------------------------------------**/
@@ -302,7 +302,6 @@ public class AnimalDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -327,7 +326,6 @@ public class AnimalDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -352,7 +350,6 @@ public class AnimalDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -377,7 +374,6 @@ public class AnimalDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -402,7 +398,6 @@ public class AnimalDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -427,7 +422,6 @@ public class AnimalDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
