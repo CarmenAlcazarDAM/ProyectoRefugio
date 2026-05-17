@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import org.proyectorefugio.enums.Ubicaciones;
 import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Ayuda;
@@ -21,7 +22,9 @@ import org.proyectorefugio.modelDAO.UbicacionDAO;
 import org.proyectorefugio.utils.Utils;
 
 
+import java.sql.Time;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UbicacionController {
@@ -50,6 +53,9 @@ public class UbicacionController {
     public Spinner insertarCapacidad;
     public TextField insertarHoraSalida;
     public Button botonInsertado;
+    public Button botonContinuar;
+    public Text cabeceraTiempo;
+    public Text cabeceraCapacidad;
 
 
     @FXML
@@ -148,20 +154,25 @@ public class UbicacionController {
     /**
      * Metodo que vacía los campos TextField una vez se ha realizado correctamente la inserción de la ubicación
      */
-    public void limpiarCampos(){
+    public void limpiarCampos() {
         insertarTipo.setValue(null);
         insertarHoraSalida.clear();
         insertarTiempo.getValueFactory().setValue(0);
         insertarCapacidad.getValueFactory().setValue(0);
     }
+
     public void botonAñadirUbicacion(ActionEvent event) {
         panelInsertar.setVisible(true);
         botonInsertado.setVisible(true);
         asignarTiposUbicacion();
+        cabeceraTiempo.setText("TIEMPO (min)");
+        cabeceraCapacidad.setVisible(true);
+        insertarCapacidad.setVisible(true);
         insertarTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
         insertarCapacidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
 
     }
+
     /**
      * Metodo que asigna las opciones de ubicaciones al ComboBox
      */
@@ -189,7 +200,72 @@ public class UbicacionController {
 
     /*-------------------------------GESTIÓN BUSCAR UBICACIÓN------------------------------------*/
 
-/*panelInsertar.setVisible(true);
-        botonInsertado.setVisible(true);*/
+    /**
+     * Método que activa y desactiva los paneles necesarios
+     *
+     * @param event -> acción de pulsar el botón
+     */
+    public void botonBusqueda(ActionEvent event) {
+        panelInsertar.setVisible(true);
+        botonInsertado.setVisible(false);
+        botonContinuar.setVisible(true);
+        cabeceraTiempo.setText("ID");
+        cabeceraCapacidad.setVisible(false);
+        insertarCapacidad.setVisible(false);
+        insertarTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
+        asignarTiposUbicacion();
 
+    }
+
+    /**
+     * Metodo que recoge los datos obtenidos por teclado y llama a los metodos find correspondiente de UbicacionDAO
+     * @return --> devuelve una lista con los datos encontrados
+     */
+    public List<Ubicacion> busquedaAccion() {
+
+        try {
+
+            String horaTexto = insertarHoraSalida.getText();
+            LocalTime hora = Utils.validarHora(horaTexto);
+            int minutos = (int) insertarTiempo.getValue();
+
+
+            if(minutos>0){
+                List<Ubicacion> resultadoUnico =  new ArrayList<>();
+                resultadoUnico.add(UbicacionDAO.findById(minutos));
+                return resultadoUnico;
+            }
+
+            List<Ubicacion> resultadosEncontrados = new ArrayList<>();
+
+            if(insertarTipo.getValue() != null){
+                resultadosEncontrados.addAll( UbicacionDAO.findByType(insertarTipo.getValue().toString().toUpperCase()));
+            }
+
+            if(hora != null){
+                resultadosEncontrados.addAll( UbicacionDAO.findByHour(Time.valueOf(hora)));
+            }
+
+            return resultadosEncontrados;
+
+
+        } catch (Exception e) {
+            //todo --> alertas y la excepción -> illegalException
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void botonContinuarBusqueda(ActionEvent event) {
+        ObservableList<Ubicacion> resultados =
+                FXCollections.observableArrayList(busquedaAccion());
+
+        if (resultados == null || resultados.isEmpty()) {
+            // todo -> alerta: no se encontraron resultados
+            return;
+        }
+
+        tablaUbicaciones.setItems(resultados);
+        limpiarCampos();
+    }
 }
