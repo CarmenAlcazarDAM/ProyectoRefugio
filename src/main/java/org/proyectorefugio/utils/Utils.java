@@ -51,6 +51,19 @@ public class Utils {
     }
 
     /**
+     * Metodo que convierte el texto introducido por teclado a tipo de dato double
+     *
+     * @param convertir --> texto introducido por teclado
+     * @return --> devuelve el texto convertido en double
+     */
+    public static double conversorDouble(String convertir) {
+        if (convertir == null || convertir.isEmpty()) {
+            return 0.0;
+        }
+        return Double.parseDouble(convertir.trim());
+    }
+
+    /**
      * Metodo que valida la hora introducida que esté en el formato correcto
      * @param hora --> hora a comprobar pasada por parámetro
      * @return --> devuelve la hora introducida como String y

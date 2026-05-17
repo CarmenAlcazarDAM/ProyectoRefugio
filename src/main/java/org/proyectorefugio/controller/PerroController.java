@@ -14,6 +14,7 @@ import org.proyectorefugio.modelDAO.PerroDAO;
 import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.SceneManager;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,6 +39,8 @@ public class PerroController {
     public Button añadirPerroBD;
     public AnchorPane ventanaBuscar;
 
+    //region---------------FMXL BUSCAR-------------------
+
 
     @FXML
     public TextField buscarId;
@@ -45,7 +48,22 @@ public class PerroController {
     public TextField buscarChip;
     public TextField buscarRaza;
     public TextField buscarColor;
+    //endregion
 
+    //region---------------FMXL MODIFICAR-------------------
+
+    @FXML
+    public AnchorPane panelModificacion;
+    public TextField modificarChip;
+    public DatePicker modificarFecha;
+    public TextArea modificarObservaciones;
+    public CheckBox modificarEsterilizado;
+    public TextField modificarDniAdoptante;
+    public Spinner modificarUbicacion;
+    public TextField modificarPeso;
+    public CheckBox modificarAgresivo;
+
+    //endregion
 
     @FXML
     /**
@@ -143,6 +161,9 @@ public class PerroController {
                 });
     }
 
+
+    //region---------------INSERTAR-------------------
+
     /**
      * Método que cuando al pulsar el botón Añadir abrirá el formulario correspondiente
      *
@@ -152,6 +173,10 @@ public class PerroController {
         RegistroAnimalController.tipo = "perro";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/registroAnimal-view.fxml", "Formulario de Registro");
     }
+
+    //endregion
+
+    //region---------------ADOPTAR-------------------
 
     /**
      * Método que cuando al pulsar el botón Adoptar abrirá el formulario correspondiente
@@ -163,6 +188,10 @@ public class PerroController {
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
         tablaPerros();
     }
+
+    //endregion
+
+    //region---------------BUSCAR ANIMAL-------------------
 
     public void botonBusqueda(ActionEvent event) {
         informacionAdicional.setVisible(false);
@@ -222,6 +251,138 @@ public class PerroController {
                 FXCollections.observableArrayList(buscarAnimal());
 
         tablaPerros.setItems(resultados);
+    }
+    //endregion
+
+    //region---------------MODIFICAR-------------------
+
+    public void botonModificar(ActionEvent event) {
+        panelModificacion.setVisible(true);
+        ventanaBuscar.setVisible(false);
+        informacionAdicional.setVisible(false);
+        modificarUbicacion.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
+        //todo --> cargar datos
+    }
+    
+    public boolean modificarAnimal(){
+        Perro pSeleccionado = tablaPerros.getSelectionModel().getSelectedItem();
+        Animal aSeleccionado = tablaPerros.getSelectionModel().getSelectedItem();
+
+
+        String chip = modificarChip.getText();
+        LocalDate fecha = modificarFecha.getValue();
+        String observaciones = modificarObservaciones.getText();
+        String dniAdoptante = modificarDniAdoptante.getText();
+        int ubicacion = (int)modificarUbicacion.getValue();
+        Double peso = Utils.conversorDouble(modificarPeso.getText());
+
+        if ((chip == null || chip.isEmpty()) && fecha == null && (observaciones == null || observaciones.isEmpty())
+                && (dniAdoptante == null || dniAdoptante.isEmpty()) && ubicacion == 0 && (peso == null || peso == 0.0) &&
+                !modificarEsterilizado.isSelected() &&  !modificarAgresivo.isSelected()) {
+            //todo --> alerta de campos vacíos
+            return false;
+        }
+
+        boolean actualizado = false;
+
+        if (chip != null && !chip.trim().isEmpty()) {
+            if (AnimalDAO.findByChip(chip) == null) {
+                if (AnimalDAO.updateNumeroChip(aSeleccionado, chip)) {
+                    // todo -> alerta éxito — chip actualizado correctamente
+                    actualizado = true;
+                } else {
+                    // todo -> alerta error — no se pudo actualizar el chip
+                }
+            } else {
+                // todo -> alerta error — ya existe un animal con ese chip
+            }
+        }
+
+        if (fecha != null) {
+            if (fecha.isAfter(LocalDate.now())) {
+                // todo -> alerta error — la fecha no puede ser futura
+                return false;
+            } else if (AnimalDAO.updateFechaAlta(aSeleccionado, fecha)) {
+                // todo -> alerta éxito — fecha actualizada correctamente
+                actualizado = true;
+            } else {
+                // todo -> alerta error — no se pudo actualizar la fecha
+            }
+        }
+
+        if (observaciones != null && !observaciones.trim().isEmpty()) {
+            if (AnimalDAO.updateObservaciones(aSeleccionado, observaciones)) {
+                // todo -> alerta éxito — observaciones actualizadas correctamente
+                actualizado = true;
+            } else {
+                // todo -> alerta error — no se pudo actualizar las observaciones
+            }
+        }
+
+        if (!aSeleccionado.isEsterilizado() && modificarEsterilizado.isSelected()) {
+            if (AnimalDAO.updateEsterilizado(aSeleccionado, true)) {
+                // todo -> alerta éxito — esterilizado actualizado correctamente
+                actualizado = true;
+            } else {
+                // todo -> alerta error — no se pudo actualizar esterilizado
+            }
+        } // todo -> esto debería cambiar si cargo los datos
+
+        if (!pSeleccionado.isAgresivo() && modificarAgresivo.isSelected()) {
+            if (PerroDAO.updateAgresivo(pSeleccionado, true)) {
+                // todo -> alerta éxito — agresivo actualizado correctamente
+                actualizado = true;
+            } else {
+                // todo -> alerta error — no se pudo actualizar agresivo
+            }
+        } // todo -> esto debería cambiar si cargo los datos
+
+        if (dniAdoptante != null && !dniAdoptante.trim().isEmpty()) {
+            if (AnimalDAO.updateAdoptante(aSeleccionado, dniAdoptante)) {
+                // todo -> alerta éxito — adoptante actualizado correctamente
+                actualizado = true;
+            } else {
+                // todo -> alerta error — no se pudo actualizar el adoptante
+            }
+        }
+
+        if (ubicacion > 0) {
+            if (AnimalDAO.updateUbicacion(aSeleccionado, ubicacion)) {
+                // todo -> alerta éxito — ubicación actualizada correctamente
+                actualizado = true;
+            } else {
+                // todo -> alerta error — no se pudo actualizar la ubicación
+            }
+        }
+
+        if (peso != null && peso > 0) {
+            if (PerroDAO.updatePeso(pSeleccionado, peso)) {
+                // todo -> alerta éxito — peso actualizado correctamente
+                actualizado = true;
+            } else {
+                // todo -> alerta error — no se pudo actualizar el peso
+            }
+        }
+
+        return actualizado;
+
+    }
+    public void limpiarCampos() {
+        modificarChip.clear();
+        modificarFecha.setValue(null);
+        modificarObservaciones.clear();
+        modificarDniAdoptante.clear();
+        modificarUbicacion.getValueFactory().setValue(0);
+        modificarPeso.clear();
+        modificarEsterilizado.setSelected(false);
+        modificarAgresivo.setSelected(false);
+    }
+
+
+    public void botonGuardarModificacion(ActionEvent event) {
+        modificarAnimal();
+        limpiarCampos();
+        tablaPerros();
     }
 }
 
