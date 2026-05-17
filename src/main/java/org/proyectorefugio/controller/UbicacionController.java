@@ -357,6 +357,10 @@ public class UbicacionController {
 
     //region ------------------- GESTIÓN ELIMINAR UBICACIÓN-------------------
 
+    /**
+     * Método que elimina la ubicación seleccionada de la BBDD
+     * @param event --> acción que ocurre cuando se pulsa el boton
+     */
     public void botonEliminar(ActionEvent event) {
         Ubicacion seleccionada = tablaUbicaciones.getSelectionModel().getSelectedItem();
         panelInsertar.setVisible(false);
