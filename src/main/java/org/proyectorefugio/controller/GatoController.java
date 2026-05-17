@@ -40,6 +40,7 @@ public class GatoController {
     public Button añadirGatoBD;
     public AnchorPane ventanaBuscar;
 
+    //region---------------FMXL BUSCAR-------------------
 
     @FXML
     public TextField buscarId;
@@ -62,7 +63,6 @@ public class GatoController {
     public CheckBox modificarLeucemia;
     public Text textoPeso;
 
-
     //endregion
 
     @FXML
@@ -74,6 +74,7 @@ public class GatoController {
         tablaGatos();
         mostrarInformacionAdicional();
     }
+
     @FXML
     /**
      * Selecciona el check de No adoptados y desmarca el de adoptados.
@@ -156,6 +157,7 @@ public class GatoController {
                     }
                 });
     }
+
     @FXML
     /**
      * Método que cuando al pulsar el botón Añadir abrirá el formulario correspondiente
@@ -166,11 +168,23 @@ public class GatoController {
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/registroAnimal-view.fxml", "Formulario de Registro");
     }
 
+    @FXML
+    /**
+     * Metodo que busca gatos en la base de datos según los filtros introducidos (id, chip, nombre, raza, color).
+     * Prioriza la búsqueda por id y por chip al ser identificadores únicos.
+     * Elimina duplicados usando un HashSet antes de devolver los resultados.
+     * @return --> lista de gatos que coinciden con los criterios de búsqueda
+     */
     public void botonAdoptar(ActionEvent event) {
         FormularioPersonaYAdoptarController.persona = "adoptante";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
         tablaGatos();
+
+        //region---------------BUSCAR GATO-------------------
+
     }
+
+    @FXML
     public void botonBusqueda(ActionEvent event) {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(true);
@@ -225,14 +239,26 @@ public class GatoController {
         //todo --> alertas
     }
 
+    @FXML
+    /**
+     * Ejecuta la búsqueda y actualiza la tabla con los resultados obtenidos.
+     * @param event -> acción que se realiza cuando se pulsa el botón
+     */
     public void botonContinuarBusqueda(ActionEvent event) {
         ObservableList<Gato> resultados =
                 FXCollections.observableArrayList(buscarAnimal());
 
         tablaGatos.setItems(resultados);
     }
-    //region---------------MODIFICAR GATO-------------------
+    //endregion
 
+    //region---------------MODIFICAR GATO-------------------
+    @FXML
+
+    /**
+     * Muestra el panel de modificación y oculta los demás paneles.
+     * @param event -> acción que se realiza cuando se pulsa el botón
+     */
     public void botonModificar(ActionEvent event) {
         panelModificacion.setVisible(true);
         ventanaBuscar.setVisible(false);
@@ -243,6 +269,11 @@ public class GatoController {
         //todo --> cargar datos
     }
 
+    /**
+     * Metodo que recoge los campos rellenos y actualiza la base de datos
+     *
+     * @return --> true si al menos un campo fue actualizado correctamente, false en caso contrario
+     */
     public boolean modificarGato() {
         Gato gSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
         Animal aSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
@@ -344,6 +375,9 @@ public class GatoController {
         return actualizado;
     }
 
+    /**
+     * Metodo que limpia todos los campos del formulario de modificación dejándolos en su estado inicial.
+     */
     public void limpiarCamposGato() {
         modificarChip.clear();
         modificarFecha.setValue(null);
@@ -354,6 +388,11 @@ public class GatoController {
         modificarLeucemia.setSelected(false);
     }
 
+    @FXML
+    /**
+     * Guarda los cambios del formulario de modificación, limpia los campos y recarga la tabla.
+     * @param event -> acción que se realiza cuando se pulsa el botón
+     */
     public void botonGuardarModificacion(ActionEvent event) {
         modificarGato();
         limpiarCamposGato();
@@ -365,7 +404,12 @@ public class GatoController {
 
     //region---------------ELIMINAR GATO-------------------
 
-
+    @FXML
+    /**
+     * Metodo que elimina de la base de datos el gato seleccionado en la tabla,
+     * verificando que existe en GatoDAO.
+     * @param event -> acción que se realiza cuando se pulsa el botón
+     */
     public void botonEliminar(ActionEvent event) {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(false);
@@ -373,12 +417,16 @@ public class GatoController {
         // todo -> confirmacion de alerta de si quiere borrar o no
 
         if (animalSeleccionado == null) {
-
             // todo -> alerta: selecciona un elemento primero
             return;
         }
-        //todo-> confirmacion
-        AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
+
+        if (GatoDAO.findByID(animalSeleccionado.getId()) != null) {
+            //todo-> confirmacion
+            AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
+        } else {
+            //todo -> alerta: ese animal no es un gato
+        }
         initialize();
     }
     //endregion
