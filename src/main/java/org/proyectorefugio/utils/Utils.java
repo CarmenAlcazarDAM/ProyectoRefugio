@@ -1,5 +1,8 @@
 package org.proyectorefugio.utils;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class Utils {
 
     /**
@@ -43,5 +46,13 @@ public class Utils {
             return 0;
         }
         return Integer.parseInt(convertir);
+    }
+
+    public static LocalTime validarHora (String hora){
+        if(hora==null){return null;}
+        if (hora.matches("([01]?[0-9]|2[0-3])?:?([0-5][0-9])?")) {
+            return LocalTime.parse(hora, DateTimeFormatter.ofPattern("HH:mm"));
+        }
+        return null;
     }
 }

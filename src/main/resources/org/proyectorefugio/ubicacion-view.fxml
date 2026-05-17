@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -24,7 +25,7 @@
       </TableView>
       <HBox layoutX="74.0" layoutY="184.0" prefHeight="29.0" prefWidth="654.0" spacing="15.0">
          <children>
-            <Button mnemonicParsing="false" text="Añadir Ubicación" />
+            <Button mnemonicParsing="false" onAction="#botonAñadirUbicacion" text="Añadir Ubicación" />
             <Button mnemonicParsing="false" text="Buscar" />
             <Button mnemonicParsing="false" text="Modificar" />
             <Button mnemonicParsing="false" text="Eliminar" />
@@ -37,13 +38,11 @@
                   <Font name="Segoe UI Semibold" size="14.0" />
                </font>
             </Text>
-            <TextField fx:id="insertarTipo" layoutX="10.0" layoutY="28.0" prefHeight="32.0" prefWidth="190.0" promptText="Ej: chenil / jaula" />
             <Text layoutX="218.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HORA SALIDA" wrappingWidth="104.447265625">
                <font>
                   <Font name="Segoe UI Semibold" size="14.0" />
                </font>
             </Text>
-            <Spinner fx:id="insertarHora" layoutX="217.0" layoutY="28.0" prefHeight="32.0" prefWidth="190.0" />
             <Text layoutX="427.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TIEMPO (min)" wrappingWidth="104.447265625">
                <font>
                   <Font name="Segoe UI Semibold" size="14.0" />
@@ -56,11 +55,13 @@
                </font>
             </Text>
             <Spinner fx:id="insertarCapacidad" layoutX="577.0" layoutY="28.0" prefHeight="32.0" prefWidth="126.0" />
-            <Button layoutX="727.0" layoutY="25.0" mnemonicParsing="false" onAction="#botonContinuarBusqueda" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: #3b668c;" text="Continuar" textFill="WHITE">
+            <Button layoutX="727.0" layoutY="25.0" mnemonicParsing="false" onAction="#botonGuardarUbicacion" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: #3b668c;" text="Guardar" textFill="WHITE">
                <font>
                   <Font name="Segoe UI Semibold" size="14.0" />
                </font>
             </Button>
+            <TextField fx:id="insertarHoraSalida" layoutX="218.0" layoutY="28.0" prefHeight="32.0" prefWidth="190.0" promptText="Ej: 10:30" />
+            <ComboBox fx:id="insertarTipo" layoutX="10.0" layoutY="32.0" prefHeight="26.0" prefWidth="190.0" />
          </children>
       </AnchorPane>
    </children>

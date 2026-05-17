@@ -5,18 +5,23 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.layout.AnchorPane;
+import org.proyectorefugio.enums.Ubicaciones;
 import org.proyectorefugio.model.Animal;
+import org.proyectorefugio.model.Ayuda;
 import org.proyectorefugio.model.Ubicacion;
+import org.proyectorefugio.model.Voluntario;
 import org.proyectorefugio.modelDAO.AnimalDAO;
 import org.proyectorefugio.modelDAO.UbicacionDAO;
+import org.proyectorefugio.utils.Utils;
 
 
+import java.time.LocalTime;
 import java.util.List;
 
 public class UbicacionController {
@@ -37,7 +42,13 @@ public class UbicacionController {
 
     @FXML
     public TableColumn<Ubicacion, Integer> capacidadCol;
+
+    @FXML
     public AnchorPane panelInsertar;
+    public ComboBox insertarTipo;
+    public Spinner insertarTiempo;
+    public Spinner insertarCapacidad;
+    public TextField insertarHoraSalida;
 
 
     @FXML
@@ -47,7 +58,10 @@ public class UbicacionController {
     private void initialize() {
         iniciarTabla();
         panelInsertar.setVisible(false);
+
+
     }
+
 
     /**
      * Método que extrae los datos de las ubicaciones de la base de datos y clasifica la
@@ -91,6 +105,7 @@ public class UbicacionController {
     /**
      * Método que obtiene la cantidad de animales que hay en la actualidad en una determinada
      * ubicacion
+     *
      * @param idUbicacion --> id de la ubicacion de la que vamos a obtener la cantidad
      *                    de animales
      * @return --> devuelve cuantos animales están ocupando la ubicación
@@ -99,4 +114,70 @@ public class UbicacionController {
         List<Animal> animalesEnUbicacion = AnimalDAO.findByUbicacion(idUbicacion);
         return animalesEnUbicacion.size();
     }
+
+    /*-------------------------------GESTIÓN INSERTAR UBICACIÓN------------------------------------*/
+
+    public void insertarUbicacion() {
+        try {
+            if (insertarTipo.getValue() == null || (int) insertarCapacidad.getValue() < 1) {
+                // todo -> alerta
+                return;
+            }
+            Ubicaciones tipo = Ubicaciones.valueOf(insertarTipo.getValue().toString().toUpperCase());
+            String horaTexto = insertarHoraSalida.getText();
+            LocalTime hora = Utils.validarHora(horaTexto);
+            int minutos = (int) insertarTiempo.getValue();
+            int capacidad = (int) insertarCapacidad.getValue();
+
+            Ubicacion u = new Ubicacion(tipo, hora, minutos, capacidad);
+            UbicacionDAO.addUbicacion(u);
+
+
+        } catch (Exception e) {
+            //todo --> alertas y la excepción -> illegalException
+            throw new RuntimeException(e);
+        }
+    }
+    public void limpiarCampos(){
+        insertarTipo.setValue(null);
+        insertarHoraSalida.clear();
+        insertarTiempo.getValueFactory().setValue(0);
+        insertarCapacidad.getValueFactory().setValue(0);
+    }
+    public void botonAñadirUbicacion(ActionEvent event) {
+        panelInsertar.setVisible(true);
+        asignarTiposUbicacion();
+        insertarTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
+        insertarCapacidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
+
+    }
+    /**
+     * Metodo que asigna las opciones de ubicaciones al ComboBox
+     */
+    public void asignarTiposUbicacion() {
+        ObservableList<String> opciones = FXCollections.observableArrayList(
+                "Chenil",
+                "Jaula",
+                "Cuarentena",
+                "Agresivos"
+        );
+
+        insertarTipo.setItems(opciones);
+    }
+
+    public void botonGuardarUbicacion(ActionEvent event) {
+        try {
+            insertarUbicacion();
+        } catch (Exception e) {
+            //todo --> alertas y la excepción -> illegalException --> elarta si no se ha guardado
+            throw new RuntimeException(e);
+        }
+        initialize();
+        limpiarCampos();
+    }
+
+    /*-------------------------------GESTIÓN BUSCAR UBICACIÓN------------------------------------*/
+
+
+
 }
