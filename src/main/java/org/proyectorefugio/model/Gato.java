@@ -37,7 +37,7 @@ public class Gato extends Animal{
     }
 
     /**
-     * Método que convierte en texto el boolean isLeucemiaFelina
+     * Metodo que convierte en texto el boolean isLeucemiaFelina
      * @return --> devuelve una cadena de texto
      */
     public String isLeucemiaFelinaTexto(){

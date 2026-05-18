@@ -72,10 +72,10 @@ public class Perro extends Animal implements Acogible {
 
     @Override
     /**
-     * Método que indica si un perro puede ser acogido no.
+     * Metodo que indica si un perro puede ser acogido no.
      * Si es agresivo no puede ser acogido
      *
-     * Este método existe para una futura ampliación del programa
+     * Este metodo existe para una futura ampliación del programa
      * donde se contemple además de la Adopción, la Acogida de los animales
      * a la espera de una familia que los adopte.
      *
@@ -89,7 +89,7 @@ public class Perro extends Animal implements Acogible {
     }
 
     /**
-     * Método que convierte en texto el boolean isAgresivo
+     * Metodo que convierte en texto el boolean isAgresivo
      * @return --> devuelve una cadena de texto
      */
     public String isAgresivoTexto(){

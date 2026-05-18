@@ -48,7 +48,7 @@ public class Ubicacion {
     }
 
     /**
-     * Método que convierte el tipo de dato LocalTime en String
+     * Metodo que convierte el tipo de dato LocalTime en String
      * para poder gestionarlo cuando tiene valor null. Además la ubicacion
      * de AGRESIVOS no salen al recreo sino que son paseados con correa uno por uno.
      * @return --> devuelve la hora pasada a texto

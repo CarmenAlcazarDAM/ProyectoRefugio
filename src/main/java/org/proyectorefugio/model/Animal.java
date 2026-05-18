@@ -236,7 +236,7 @@ public class Animal {
     }
 
     /**
-     * Método que convierte en texto el boolean isEsterilizado
+     * Metodo que convierte en texto el boolean isEsterilizado
      * @return --> devuelve una cadena de texto
      */
     public String isEsterilizadoTexto(){
