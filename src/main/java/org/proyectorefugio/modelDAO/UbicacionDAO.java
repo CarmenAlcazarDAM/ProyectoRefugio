@@ -160,7 +160,13 @@ public class UbicacionDAO {
         if (u != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT)) {
                 ps.setString(1, u.getTipo().toString().toUpperCase());
-                ps.setTime(2, Time.valueOf(u.getHoraRecreo()));
+                LocalTime horaRecreo = u.getHoraRecreo();
+                if (horaRecreo != null) {
+                    ps.setTime(2, Time.valueOf(horaRecreo));
+                } else {
+                    // inserta NULL , indicando su tipo de dato TIME
+                    ps.setNull(2, java.sql.Types.TIME);
+                }
                 ps.setInt(3, u.getMinutosRecreo());
                 ps.setInt(4, u.getCapacidad());
 
@@ -214,7 +220,6 @@ public class UbicacionDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -237,7 +242,6 @@ public class UbicacionDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -260,7 +264,6 @@ public class UbicacionDAO {
                 int filasAfectadas = ps.executeUpdate();
                 updated = (filasAfectadas > 0);
 
-                updated = true;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

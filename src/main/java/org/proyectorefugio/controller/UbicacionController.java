@@ -14,11 +14,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import org.proyectorefugio.enums.Ubicaciones;
 import org.proyectorefugio.model.Animal;
-import org.proyectorefugio.model.Ayuda;
 import org.proyectorefugio.model.Ubicacion;
-import org.proyectorefugio.model.Voluntario;
 import org.proyectorefugio.modelDAO.AnimalDAO;
-import org.proyectorefugio.modelDAO.AyudaDAO;
 import org.proyectorefugio.modelDAO.UbicacionDAO;
 import org.proyectorefugio.utils.Utils;
 
@@ -71,6 +68,8 @@ public class UbicacionController {
         iniciarTabla();
         panelInsertar.setVisible(false);
         botonInsertado.setVisible(false);
+        insertarTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
+        insertarCapacidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
     }
 
 
@@ -174,6 +173,8 @@ public class UbicacionController {
     public void botonAñadirUbicacion(ActionEvent event) {
         panelInsertar.setVisible(true);
         botonInsertado.setVisible(true);
+        botonActualizar.setVisible(false);
+        botonContinuar.setVisible(false);
         asignarTiposUbicacion();
         cabeceraTiempo.setText("TIEMPO (min)");
         cabeceraCapacidad.setVisible(true);
@@ -204,7 +205,7 @@ public class UbicacionController {
             //todo --> alertas y la excepción -> illegalException --> elarta si no se ha guardado
             throw new RuntimeException(e);
         }
-        initialize();
+        iniciarTabla();
         limpiarCampos();
     }
     //endregion
@@ -219,14 +220,15 @@ public class UbicacionController {
      */
     public void botonBusqueda(ActionEvent event) {
         panelInsertar.setVisible(true);
-        botonInsertado.setVisible(false);
         botonContinuar.setVisible(true);
+        botonInsertado.setVisible(false);
+        botonActualizar.setVisible(false);
         cabeceraTiempo.setText("ID");
         cabeceraCapacidad.setVisible(false);
         insertarCapacidad.setVisible(false);
         insertarTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
+        insertarCapacidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
         asignarTiposUbicacion();
-
     }
 
     /**
@@ -311,6 +313,7 @@ public class UbicacionController {
         insertarCapacidad.setVisible(true);
         insertarTiempo.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
         insertarCapacidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
+        iniciarTabla();
     }
 
     /**
