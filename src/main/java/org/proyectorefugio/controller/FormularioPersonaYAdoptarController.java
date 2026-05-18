@@ -78,7 +78,9 @@ public class FormularioPersonaYAdoptarController {
             if (nombre.trim().isEmpty() || apellidos.trim().isEmpty() ||
                     dni.trim().isEmpty() || telefono.trim().isEmpty()||
                     correo.trim().isEmpty() || domicilio.trim().isEmpty()) { //.trim() --> elimina los espacios del principio y del final, no los entre palabras
+
                 Mensajes.aletaObligatoriosCamposVacios("Debe completar todos los campos obligatorios");
+
                 return null;
             }
             return new Persona(dni, nombre, apellidos, telefono, correo, domicilio);
@@ -97,7 +99,6 @@ public class FormularioPersonaYAdoptarController {
      * @param event --> evento que ocurre cuando pulsas el boton
      */
     public void guardarInformacion(ActionEvent event) {
-        //todo-> creo que no guarda la información, comprobar launcher y que guarde
         Persona registrar = obtenerInformacionPersonaDelFormulario();
         if(registrar==null){
             return;
@@ -120,17 +121,17 @@ public class FormularioPersonaYAdoptarController {
             }
         }
 
-
         if ("voluntario".equals(persona)) {
             if (VoluntarioDAO.findByDni(registrar.getDni()) == null) {
                 VoluntarioDAO.addVoluntario(registrar);
             }
         }
-        // todo ->  añadir un Alert flotante confirmando el éxito y cierre el formulario
+
         limpiarCampos();
 
         Stage stage = (Stage) botonCancelar.getScene().getWindow();
         stage.close();
+        Mensajes.operacionCompletada("Registro completado");
 
     }
 
