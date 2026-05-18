@@ -14,12 +14,15 @@ import org.proyectorefugio.model.Gato;
 import org.proyectorefugio.modelDAO.AnimalDAO;
 import org.proyectorefugio.modelDAO.GatoDAO;
 import org.proyectorefugio.utils.Utils;
+import org.proyectorefugio.view.Mensajes;
 import org.proyectorefugio.view.SceneManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+//todo -> comentarios
 
 public class GatoController {
     @FXML
@@ -79,7 +82,7 @@ public class GatoController {
     /**
      * Se encarga de ocultar todos los AnchorPane que puedan estar visibles
      */
-    private void ocultarTodosPaneles(){
+    private void ocultarTodosPaneles() {
         ventanaBuscar.setVisible(false);
         panelModificacion.setVisible(false);
 
@@ -188,7 +191,7 @@ public class GatoController {
     @FXML
     /**
      * Metodo que busca gatos en la base de datos según los filtros introducidos (id, chip, nombre, raza, color).
-     * Prioriza la búsqueda por id y por chip al ser identificadores únicos.
+     * Prioriza la búsqueda por su id y por chip al ser identificadores únicos.
      * Elimina duplicados usando un HashSet antes de devolver los resultados.
      * @return --> lista de gatos que coinciden con los criterios de búsqueda
      */
@@ -215,13 +218,19 @@ public class GatoController {
         if (idAnimalTexto != null) {
             idAnimal = Utils.conversorInt(idAnimalTexto);
         }
-        ;
         String nombreAnimal = buscarNombre.getText();
         String chipAnimal = buscarChip.getText();
         String razaAnimal = buscarRaza.getText();
         String colorAnimal = buscarColor.getText();
 
         boolean buscarNoAdoptados = noAdoptado.isSelected();
+
+        if (idAnimalTexto.isEmpty() && chipAnimal.isEmpty() &&
+                nombreAnimal.isEmpty() && razaAnimal.isEmpty() && colorAnimal.isEmpty()) {
+            Mensajes.aletaObligatoriosCamposVacios("Introduce al menos un criterio de búsqueda");
+            tablaGatos();
+            return null;
+        }
 
         List<Gato> resultadosEncontrados = new ArrayList<>();
 
@@ -230,6 +239,9 @@ public class GatoController {
             if (p != null) {
                 resultadosEncontrados.add(p);
                 return resultadosEncontrados;
+            } else {
+                Mensajes.alertaNoExiste("No existe ningún gato con el ID: " + idAnimalTexto);
+                return new ArrayList<>();
             }
         }
         if (chipAnimal != null && !chipAnimal.isEmpty()) {
@@ -237,6 +249,9 @@ public class GatoController {
             if (g != null) {
                 resultadosEncontrados.add(g);
                 return resultadosEncontrados;
+            } else {
+                Mensajes.alertaNoExiste("El número de chip " + chipAnimal + "no existe en nuestros registros");
+                return new ArrayList<>();
             }
         }
         if (nombreAnimal != null && !nombreAnimal.isEmpty()) {
@@ -254,204 +269,210 @@ public class GatoController {
 
         HashSet<Gato> busquedaFinal = new HashSet<>(resultadosEncontrados);
         busquedaFinal.remove(null);
+
+        if (busquedaFinal.isEmpty()) {
+            Mensajes.alertaErrorDeRegistro("No se encontraron resultados en la base de datos");
+            return new ArrayList<>();
+        }
+
         return new ArrayList<>(busquedaFinal);
-        //todo --> alertas
     }
 
-    @FXML
-    /**
-     * Ejecuta la búsqueda y actualiza la tabla con los resultados obtenidos.
-     * @param event -> acción que se realiza cuando se pulsa el botón
-     */
-    public void botonContinuarBusqueda(ActionEvent event) {
-        ObservableList<Gato> resultados =
-                FXCollections.observableArrayList(buscarAnimal());
 
-        tablaGatos.setItems(resultados);
-    }
-    //endregion
+        @FXML
+        /**
+         * Ejecuta la búsqueda y actualiza la tabla con los resultados obtenidos.
+         * @param event -> acción que se realiza cuando se pulsa el botón
+         */
+        public void botonContinuarBusqueda(ActionEvent event) {
+            ObservableList<Gato> resultados =
+                    FXCollections.observableArrayList(buscarAnimal());
 
-    //region---------------MODIFICAR GATO-------------------
-    @FXML
+            tablaGatos.setItems(resultados);
+        }
+        //endregion
 
-    /**
-     * Muestra el panel de modificación y oculta los demás paneles.
-     * @param event -> acción que se realiza cuando se pulsa el botón
-     */
-    public void botonModificar(ActionEvent event) {
-        panelModificacion.setVisible(true);
-        ventanaBuscar.setVisible(false);
-        informacionAdicional.setVisible(false);
-        modificarUbicacion.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
-        modificarPeso.setVisible(false);
-        textoPeso.setVisible(false);
-        //todo --> cargar datos
-    }
+        //region---------------MODIFICAR GATO-------------------
+        @FXML
 
-    /**
-     * Metodo que recoge los campos rellenos y actualiza la base de datos
-     *
-     * @return --> true si al menos un campo fue actualizado correctamente, false en caso contrario
-     */
-    public boolean modificarGato() {
-        informacionAdicional.setVisible(false);
-        Gato gSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
-        Animal aSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
-
-        if (gSeleccionado == null || aSeleccionado == null) {
-            // todo -> alerta: selecciona un elemento primero
-            return false;
+        /**
+         * Muestra el panel de modificación y oculta los demás paneles.
+         * @param event -> acción que se realiza cuando se pulsa el botón
+         */
+        public void botonModificar(ActionEvent event) {
+            panelModificacion.setVisible(true);
+            ventanaBuscar.setVisible(false);
+            informacionAdicional.setVisible(false);
+            modificarUbicacion.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
+            modificarPeso.setVisible(false);
+            textoPeso.setVisible(false);
+            tablaGatos();
         }
 
-        String chip = modificarChip.getText();
-        LocalDate fecha = modificarFecha.getValue();
-        String observaciones = modificarObservaciones.getText();
-        String dniAdoptante = modificarDniAdoptante.getText();
-        int ubicacion = (int) modificarUbicacion.getValue();
+        /**
+         * Metodo que recoge los campos rellenos y actualiza la base de datos
+         *
+         * @return --> true si al menos un campo fue actualizado correctamente, false en caso contrario
+         */
+        public boolean modificarGato() {
+            informacionAdicional.setVisible(false);
+            Gato gSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
+            Animal aSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
 
-        if ((chip == null || chip.trim().isEmpty()) &&
-                fecha == null &&
-                (observaciones == null || observaciones.trim().isEmpty()) &&
-                (dniAdoptante == null || dniAdoptante.trim().isEmpty()) &&
-                ubicacion == 0 &&
-                !modificarEsterilizado.isSelected() &&
-                !modificarLeucemia.isSelected()) {
-            // todo -> alerta: no ha rellenado ningún campo
-            return false;
-        }
+            if (gSeleccionado == null || aSeleccionado == null) {
+                // todo -> alerta: selecciona un elemento primero
+                return false;
+            }
 
-        boolean actualizado = false;
+            String chip = modificarChip.getText();
+            LocalDate fecha = modificarFecha.getValue();
+            String observaciones = modificarObservaciones.getText();
+            String dniAdoptante = modificarDniAdoptante.getText();
+            int ubicacion = (int) modificarUbicacion.getValue();
 
-        if (chip != null && !chip.trim().isEmpty()) {
-            if (AnimalDAO.findByChip(chip) == null) {
-                if (AnimalDAO.updateNumeroChip(aSeleccionado, chip)) {
-                    // todo -> alerta éxito — chip actualizado correctamente
+            if ((chip == null || chip.trim().isEmpty()) &&
+                    fecha == null &&
+                    (observaciones == null || observaciones.trim().isEmpty()) &&
+                    (dniAdoptante == null || dniAdoptante.trim().isEmpty()) &&
+                    ubicacion == 0 &&
+                    !modificarEsterilizado.isSelected() &&
+                    !modificarLeucemia.isSelected()) {
+                // todo -> alerta: no ha rellenado ningún campo
+                return false;
+            }
+
+            boolean actualizado = false;
+
+            if (chip != null && !chip.trim().isEmpty()) {
+                if (AnimalDAO.findByChip(chip) == null) {
+                    if (AnimalDAO.updateNumeroChip(aSeleccionado, chip)) {
+                        // todo -> alerta éxito — chip actualizado correctamente
+                        actualizado = true;
+                    } else {
+                        // todo -> alerta error — no se pudo actualizar el chip
+                    }
+                } else {
+                    // todo -> alerta error — ya existe un animal con ese chip
+                }
+            }
+
+            if (fecha != null) {
+                if (fecha.isAfter(LocalDate.now())) {
+                    // todo -> alerta error — la fecha no puede ser futura
+                    return false;
+                } else if (AnimalDAO.updateFechaAlta(aSeleccionado, fecha)) {
+                    // todo -> alerta éxito — fecha actualizada correctamente
                     actualizado = true;
                 } else {
-                    // todo -> alerta error — no se pudo actualizar el chip
+                    // todo -> alerta error — no se pudo actualizar la fecha
                 }
-            } else {
-                // todo -> alerta error — ya existe un animal con ese chip
             }
+
+            if (observaciones != null && !observaciones.trim().isEmpty()) {
+                if (AnimalDAO.updateObservaciones(aSeleccionado, observaciones)) {
+                    // todo -> alerta éxito — observaciones actualizadas correctamente
+                    actualizado = true;
+                } else {
+                    // todo -> alerta error — no se pudo actualizar las observaciones
+                }
+            }
+
+            if (!aSeleccionado.isEsterilizado() && modificarEsterilizado.isSelected()) {
+                if (AnimalDAO.updateEsterilizado(aSeleccionado, true)) {
+                    // todo -> alerta éxito — esterilizado actualizado correctamente
+                    actualizado = true;
+                } else {
+                    // todo -> alerta error — no se pudo actualizar esterilizado
+                }
+            } // todo -> esto debería cambiar si cargo los datos
+
+            if (!gSeleccionado.isLeucemiaFelina() && modificarLeucemia.isSelected()) {
+                if (GatoDAO.updateLeucemia(gSeleccionado, true)) {
+                    // todo -> alerta éxito — leucemia actualizada correctamente
+                    actualizado = true;
+                } else {
+                    // todo -> alerta error — no se pudo actualizar leucemia
+                }
+            } // todo -> esto debería cambiar si cargo los datos
+
+            if (dniAdoptante != null && !dniAdoptante.trim().isEmpty()) {
+                if (AnimalDAO.updateAdoptante(aSeleccionado, dniAdoptante)) {
+                    // todo -> alerta éxito — adoptante actualizado correctamente
+                    actualizado = true;
+                } else {
+                    // todo -> alerta error — no se pudo actualizar el adoptante
+                }
+            }
+
+            if (ubicacion > 0) {
+                if (AnimalDAO.updateUbicacion(aSeleccionado, ubicacion)) {
+                    // todo -> alerta éxito — ubicación actualizada correctamente
+                    actualizado = true;
+                } else {
+                    // todo -> alerta error — no se pudo actualizar la ubicación
+                }
+            }
+
+            return actualizado;
         }
 
-        if (fecha != null) {
-            if (fecha.isAfter(LocalDate.now())) {
-                // todo -> alerta error — la fecha no puede ser futura
-                return false;
-            } else if (AnimalDAO.updateFechaAlta(aSeleccionado, fecha)) {
-                // todo -> alerta éxito — fecha actualizada correctamente
-                actualizado = true;
-            } else {
-                // todo -> alerta error — no se pudo actualizar la fecha
-            }
+        /**
+         * Metodo que limpia todos los campos del formulario de modificación dejándolos en su estado inicial.
+         */
+        public void limpiarCamposGato() {
+            modificarChip.clear();
+            modificarFecha.setValue(null);
+            modificarObservaciones.clear();
+            modificarDniAdoptante.clear();
+            modificarUbicacion.getValueFactory().setValue(0);
+            modificarEsterilizado.setSelected(false);
+            modificarLeucemia.setSelected(false);
         }
 
-        if (observaciones != null && !observaciones.trim().isEmpty()) {
-            if (AnimalDAO.updateObservaciones(aSeleccionado, observaciones)) {
-                // todo -> alerta éxito — observaciones actualizadas correctamente
-                actualizado = true;
-            } else {
-                // todo -> alerta error — no se pudo actualizar las observaciones
-            }
+        @FXML
+        /**
+         * Guarda los cambios del formulario de modificación, limpia los campos y recarga la tabla.
+         * @param event -> acción que se realiza cuando se pulsa el botón
+         */
+        public void botonGuardarModificacion(ActionEvent event) {
+            modificarGato();
+            limpiarCamposGato();
+            panelModificacion.setVisible(false);
+            tablaGatos();
+            informacionAdicional.setVisible(false);
         }
 
-        if (!aSeleccionado.isEsterilizado() && modificarEsterilizado.isSelected()) {
-            if (AnimalDAO.updateEsterilizado(aSeleccionado, true)) {
-                // todo -> alerta éxito — esterilizado actualizado correctamente
-                actualizado = true;
-            } else {
-                // todo -> alerta error — no se pudo actualizar esterilizado
+        //endregion
+
+
+        //region---------------ELIMINAR GATO-------------------
+
+        @FXML
+        /**
+         * Metodo que elimina de la base de datos el gato seleccionado en la tabla,
+         * verificando que existe en GatoDAO.
+         * @param event -> acción que se realiza cuando se pulsa el botón
+         */
+        public void botonEliminar(ActionEvent event) {
+            informacionAdicional.setVisible(false);
+            ventanaBuscar.setVisible(false);
+            Animal animalSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
+            // todo -> confirmacion de alerta de si quiere borrar o no
+
+            if (animalSeleccionado == null) {
+                // todo -> alerta: selecciona un elemento primero
+                return;
             }
-        } // todo -> esto debería cambiar si cargo los datos
 
-        if (!gSeleccionado.isLeucemiaFelina() && modificarLeucemia.isSelected()) {
-            if (GatoDAO.updateLeucemia(gSeleccionado, true)) {
-                // todo -> alerta éxito — leucemia actualizada correctamente
-                actualizado = true;
+            if (GatoDAO.findByID(animalSeleccionado.getId()) != null) {
+                //todo-> confirmacion
+                AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
             } else {
-                // todo -> alerta error — no se pudo actualizar leucemia
+                //todo -> alerta: ese animal no es un gato
             }
-        } // todo -> esto debería cambiar si cargo los datos
-
-        if (dniAdoptante != null && !dniAdoptante.trim().isEmpty()) {
-            if (AnimalDAO.updateAdoptante(aSeleccionado, dniAdoptante)) {
-                // todo -> alerta éxito — adoptante actualizado correctamente
-                actualizado = true;
-            } else {
-                // todo -> alerta error — no se pudo actualizar el adoptante
-            }
+            initialize();
         }
-
-        if (ubicacion > 0) {
-            if (AnimalDAO.updateUbicacion(aSeleccionado, ubicacion)) {
-                // todo -> alerta éxito — ubicación actualizada correctamente
-                actualizado = true;
-            } else {
-                // todo -> alerta error — no se pudo actualizar la ubicación
-            }
-        }
-
-        return actualizado;
-    }
-
-    /**
-     * Metodo que limpia todos los campos del formulario de modificación dejándolos en su estado inicial.
-     */
-    public void limpiarCamposGato() {
-        modificarChip.clear();
-        modificarFecha.setValue(null);
-        modificarObservaciones.clear();
-        modificarDniAdoptante.clear();
-        modificarUbicacion.getValueFactory().setValue(0);
-        modificarEsterilizado.setSelected(false);
-        modificarLeucemia.setSelected(false);
-    }
-
-    @FXML
-    /**
-     * Guarda los cambios del formulario de modificación, limpia los campos y recarga la tabla.
-     * @param event -> acción que se realiza cuando se pulsa el botón
-     */
-    public void botonGuardarModificacion(ActionEvent event) {
-        modificarGato();
-        limpiarCamposGato();
-        panelModificacion.setVisible(false);
-        tablaGatos();
-        informacionAdicional.setVisible(false);
-    }
-
-    //endregion
-
-
-    //region---------------ELIMINAR GATO-------------------
-
-    @FXML
-    /**
-     * Metodo que elimina de la base de datos el gato seleccionado en la tabla,
-     * verificando que existe en GatoDAO.
-     * @param event -> acción que se realiza cuando se pulsa el botón
-     */
-    public void botonEliminar(ActionEvent event) {
-        informacionAdicional.setVisible(false);
-        ventanaBuscar.setVisible(false);
-        Animal animalSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
-        // todo -> confirmacion de alerta de si quiere borrar o no
-
-        if (animalSeleccionado == null) {
-            // todo -> alerta: selecciona un elemento primero
-            return;
-        }
-
-        if (GatoDAO.findByID(animalSeleccionado.getId()) != null) {
-            //todo-> confirmacion
-            AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
-        } else {
-            //todo -> alerta: ese animal no es un gato
-        }
-        initialize();
-    }
-    //endregion
+        //endregion
 }
 
 

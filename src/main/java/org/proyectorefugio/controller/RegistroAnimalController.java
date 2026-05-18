@@ -103,6 +103,7 @@ public class RegistroAnimalController {
         String edad = infoEdad.getText();
         String marcasDistintivas = infoMarcas.getText();
         String numeroChip = infoChip.getText();
+        // todo-> arreglar que siempre hay fecha de ingreso, si es null que se ponga por defecto la fecha del sistema
         LocalDate fechaIngreso = infoFecha.getValue();
 
         Boolean esterilizado;
