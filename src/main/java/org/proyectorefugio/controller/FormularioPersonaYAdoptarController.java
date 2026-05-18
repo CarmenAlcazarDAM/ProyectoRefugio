@@ -6,13 +6,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import jdk.jshell.execution.Util;
 import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Persona;
 import org.proyectorefugio.modelDAO.*;
 import org.proyectorefugio.utils.Utils;
+import org.proyectorefugio.view.Mensajes;
 
 import java.time.LocalDate;
 
+//todo-> hay métodos sin comentar
 public class FormularioPersonaYAdoptarController {
     //Cuando el correspondiente controlador inicie el formulario
     // le va a dar a persona un valor "voluntario" o "adoptante".
@@ -73,18 +76,17 @@ public class FormularioPersonaYAdoptarController {
 
 
             if (nombre.trim().isEmpty() || apellidos.trim().isEmpty() ||
-                    dni.trim().isEmpty() || telefono.trim().isEmpty()) { //.trim() --> elimina los espacios del principio y del final, no los entre palabras
-               //todo --> aqui puedo añadir alertas de campos obligatorios
+                    dni.trim().isEmpty() || telefono.trim().isEmpty()||
+                    correo.trim().isEmpty() || domicilio.trim().isEmpty()) { //.trim() --> elimina los espacios del principio y del final, no los entre palabras
+                Mensajes.aletaObligatoriosCamposVacios("Debe completar todos los campos obligatorios");
                 return null;
             }
             return new Persona(dni, nombre, apellidos, telefono, correo, domicilio);
 
         } catch (Exception e) {
-            System.out.println("Ocurrió un error al intentar guardar el registro: " + e.getMessage());
-
-            //todo -> alertas de error
+            Mensajes.alertaErrorDeRegistro(e.getMessage());
+            return null;
         }
-        return null;
     }
 
 
@@ -95,7 +97,7 @@ public class FormularioPersonaYAdoptarController {
      * @param event --> evento que ocurre cuando pulsas el boton
      */
     public void guardarInformacion(ActionEvent event) {
-        //todo-> creo que no guarda la informacion, comprobar launcher y que guarde
+        //todo-> creo que no guarda la información, comprobar launcher y que guarde
         Persona registrar = obtenerInformacionPersonaDelFormulario();
         if(registrar==null){
             return;
