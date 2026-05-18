@@ -8,7 +8,7 @@ import java.util.Date;
 public class Utils {
 
     /**
-     * Método que valida si un DNI o NIE introducido es correcto.
+     * Metodo que valida si un DNI o NIE introducido es correcto.
      * Un DNI es correcto si tiene una cadena de caracteres de 8 números y 1 letra de A-Z.
      * Un NIE  es correcto si tiene una cadena de caracteres con 1 letra (X, Y o Z), 7 números y 1 letra de A-Z.
      * (Regular expression validadas con: regex101.com)
@@ -25,7 +25,7 @@ public class Utils {
     }
 
     /**
-     * Método de valida si un número de chip es correcto.
+     * Metodo de valida si un número de chip es correcto.
      * Para ello debe ser una cadena de caracteres con 15 números.
      *
      * @param chip --> número de chip a validar pasado por parámetro.
@@ -78,7 +78,7 @@ public class Utils {
     }
 
     /**
-     * Metodo que valida  una fecha introducida para que no sea posterior
+     * Metodo que valida una fecha introducida para que no sea posterior
      * al día actual del sistema
      * @param fecha --> fecha a comprobar pasada por parámetro
      * @return --> devuelve true si la fecha introducida es correcta
