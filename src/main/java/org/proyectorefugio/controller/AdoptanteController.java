@@ -40,7 +40,7 @@ public class AdoptanteController {
     }
 
     /**
-     * Método que extrae los datos de los adoptantes de la base de datos y clasifica la
+     * Metodo que extrae los datos de los adoptantes de la base de datos y clasifica la
      * información por columnas en una tabla.
      */
     public void tablaAdoptantes() {
@@ -61,7 +61,7 @@ public class AdoptanteController {
     }
 
     /**
-     * Método que muestra toda la información del Adoptante cuando seleccionas sobre él en la tabla
+     * Metodo que muestra toda la información del Adoptante cuando seleccionas sobre él en la tabla
      * La información aparece en un recuadro Label que aparece cuando das el primer click.
      */
     public void mostrarInformacionAdicional() {

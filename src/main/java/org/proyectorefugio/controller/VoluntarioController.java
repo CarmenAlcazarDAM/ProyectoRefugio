@@ -14,11 +14,9 @@ import org.proyectorefugio.modelDAO.*;
 import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.SceneManager;
 
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class VoluntarioController {
     //region ------------------- FXML-------------------
@@ -117,7 +115,7 @@ public class VoluntarioController {
     //region ------------------- LABEL INFORMACIÓN ADICIONAL-------------------
 
     /**
-     * Método que muestra toda la información del Voluntario cuando seleccionas sobre él en la tabla
+     * Metodo que muestra toda la información del Voluntario cuando seleccionas sobre él en la tabla
      * La información aparece en un recuadro Label que aparece cuando das el primer click.
      */
     public void mostrarInformacionAdicional() {
@@ -156,7 +154,7 @@ public class VoluntarioController {
     //region ------------------- INSERTAR VOLUNTARIO -------------------
 
     /**
-     * Método que cuando al pulsar el botón "Nuevo Voluntario" abrirá el formulario correspondiente
+     * Metodo que cuando al pulsar el botón "Nuevo Voluntario" abrirá el formulario correspondiente
      *
      * @param event --> acción que se va a llevar a cabo
      */

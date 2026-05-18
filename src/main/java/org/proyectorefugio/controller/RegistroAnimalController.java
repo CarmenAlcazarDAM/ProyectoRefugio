@@ -56,8 +56,6 @@ public class RegistroAnimalController {
     public void initialize() {
         asignarOpcionesSexo();
         definirTipoAnimal();
-
-
     }
 
     /**

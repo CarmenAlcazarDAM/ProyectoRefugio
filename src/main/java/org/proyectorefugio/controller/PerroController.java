@@ -115,7 +115,7 @@ public class PerroController {
     }
 
     /**
-     * Método que extrae los datos de los perros de la base de datos y clasifica la
+     * Metodo que extrae los datos de los perros de la base de datos y clasifica la
      * información por columnas en una tabla.
      */
     public void tablaPerros() {
@@ -134,7 +134,7 @@ public class PerroController {
 
 
     /**
-     * Método que muestra toda la información del Perro cuando seleccionas sobre él en la tabla
+     * Metodo que muestra toda la información del Perro cuando seleccionas sobre él en la tabla
      * La información aparece en un recuadro Label que aparece cuando das el primer click.
      */
     public void mostrarInformacionAdicional() {
@@ -183,7 +183,7 @@ public class PerroController {
     //region---------------INSERTAR-------------------
 
     /**
-     * Método que cuando al pulsar el botón Añadir abrirá el formulario correspondiente
+     * Metodo que cuando al pulsar el botón Añadir abrirá el formulario correspondiente
      *
      * @param event --> acción que se va a llevar a cabo
      */
