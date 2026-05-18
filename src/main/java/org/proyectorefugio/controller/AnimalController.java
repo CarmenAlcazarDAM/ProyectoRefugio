@@ -7,9 +7,9 @@ import javafx.scene.layout.AnchorPane;
 
 import org.proyectorefugio.view.SceneManager;
 
-import java.io.IOException;
 
 public class AnimalController {
+    //todo -> faltan comentarios
     @FXML
     private AnchorPane panelContenido;
 
