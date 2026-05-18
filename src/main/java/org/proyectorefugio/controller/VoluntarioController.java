@@ -113,6 +113,13 @@ public class VoluntarioController {
 
         listaVoluntarios.getSelectionModel().selectedItemProperty().addListener((observable, anterior, seleccionado) -> {
             if (seleccionado != null) {
+                Voluntario v = VoluntarioDAO.findByDni(seleccionado.getDni());
+                if(v ==null){return;}
+
+                informacionAdicional.setVisible(true);
+                ventanaBuscar.setVisible(false);
+
+
                 informacionAdicional.setText(
                         "Nombre: " + seleccionado.getNombre() + "\n" +
                                 "DNI: " + seleccionado.getDni() + "\n" +
