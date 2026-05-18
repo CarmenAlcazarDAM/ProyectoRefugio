@@ -1,5 +1,7 @@
 package org.proyectorefugio.view;
 
+import javafx.scene.control.Alert;
+
 public class Mensajes {
 
     /**
@@ -27,6 +29,24 @@ public class Mensajes {
     }
 
     //region----------MENSAJES ALERTA--------------
+    //todo-> comentar los métodos
+
+    public static void aletaObligatoriosCamposVacios(String mensaje){
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle("Error en el registro");
+        alerta.setHeaderText("Campo obligatorio vacío");
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+    public static void alertaErrorDeRegistro(String mensaje){
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle("ATENCIÓN");
+        alerta.setHeaderText("No se ha podido completar el registro");
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
 
 
 
