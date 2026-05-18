@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+//todo-> comentarios
 public class Utils {
 
     /**
@@ -24,6 +25,18 @@ public class Utils {
         return false;
     }
 
+    public static boolean validarTelefono(String telefono) {
+        if (telefono != null) {
+            //por si ponen espacios entre números
+            String telefonoSinEspacios = telefono.replaceAll("[\\s-]", "");
+            if (telefonoSinEspacios.matches("\\+?\\d{9,15}")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     /**
      * Metodo de valida si un número de chip es correcto.
      * Para ello debe ser una cadena de caracteres con 15 números.
@@ -37,6 +50,7 @@ public class Utils {
         }
         return false;
     }
+
     /**
      * Metodo que convierte el texto introducido por teclado a tipo de dato int
      *
@@ -65,12 +79,15 @@ public class Utils {
 
     /**
      * Metodo que valida la hora introducida que esté en el formato correcto
+     *
      * @param hora --> hora a comprobar pasada por parámetro
      * @return --> devuelve la hora introducida como String y
      * la devuelve validada en formato LocalTime
      */
-    public static LocalTime validarHora (String hora){
-        if(hora==null){return null;}
+    public static LocalTime validarHora(String hora) {
+        if (hora == null) {
+            return null;
+        }
         if (hora.matches("([01]?[0-9]|2[0-3]):([0-5][0-9])")) {
             return LocalTime.parse(hora, DateTimeFormatter.ofPattern("H:mm"));
         }
@@ -80,6 +97,7 @@ public class Utils {
     /**
      * Metodo que valida una fecha introducida para que no sea posterior
      * al día actual del sistema
+     *
      * @param fecha --> fecha a comprobar pasada por parámetro
      * @return --> devuelve true si la fecha introducida es correcta
      */
