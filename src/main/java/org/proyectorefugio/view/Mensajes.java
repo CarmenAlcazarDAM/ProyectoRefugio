@@ -33,7 +33,7 @@ public class Mensajes {
 
     public static void aletaObligatoriosCamposVacios(String mensaje){
         Alert alerta = new Alert(Alert.AlertType.ERROR);
-        alerta.setTitle("Error en el registro");
+        alerta.setTitle("ATENCIÓN");
         alerta.setHeaderText("Campo obligatorio vacío");
         alerta.setContentText(mensaje);
         alerta.showAndWait();
@@ -47,9 +47,18 @@ public class Mensajes {
         alerta.showAndWait();
     }
 
-    //enregion
+    public static void alertaNoExiste(String mensaje){
+        Alert alerta = new Alert(Alert.AlertType.WARNING);
+        alerta.setTitle("ATENCIÓN");
+        alerta.setHeaderText("Búsqueda no encontrada");
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
+    //endregion
 
     //region----------MENSAJES CONFIRMACIONES--------------
+
     public static void operacionCompletada(String mensaje){
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setTitle("Operación completada");
@@ -58,7 +67,10 @@ public class Mensajes {
         alerta.showAndWait();
     }
 
-
     //endregion
 
+
+    //region----------MENSAJES BÚSQUEDAS--------------
+
+    //endregion
 }

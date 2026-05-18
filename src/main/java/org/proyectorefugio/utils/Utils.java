@@ -2,6 +2,7 @@ package org.proyectorefugio.utils;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ public class Utils {
     /**
      * Metodo que valida si un DNI o NIE introducido es correcto.
      * Un DNI es correcto si tiene una cadena de caracteres de 8 números y 1 letra de A-Z.
-     * Un NIE  es correcto si tiene una cadena de caracteres con 1 letra (X, Y o Z), 7 números y 1 letra de A-Z.
+     * Un NIE es correcto si tiene una cadena de caracteres con 1 letra (X, Y o Z), 7 números y 1 letra de A-Z.
      * (Regular expression validadas con: regex101.com)
      *
      * @param dni --> dni o nie a validar pasado por parámetro.
@@ -45,7 +46,8 @@ public class Utils {
      * @return --> devuelve true si el dni está correctamente escrito
      */
     public static boolean validaChip(String chip) {
-        if ((chip != null) && chip.matches("[0-9]{15}")) {
+        if (chip == null){return true;}
+        if (chip.matches("[0-9]{15}")) {
             return true;
         }
         return false;
@@ -107,4 +109,5 @@ public class Utils {
         }
         return !fecha.isAfter(LocalDate.now());
     }
+
 }

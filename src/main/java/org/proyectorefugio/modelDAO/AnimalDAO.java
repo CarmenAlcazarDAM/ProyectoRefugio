@@ -4,6 +4,7 @@ import org.proyectorefugio.model.Animal;
 
 import org.proyectorefugio.dataAccess.ConnectionBD;
 import org.proyectorefugio.enums.Sexo;
+import org.proyectorefugio.utils.Utils;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,7 +32,7 @@ public class AnimalDAO {
     private final static String SQL_FIND_BY_UBICACION_AND_ALTA = "SELECT * FROM animal WHERE idUbicacion = ? AND fechaALTA IS NULL";
 
 
-    private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo,color,edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+    private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion, fechaIngreso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String SQL_DELETE_BY_ID = "DELETE animal FROM animal WHERE id = ?";
 
@@ -250,6 +251,7 @@ public class AnimalDAO {
                 ps.setString(9, animal.getHistoria());
                 ps.setString(10, animal.getObservaciones());
                 ps.setInt(11, animal.getIdUbicacion());
+                ps.setDate(12, (Date) animal.getFechaIngreso());
 
                 ps.executeUpdate();
 

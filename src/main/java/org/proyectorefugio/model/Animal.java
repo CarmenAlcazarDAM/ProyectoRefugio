@@ -5,6 +5,7 @@ import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.Mensajes;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
@@ -26,21 +27,22 @@ public class Animal {
     private String dniAdoptante;
     private int idUbicacion;
 
-    public Animal(int id, String nombre, String raza, Sexo sexo){
+    public Animal(int id, String nombre, String raza, Sexo sexo) {
         this.id = id;
         this.nombre = nombre;
         this.raza = raza;
         this.sexo = sexo;
     }
+
     public Animal(int id, String nombre, String raza, Sexo sexo, String marcasDistintivas,
                   String numeroChip, boolean esterilizado, String historia,
-                   String observaciones, Date fechaIngreso, int idUbicacion) {
+                  String observaciones, Date fechaIngreso, int idUbicacion) {
         this.id = id;
         this.nombre = nombre;
         this.raza = raza;
         this.sexo = sexo;
         this.marcasDistintivas = marcasDistintivas;
-        this.numeroChip = numeroChip;
+        setNumeroChip(numeroChip);
         this.esterilizado = esterilizado;
         this.historia = historia;
         this.observaciones = observaciones;
@@ -49,7 +51,10 @@ public class Animal {
     }
 
     //este se usa en AnimalDAO
-    public Animal(int id, String nombre, String raza, Sexo sexo, String color, String edad, String marcasDistintivas, String numeroChip, boolean esterilizado, String historia, String observaciones, Date fechaIngreso, boolean adoptado, Date fechaAlta, String dniAdoptante, int idUbicacion) {
+    public Animal(int id, String nombre, String raza, Sexo sexo, String color, String edad,
+                  String marcasDistintivas, String numeroChip, boolean esterilizado, String historia,
+                  String observaciones, Date fechaIngreso, boolean adoptado,
+                  Date fechaAlta, String dniAdoptante, int idUbicacion) {
         this.id = id;
         this.nombre = nombre;
         this.raza = raza;
@@ -57,14 +62,14 @@ public class Animal {
         this.color = color;
         this.edad = edad;
         this.marcasDistintivas = marcasDistintivas;
-        this.numeroChip = numeroChip;
+        setNumeroChip(numeroChip);
         this.esterilizado = esterilizado;
         this.historia = historia;
         this.observaciones = observaciones;
-        this.fechaIngreso = fechaIngreso;
+        setFechaIngreso(fechaIngreso);
         this.adoptado = adoptado;
         this.fechaAlta = fechaAlta;
-        this.dniAdoptante = dniAdoptante;
+        setDniAdoptante(dniAdoptante);
         this.idUbicacion = idUbicacion;
     }
 
@@ -75,7 +80,7 @@ public class Animal {
         this.color = color;
         this.edad = edad;
         this.marcasDistintivas = marcasDistintivas;
-        this.numeroChip = numeroChip;
+        setNumeroChip(numeroChip);
         this.esterilizado = esterilizado;
         this.historia = historia;
         this.observaciones = observaciones;
@@ -144,7 +149,7 @@ public class Animal {
     }
 
     public void setNumeroChip(String numeroChip) {
-        if(!Utils.validaChip(numeroChip)){
+        if (!Utils.validaChip(numeroChip)) {
             throw new IllegalArgumentException("Número de chip no válido");
         }
         this.numeroChip = numeroChip;
@@ -179,6 +184,16 @@ public class Animal {
     }
 
     public void setFechaIngreso(Date fechaIngreso) {
+        if (fechaIngreso == null) {
+            throw new IllegalArgumentException("La fecha de ingreso no puede ser nula");
+        }
+
+        //Necesito esto para pasar de LocalDate a Date  //todo-> si me da tiempo pasarlo todo a LocalDate
+        LocalDate localDate = ((java.sql.Date) fechaIngreso).toLocalDate();
+
+        if (!Utils.validarFecha(localDate)) {
+            throw new IllegalArgumentException("La fecha de ingreso no puede ser posterior al día actual");
+        }
         this.fechaIngreso = fechaIngreso;
     }
 
@@ -187,9 +202,9 @@ public class Animal {
     }
 
     public void setAdoptado(boolean adoptado) {
-        if(this.dniAdoptante!=null){
+        if (this.dniAdoptante != null) {
             this.adoptado = true;
-        }else {
+        } else {
             this.adoptado = adoptado;
         }
     }
@@ -207,7 +222,21 @@ public class Animal {
     }
 
     public void setDniAdoptante(String dniAdoptante) {
-        this.dniAdoptante = dniAdoptante;
+        if (dniAdoptante == null || dniAdoptante.trim().isEmpty()) {
+            this.dniAdoptante = null;
+            return;
+        }
+
+        String dniMayuscula = dniAdoptante.toUpperCase().trim();
+
+        if (dniMayuscula.length() != 9) {
+            throw new IllegalArgumentException("DNI/NIE no válido: debe tener 9 caracteres");
+        }
+
+        if (!Utils.validarDNI(dniMayuscula)) {
+            throw new IllegalArgumentException("DNI/NIE no válido");
+        }
+        this.dniAdoptante = dniMayuscula;
     }
 
     public int getIdUbicacion() {
@@ -237,9 +266,10 @@ public class Animal {
 
     /**
      * Metodo que convierte en texto el boolean isEsterilizado
+     *
      * @return --> devuelve una cadena de texto
      */
-    public String isEsterilizadoTexto(){
+    public String isEsterilizadoTexto() {
         return Mensajes.afirmativoNegativo(this.esterilizado);
     }
 
