@@ -126,6 +126,8 @@ public class PerroDAO {
                             a.getNombre(),
                             a.getRaza(),
                             a.getSexo(),
+                            a.getColor(),
+                            a.getEdad(),
                             a.getMarcasDistintivas(),
                             a.getNumeroChip(),
                             a.isEsterilizado(),

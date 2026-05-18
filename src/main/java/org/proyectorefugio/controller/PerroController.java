@@ -72,15 +72,26 @@ public class PerroController {
     private void initialize() {
         noAdoptado.setSelected(true);
         tablaPerros();
+        ocultarTodosPaneles();
         mostrarInformacionAdicional();
     }
+
+    /**
+     * Se encarga de ocultar todos los AnchorPane que puedan estar visibles
+     */
+    private void ocultarTodosPaneles() {
+        ventanaBuscar.setVisible(false);
+        panelModificacion.setVisible(false);
+
+    }
+
 
     @FXML
     /**
      * Selecciona el check de No adoptados y desmarca el de adoptados.
      * Recarga la tabla.
      */
-    private void seleccionNoAdoptado() {
+    public void seleccionNoAdoptado() {
         if (noAdoptado.isSelected()) {
             adoptado.setSelected(false);
         } else {
@@ -94,7 +105,7 @@ public class PerroController {
      * Selecciona el check de Adoptados y desmarca el de no adoptados.
      * Mantiene siempre la opción de No Adoptado activa y recarga la tabla
      */
-    private void seleccionAdoptado() {
+    public void seleccionAdoptado() {
         if (adoptado.isSelected()) {
             noAdoptado.setSelected(false);
         } else {
@@ -131,30 +142,37 @@ public class PerroController {
         tablaPerros.getSelectionModel().selectedItemProperty().addListener(
                 (observable, anterior, seleccionado) -> {
                     if (seleccionado != null) {
+                        Perro p = PerroDAO.findByID(seleccionado.getId());
+                        if (p == null) return;
 
-                        String datosMostrar = "Id: " + seleccionado.getId() + "\n" +
-                                "Nombre: " + seleccionado.getNombre() + "\n" +
-                                "Edad: " + seleccionado.getEdad() + "\n" +
-                                "Sexo: " + seleccionado.getSexo() + "\n" +
-                                "Raza: " + seleccionado.getRaza() + "\n" +
-                                "Color: " + seleccionado.getColor() + "\n" +
-                                "Peso: " + seleccionado.getPeso() + " Kg \n";
+                        if (panelModificacion.isVisible()) return;
 
-                        if (seleccionado.getNumeroChip() != null) {
-                            datosMostrar += "Número Chip:  " + seleccionado.getNumeroChip() + "\n";
-                        }
-                        datosMostrar += "Esterilizado: " + seleccionado.isEsterilizadoTexto() + "\n" +
-                                "Fecha Ingreso: " + seleccionado.getFechaIngreso() + "\n";
-                        if (seleccionado.getObservaciones() != null) {
-                            datosMostrar += "Observaciones: " + seleccionado.getObservaciones() + "\n";
-                        }
-                        if (seleccionado.getHistoria() != null) {
-                            datosMostrar += "Historia: " + seleccionado.getHistoria() + "\n";
-                        }
-                        datosMostrar += "Agresivo: " + seleccionado.isAgresivoTexto() + "\n";
+                        informacionAdicional.setVisible(true);
+                        ventanaBuscar.setVisible(false);
 
-                        if (seleccionado.getFechaAlta() != null) {
-                            datosMostrar += "Fecha Alta: " + seleccionado.getFechaAlta();
+                        String datosMostrar = "Id: " + p.getId() + "\n" +
+                                "Nombre: " + p.getNombre() + "\n" +
+                                "Edad: " + p.getEdad() + "\n" +
+                                "Sexo: " + p.getSexo() + "\n" +
+                                "Raza: " + p.getRaza() + "\n" +
+                                "Color: " + p.getColor() + "\n" +
+                                "Peso: " + p.getPeso() + " Kg \n";
+
+                        if (p.getNumeroChip() != null) {
+                            datosMostrar += "Número Chip:  " + p.getNumeroChip() + "\n";
+                        }
+                        datosMostrar += "Esterilizado: " + p.isEsterilizadoTexto() + "\n" +
+                                "Fecha Ingreso: " + p.getFechaIngreso() + "\n";
+                        if (p.getObservaciones() != null) {
+                            datosMostrar += "Observaciones: " + p.getObservaciones() + "\n";
+                        }
+                        if (p.getHistoria() != null) {
+                            datosMostrar += "Historia: " + p.getHistoria() + "\n";
+                        }
+                        datosMostrar += "Agresivo: " + p.isAgresivoTexto() + "\n";
+
+                        if (p.getFechaAlta() != null) {
+                            datosMostrar += "Fecha Alta: " + p.getFechaAlta();
                         }
                         informacionAdicional.setText(datosMostrar);
                     }
@@ -199,6 +217,8 @@ public class PerroController {
      * @param event --> acción que se va a llevar a cabo
      */
     public void botonBusqueda(ActionEvent event) {
+        tablaPerros();
+        panelModificacion.setVisible(false);
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(true);
     }
@@ -207,6 +227,7 @@ public class PerroController {
      * Busca perros en la base de datos según los filtros introducidos (id, chip, nombre, raza, color).
      * Prioriza la búsqueda por id y por chip al ser identificadores únicos.
      * Elimina duplicados usando un HashSet antes de devolver los resultados.
+     *
      * @return lista de perros que coinciden con los criterios de búsqueda
      */
     public List<Perro> buscarAnimal() {
@@ -268,6 +289,7 @@ public class PerroController {
 
         tablaPerros.setItems(resultados);
     }
+
     //endregion
 
     //region---------------MODIFICAR-------------------
@@ -290,9 +312,11 @@ public class PerroController {
      * Recoge los campos del panel de modificación y actualiza en la base de datos
      * únicamente los campos que han sido rellenados.
      * Valida que haya un perro seleccionado y que al menos un campo esté relleno.
+     *
      * @return true si al menos un campo fue actualizado correctamente, false en caso contrario
      */
-    public boolean modificarAnimal(){
+    public boolean modificarAnimal() {
+        informacionAdicional.setVisible(false);
         Perro pSeleccionado = tablaPerros.getSelectionModel().getSelectedItem();
         Animal aSeleccionado = tablaPerros.getSelectionModel().getSelectedItem();
 
@@ -301,12 +325,12 @@ public class PerroController {
         LocalDate fecha = modificarFecha.getValue();
         String observaciones = modificarObservaciones.getText();
         String dniAdoptante = modificarDniAdoptante.getText();
-        int ubicacion = (int)modificarUbicacion.getValue();
+        int ubicacion = (int) modificarUbicacion.getValue();
         Double peso = Utils.conversorDouble(modificarPeso.getText());
 
         if ((chip == null || chip.isEmpty()) && fecha == null && (observaciones == null || observaciones.isEmpty())
                 && (dniAdoptante == null || dniAdoptante.isEmpty()) && ubicacion == 0 && (peso == null || peso == 0.0) &&
-                !modificarEsterilizado.isSelected() &&  !modificarAgresivo.isSelected()) {
+                !modificarEsterilizado.isSelected() && !modificarAgresivo.isSelected()) {
             //todo --> alerta de campos vacíos
             return false;
         }
@@ -418,10 +442,12 @@ public class PerroController {
     public void botonGuardarModificacion(ActionEvent event) {
         modificarAnimal();
         limpiarCampos();
+        panelModificacion.setVisible(false);
         tablaPerros();
+        informacionAdicional.setText("");
+        informacionAdicional.setVisible(false);
     }
     //endregion
-
 
 
     //region---------------ELIMINAR PERRO -------------------
@@ -445,11 +471,12 @@ public class PerroController {
         }
 
         if (PerroDAO.findByID(animalSeleccionado.getId()) != null) {
-        //todo-> confirmacion
+            //todo-> confirmacion
             AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
-        }else{
+        } else {
             //todo -> alerta: ese animal no es un gato
-        }        initialize();
+        }
+        initialize();
     }
     //endregion
 }

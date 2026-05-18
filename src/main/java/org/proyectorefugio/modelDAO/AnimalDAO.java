@@ -31,7 +31,7 @@ public class AnimalDAO {
     private final static String SQL_FIND_BY_UBICACION_AND_ALTA = "SELECT * FROM animal WHERE idUbicacion = ? AND fechaALTA IS NULL";
 
 
-    private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo,color, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo,color,edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
     private static final String SQL_DELETE_BY_ID = "DELETE animal FROM animal WHERE id = ?";
 
@@ -243,12 +243,13 @@ public class AnimalDAO {
                 ps.setString(2, animal.getRaza());
                 ps.setString(3, animal.getSexo().toString().toLowerCase());
                 ps.setString(4, animal.getColor());
-                ps.setString(5, animal.getMarcasDistintivas());
-                ps.setString(6, animal.getNumeroChip());
-                ps.setBoolean(7, animal.isEsterilizado());
-                ps.setString(8, animal.getHistoria());
-                ps.setString(9, animal.getObservaciones());
-                ps.setInt(10, animal.getIdUbicacion());
+                ps.setString(5, animal.getEdad());
+                ps.setString(6, animal.getMarcasDistintivas());
+                ps.setString(7, animal.getNumeroChip());
+                ps.setBoolean(8, animal.isEsterilizado());
+                ps.setString(9, animal.getHistoria());
+                ps.setString(10, animal.getObservaciones());
+                ps.setInt(11, animal.getIdUbicacion());
 
                 ps.executeUpdate();
 

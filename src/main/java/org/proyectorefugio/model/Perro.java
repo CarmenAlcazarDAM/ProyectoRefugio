@@ -14,11 +14,13 @@ public class Perro extends Animal implements Acogible {
     private boolean agresivo;
 
     public Perro(int id, String nombre, String raza, Sexo sexo,
-                 String marcasDistintivas, String numeroChip, boolean esterilizado,
-                 String historia, String observaciones, Date fechaIngreso,
-                 int idUbicacion, double peso, boolean agresivo) {
-        super(id, nombre, raza, sexo, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, fechaIngreso, idUbicacion);
+                 String color, String edad, String marcasDistintivas,
+                 String numeroChip, boolean esterilizado, String historia,
+                 String observaciones, Date fechaIngreso, int idUbicacion,
+                 double peso, boolean agresivo) {
 
+        super(id, nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip,
+                esterilizado, historia, observaciones, fechaIngreso, false, null, null, idUbicacion);
         this.peso = peso;
         this.agresivo = agresivo;
     }
