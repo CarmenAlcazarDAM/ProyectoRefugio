@@ -55,6 +55,14 @@ public class Mensajes {
         alerta.showAndWait();
     }
 
+    public static void alertaNoSeleccionado(String mensaje){
+        Alert alerta = new Alert(Alert.AlertType.WARNING);
+        alerta.setTitle("ATENCIÓN");
+        alerta.setHeaderText("Ningún elemento seleccionado");
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
     //endregion
 
     //region----------MENSAJES CONFIRMACIONES--------------

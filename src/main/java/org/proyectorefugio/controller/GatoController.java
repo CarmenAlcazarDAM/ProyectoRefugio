@@ -320,7 +320,7 @@ public class GatoController {
             Animal aSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
 
             if (gSeleccionado == null || aSeleccionado == null) {
-                // todo -> alerta: selecciona un elemento primero
+                Mensajes.alertaNoSeleccionado("Por favor, selecciona un gato");
                 return false;
             }
 
@@ -337,7 +337,7 @@ public class GatoController {
                     ubicacion == 0 &&
                     !modificarEsterilizado.isSelected() &&
                     !modificarLeucemia.isSelected()) {
-                // todo -> alerta: no ha rellenado ningún campo
+                Mensajes.aletaObligatoriosCamposVacios("Debe completar todos los campos obligatorios");
                 return false;
             }
 
