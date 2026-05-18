@@ -3,7 +3,7 @@ package org.proyectorefugio.view;
 public class Mensajes {
 
     /**
-     * Método que convierte en un Sí o un No el boolean introducido
+     * Metodo que convierte en un Sí o un No el boolean introducido
      * @param pregunta --> boolean pasado por parámetro
      * @return --> devuelve un String
      */
@@ -15,7 +15,7 @@ public class Mensajes {
     }
 
     /**
-     * Método que convierte en un Positivo o un Negativo el boolean introducido
+     * Metodo que convierte en un Positivo o un Negativo el boolean introducido
      * @param pregunta --> boolean pasado por parámetro
      * @return --> devuelve un String
      */
