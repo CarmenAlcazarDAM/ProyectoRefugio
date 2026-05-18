@@ -95,6 +95,7 @@ public class FormularioPersonaYAdoptarController {
      * @param event --> evento que ocurre cuando pulsas el boton
      */
     public void guardarInformacion(ActionEvent event) {
+        //todo-> creo que no guarda la informacion, comprobar launcher y que guarde
         Persona registrar = obtenerInformacionPersonaDelFormulario();
         if(registrar==null){
             return;
