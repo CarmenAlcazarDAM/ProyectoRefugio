@@ -139,29 +139,36 @@ public class GatoController {
         tablaGatos.getSelectionModel().selectedItemProperty().addListener(
                 (observable, anterior, seleccionado) -> {
                     if (seleccionado != null) {
+                        Gato g = GatoDAO.findByID(seleccionado.getId());
+                        if (g == null) return;
 
-                        String datosMostrar = "Id: " + seleccionado.getId() + "\n" +
-                                "Nombre: " + seleccionado.getNombre() + "\n" +
-                                "Edad: " + seleccionado.getEdad() + "\n" +
-                                "Sexo: " + seleccionado.getSexo() + "\n" +
-                                "Raza: " + seleccionado.getRaza() + "\n" +
-                                "Color: " + seleccionado.getColor() + "\n";
+                        if (panelModificacion.isVisible()) return;
 
-                        if (seleccionado.getNumeroChip() != null) {
-                            datosMostrar += "Número Chip:  " + seleccionado.getNumeroChip() + "\n";
-                        }
-                        datosMostrar += "Esterilizado: " + seleccionado.isEsterilizadoTexto() + "\n" +
-                                "Fecha Ingreso: " + seleccionado.getFechaIngreso() + "\n";
-                        if (seleccionado.getObservaciones() != null) {
-                            datosMostrar += "Observaciones: " + seleccionado.getObservaciones() + "\n";
-                        }
-                        if (seleccionado.getHistoria() != null) {
-                            datosMostrar += "Historia: " + seleccionado.getHistoria() + "\n";
-                        }
-                        datosMostrar += "Leucemia: " + seleccionado.isLeucemiaFelinaTexto() + "\n";
+                        informacionAdicional.setVisible(true);
+                        ventanaBuscar.setVisible(false);
 
-                        if (seleccionado.getFechaAlta() != null) {
-                            datosMostrar += "Fecha Alta: " + seleccionado.getFechaAlta();
+                        String datosMostrar = "Id: " + g.getId() + "\n" +
+                                "Nombre: " + g.getNombre() + "\n" +
+                                "Edad: " + g.getEdad() + "\n" +
+                                "Sexo: " + g.getSexo() + "\n" +
+                                "Raza: " + g.getRaza() + "\n" +
+                                "Color: " + g.getColor() + "\n";
+
+                        if (g.getNumeroChip() != null) {
+                            datosMostrar += "Número Chip:  " + g.getNumeroChip() + "\n";
+                        }
+                        datosMostrar += "Esterilizado: " + g.isEsterilizadoTexto() + "\n" +
+                                "Fecha Ingreso: " + g.getFechaIngreso() + "\n";
+                        if (g.getObservaciones() != null) {
+                            datosMostrar += "Observaciones: " + g.getObservaciones() + "\n";
+                        }
+                        if (g.getHistoria() != null) {
+                            datosMostrar += "Historia: " + g.getHistoria() + "\n";
+                        }
+                        datosMostrar += "Leucemia: " + g.isLeucemiaFelinaTexto() + "\n";
+
+                        if (g.getFechaAlta() != null) {
+                            datosMostrar += "Fecha Alta: " + g.getFechaAlta();
                         }
                         informacionAdicional.setText(datosMostrar);
                     }
@@ -196,6 +203,8 @@ public class GatoController {
 
     @FXML
     public void botonBusqueda(ActionEvent event) {
+        tablaGatos();
+        panelModificacion.setVisible(false);
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(true);
     }
@@ -285,6 +294,7 @@ public class GatoController {
      * @return --> true si al menos un campo fue actualizado correctamente, false en caso contrario
      */
     public boolean modificarGato() {
+        informacionAdicional.setVisible(false);
         Gato gSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
         Animal aSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
 
@@ -406,7 +416,9 @@ public class GatoController {
     public void botonGuardarModificacion(ActionEvent event) {
         modificarGato();
         limpiarCamposGato();
+        panelModificacion.setVisible(false);
         tablaGatos();
+        informacionAdicional.setVisible(false);
     }
 
     //endregion

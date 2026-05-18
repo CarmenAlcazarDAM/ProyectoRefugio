@@ -320,6 +320,10 @@ public class PerroController {
         Perro pSeleccionado = tablaPerros.getSelectionModel().getSelectedItem();
         Animal aSeleccionado = tablaPerros.getSelectionModel().getSelectedItem();
 
+        if (pSeleccionado == null || aSeleccionado == null) {
+            // todo -> alerta: selecciona un elemento primero
+            return false;
+        }
 
         String chip = modificarChip.getText();
         LocalDate fecha = modificarFecha.getValue();
@@ -444,7 +448,6 @@ public class PerroController {
         limpiarCampos();
         panelModificacion.setVisible(false);
         tablaPerros();
-        informacionAdicional.setText("");
         informacionAdicional.setVisible(false);
     }
     //endregion
