@@ -72,7 +72,17 @@ public class GatoController {
     private void initialize() {
         noAdoptado.setSelected(true);
         tablaGatos();
+        ocultarTodosPaneles();
         mostrarInformacionAdicional();
+    }
+
+    /**
+     * Se encarga de ocultar todos los AnchorPane que puedan estar visibles
+     */
+    private void ocultarTodosPaneles(){
+        ventanaBuscar.setVisible(false);
+        panelModificacion.setVisible(false);
+
     }
 
     @FXML

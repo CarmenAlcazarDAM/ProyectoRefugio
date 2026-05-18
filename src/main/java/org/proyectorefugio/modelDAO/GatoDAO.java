@@ -95,6 +95,8 @@ public class GatoDAO {
                             a.getNombre(),
                             a.getRaza(),
                             a.getSexo(),
+                            a.getColor(),
+                            a.getEdad(),
                             a.getMarcasDistintivas(),
                             a.getNumeroChip(),
                             a.isEsterilizado(),

@@ -13,10 +13,13 @@ public class Gato extends Animal{
         this.leucemiaFelina =lucemiaFelina;
 
     }
-    public Gato(int id, String nombre, String raza, Sexo sexo, String marcasDistintivas,
-                String numeroChip, boolean esterilizado, String historia, String observaciones,
-                Date fechaIngreso, int idUbicacion, boolean leucemiaFelina) {
-        super(id,nombre, raza, sexo, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, fechaIngreso, idUbicacion);
+    public Gato(int id, String nombre, String raza, Sexo sexo,
+                String color, String edad,
+                String marcasDistintivas, String numeroChip, boolean esterilizado,
+                String historia, String observaciones, Date fechaIngreso,
+                int idUbicacion, boolean leucemiaFelina) {
+        super(id, nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip,
+                esterilizado, historia, observaciones, fechaIngreso, false, null, null, idUbicacion);
         this.leucemiaFelina = leucemiaFelina;
     }
 
