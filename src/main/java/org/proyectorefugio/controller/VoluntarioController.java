@@ -50,6 +50,17 @@ public class VoluntarioController {
     public TextField buscarUbicacion;
     public DatePicker buscarFecha;
 
+    @FXML
+    public AnchorPane ventanaAñadirTarea;
+    public TextArea insertarTareaTexto;
+    public TextField insertarTareaDni;
+    public Spinner<Integer> insertarTareaUbicacion;
+    public DatePicker insertarTareaFecha;
+    public Button botonGuardarTarea;
+
+    public Button botonGuardarModificacion;
+    public Text textoDni;
+
 
     //endregion
 
@@ -62,6 +73,8 @@ public class VoluntarioController {
         iniciarTabla();
         iniciarListaVoluntarios();
         mostrarInformacionAdicional();
+        botonGuardarTarea.setVisible(false);
+        botonGuardarModificacion.setVisible(false);
 
     }
 
@@ -110,6 +123,8 @@ public class VoluntarioController {
     public void mostrarInformacionAdicional() {
         ventanaBuscar.setVisible(false);
         ventanaAñadirTarea.setVisible(false);
+        botonGuardarModificacion.setVisible(false);
+
 
         listaVoluntarios.getSelectionModel().selectedItemProperty().addListener((observable, anterior, seleccionado) -> {
             if (seleccionado != null) {
@@ -118,6 +133,10 @@ public class VoluntarioController {
 
                 informacionAdicional.setVisible(true);
                 ventanaBuscar.setVisible(false);
+                ventanaAñadirTarea.setVisible(false);
+                botonGuardarModificacion.setVisible(false);
+                botonGuardarTarea.setVisible(false);
+
 
 
                 informacionAdicional.setText(
@@ -146,7 +165,8 @@ public class VoluntarioController {
 
         FormularioPersonaYAdoptarController.persona = "voluntario";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
-        initialize();
+        iniciarTabla();
+        iniciarListaVoluntarios();
     }
     //endregion
 
@@ -159,11 +179,13 @@ public class VoluntarioController {
      * @param event --> acción que tiene lugar cuando pulsas el botón
      */
     public void botonBusqueda(ActionEvent event) {
+        iniciarTabla();
+        iniciarListaVoluntarios();
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(true);
         ventanaAñadirTarea.setVisible(false);
         botonGuardarTarea.setVisible(false);
-
+        botonGuardarModificacion.setVisible(false);
     }
 
     /**
@@ -225,6 +247,7 @@ public class VoluntarioController {
             return resultados;
         }
         return null;
+
     }
 
     //endregion
@@ -293,17 +316,12 @@ public class VoluntarioController {
 
     //region ------------------- GESTIÓN AÑADIR TAREA -------------------
 
-    @FXML
-    public AnchorPane ventanaAñadirTarea;
-    public TextArea insertarTareaTexto;
-    public TextField insertarTareaDni;
-    public Spinner<Integer> insertarTareaUbicacion;
-    public DatePicker insertarTareaFecha;
-    public Button botonGuardarTarea;
+
 
 
     public void botonAñadirTarea(ActionEvent event) {
         ventanaBuscar.setVisible(false);
+        informacionAdicional.setVisible(false);
         ventanaAñadirTarea.setVisible(true);
         botonGuardarTarea.setVisible(true);
         insertarTareaUbicacion.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0));
@@ -355,8 +373,7 @@ public class VoluntarioController {
 
 
     //region ------------------- GESTIÓN MODIFICAR AYUDA -------------------
-    public Button botonGuardarModificacion;
-    public Text textoDni;
+
 
 
     public void botonModificar(ActionEvent event) {
