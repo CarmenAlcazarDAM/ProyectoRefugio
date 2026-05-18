@@ -25,7 +25,7 @@ public class VoluntarioDAO {
 
     /////////////////////// FIND ///////////////////////
     /**
-     * Método que crea una lista con todas los voluntarios de la base de datos
+     * Metodo que crea una lista con todas los voluntarios de la base de datos
      *
      * @return --> devuelve una lista con todos los voluntarios y sus datos
      */
@@ -47,7 +47,7 @@ public class VoluntarioDAO {
     }
 
     /**
-     * Método que verifica si un dni especifico existe dentro de la tabla voluntarios
+     * Metodo que verifica si un dni especifico existe dentro de la tabla voluntarios
      * @param dni --> dni a buscar
      * @return --> devuelve true si encuentra el dni dentro de volutario, false si no lo encuentra
      */
@@ -69,7 +69,7 @@ public class VoluntarioDAO {
     }
 
     /**
-     * Método que busca a un voluntario por su dni específico
+     * Metodo que busca a un voluntario por su dni específico
      * @param dni --> dni a buscar
      * @return --> devuelve el objeto Voluntario si lo encuentra
      *
@@ -86,7 +86,7 @@ public class VoluntarioDAO {
     }
 
     /**
-     * Método que busca a los Voluntarios con un nombre específico
+     * Metodo que busca a los Voluntarios con un nombre específico
      * @param name --> nombre a buscar
      * @return --> devuelve una lista de Voluntarios que compartan el mismo nombre
      */
@@ -106,7 +106,7 @@ public class VoluntarioDAO {
     }
 
     /**
-     * Método que busca a los Voluntarios con un apellido específico
+     * Metodo que busca a los Voluntarios con un apellido específico
      * @param lastName --> apellido a buscar
      * @return --> devuelve una lista de Voluntarios que compartan el mismo apellido
      */
@@ -125,7 +125,7 @@ public class VoluntarioDAO {
     }
 
     /**
-     * Método que rellena el constructor del objeto Volutario, para no tener que rellenarlo en todos los métodos en los que se use
+     * Metodo que rellena el constructor del objeto Volutario, para no tener que rellenarlo en todos los métodos en los que se use
      * en caso de que haya modificaciones de atributos en el objeto Voluntario
      * @param p --> objeto Persona (superclase).
      * @return --> devuelve el objeto Persona (superclase) convertido en Voluntario (subclase)
@@ -139,7 +139,7 @@ public class VoluntarioDAO {
 
     //////////////////////// ADD ////////////////////
     /**
-     * Método que inserta un VOLUNTARIO en la base de datos dentro de la tabla voluntario
+     * Metodo que inserta un VOLUNTARIO en la base de datos dentro de la tabla voluntario
      * @param p --> objeto Persona pasado como parámetro
      * @return --> devuelve true si se ha insertado correctamente, false si no se ha insertado
      */

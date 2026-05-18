@@ -47,7 +47,7 @@ public class AnimalDAO {
 
     /////////////////////// FIND ///////////////////////
     /**
-     * Método que busca y devuelve un objeto animal según su ID
+     * Metodo que busca y devuelve un objeto animal según su ID
      *
      * @param id --> id específica de cada animal
      * @return --> devuelve un objeto animal
@@ -88,7 +88,7 @@ public class AnimalDAO {
     }
 
     /**
-     * Método que busca un Animal por su numero de chip en caso de que lo tenga,
+     * Metodo que busca un Animal por su numero de chip en caso de que lo tenga,
      * el número de chip de cada animal es una secuencia de 15 números e irrepetible
      *
      * @param chip --> número de chip pasado por parámetro
@@ -111,7 +111,7 @@ public class AnimalDAO {
     }
 
     /**
-     * Método que busca los Animales que compartan el mismo nombre
+     * Metodo que busca los Animales que compartan el mismo nombre
      *
      * @param name      --> nombre a buscar
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
@@ -140,7 +140,7 @@ public class AnimalDAO {
     }
 
     /**
-     * Método que busca los Animales que compartan la misma raza
+     * Metodo que busca los Animales que compartan la misma raza
      *
      * @param breed     --> raza a buscar
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
@@ -169,7 +169,7 @@ public class AnimalDAO {
     }
 
     /**
-     * Método que busca los Animales que compartan el mismo color
+     * Metodo que busca los Animales que compartan el mismo color
      *
      * @param colour    --> color a buscar
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
@@ -197,7 +197,7 @@ public class AnimalDAO {
     }
 
     /**
-     * Método que busca todos los animales que están en una ubicacion determinada
+     * Metodo que busca todos los animales que están en una ubicacion determinada
      * y no se han dado de Alta en el registro es decir, aún se encuentran
      * en el refugio
      *
@@ -229,7 +229,7 @@ public class AnimalDAO {
 
     /////////////////////// ADD ///////////////////////
     /**
-     * Método que inserta un animal en la base de datos
+     * Metodo que inserta un animal en la base de datos
      *
      * @param animal --> recibe el objeto Animal a insertar
      * @return --> devuelve un int que es el id del animal
@@ -264,7 +264,7 @@ public class AnimalDAO {
 
     /////////////////////// DELETE ///////////////////////
     /**
-     * Método que borra un objeto Animal de la base de datos animal,
+     * Metodo que borra un objeto Animal de la base de datos animal,
      * sus respectivos objetos que heredan tambien se borraran ya que las FK son on delete cascade
      *
      * @param id --> id específica del animal que queremos borrar
@@ -287,7 +287,7 @@ public class AnimalDAO {
 
     /// //////////////////// UPDATE ///////////////////////
     /**
-     * Método que actualiza la informacion del numero de chip de un animal
+     * Metodo que actualiza la informacion del numero de chip de un animal
      *
      * @param a          --> animal al que vamos a actualizar la información
      * @param numeroChip --> número del chip pasado por parámetro (dos animales no pueden tener el mismo número de chip)
@@ -311,7 +311,7 @@ public class AnimalDAO {
     }
 
     /**
-     * Método que actualiza la informacion de Observaciones del animal
+     * Metodo que actualiza la informacion de Observaciones del animal
      *
      * @param a             --> animal al que vamos a actualizar la información
      * @param observaciones --> observacion que vamos a añadir
@@ -335,7 +335,7 @@ public class AnimalDAO {
     }
 
     /**
-     * Método que actualiza si se esteriliza a un animal
+     * Metodo que actualiza si se esteriliza a un animal
      *
      * @param a          --> animal al que vamos a actualizar la información
      * @param estelizado --> información de esterilizacion pasada por parámetro
@@ -359,7 +359,7 @@ public class AnimalDAO {
     }
 
     /**
-     * Método que actualiza la fecha de alta de un animal
+     * Metodo que actualiza la fecha de alta de un animal
      *
      * @param a         --> animal al que vamos a actualizar la información
      * @param fechaAlta --> fecha en la que se dará de alta el animal
@@ -383,7 +383,7 @@ public class AnimalDAO {
     }
 
     /**
-     * Método que actualiza la informacion de la ubicación del animal
+     * Metodo que actualiza la informacion de la ubicación del animal
      *
      * @param a           --> animal al que vamos a actualizar la información
      * @param idUbicacion --> id de la ubicacion pasado por parámetro
@@ -407,7 +407,7 @@ public class AnimalDAO {
     }
 
     /**
-     * Método que actualiza la informacion del adoptante
+     * Metodo que actualiza la informacion del adoptante
      *
      * @param a            --> animal al que vamos a actualizar la información
      * @param dniAdoptante --> dni del adoptante pasado por parámetro

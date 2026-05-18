@@ -25,7 +25,7 @@ public class AdoptanteDAO {
 
     /////////////////////// FIND ///////////////////////
     /**
-     * Método que crea una lista con todas los adoptantes de la base de datos
+     * Metodo que crea una lista con todas los adoptantes de la base de datos
      *
      * @return --> devuelve una lista con todos los adoptantes y sus datos
      */
@@ -47,7 +47,7 @@ public class AdoptanteDAO {
     }
 
     /**
-     * Método que verifica si un dni especifico existe dentro de la tabla adoptantes
+     * Metodo que verifica si un dni especifico existe dentro de la tabla adoptantes
      * @param dni --> dni a buscar
      * @return --> devuelve true si encuentra el dni dentro de adoptantes, false si no lo encuentra
      */
@@ -69,7 +69,7 @@ public class AdoptanteDAO {
     }
 
     /**
-     * Método que busca a un adoptante por su dni específico
+     * Metodo que busca a un adoptante por su dni específico
      * @param dni --> dni a buscar
      * @return --> devuelve el objeto Adoptante si lo encuentra
      *
@@ -86,7 +86,7 @@ public class AdoptanteDAO {
     }
 
     /**
-     * Método que busca a los Adoptantes con un nombre específico
+     * Metodo que busca a los Adoptantes con un nombre específico
      * @param name --> nombre a buscar
      * @return --> devuelve una lista de Adoptantes que compartan el mismo nombre
      */
@@ -106,7 +106,7 @@ public class AdoptanteDAO {
     }
 
     /**
-     * Método que busca a los Adoptantes con un apellido específico
+     * Metodo que busca a los Adoptantes con un apellido específico
      * @param lastName --> apellido a buscar
      * @return --> devuelve una lista de Adoptantes que compartan el mismo apellido
      */
@@ -125,7 +125,7 @@ public class AdoptanteDAO {
     }
 
     /**
-     * Método que rellena el constructor del objeto Adoptante, para no tener que rellenarlo en todos los métodos en los que se use
+     * Metodo que rellena el constructor del objeto Adoptante, para no tener que rellenarlo en todos los métodos en los que se use
      * en caso de que haya modificaciones de atributos en el objeto Voluntario
      * @param p --> objeto Persona (superclase).
      * @return --> devuelve el objeto Persona (superclase) convertido en Adoptante (subclase)
@@ -139,7 +139,7 @@ public class AdoptanteDAO {
 
     //////////////////////// ADD ////////////////////
     /**
-     * Método que inserta un ADOPTANTE en la base de datos dentro de la tabla adoptante
+     * Metodo que inserta un ADOPTANTE en la base de datos dentro de la tabla adoptante
      * @param p --> objeto Persona pasado como parámetro
      * @return --> devuelve true si se ha insertado correctamente, false si no se ha insertado
      */

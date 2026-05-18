@@ -33,7 +33,7 @@ public class PerroDAO {
 
     /////////////////////// FIND ///////////////////////
     /**
-     * Método que busca todos los Perros de la base de datos.
+     * Metodo que busca todos los Perros de la base de datos.
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
      * @return --> devuelve una lista con todos los Perros encontrados
      */
@@ -63,7 +63,7 @@ public class PerroDAO {
     }
 
     /**
-     * Método que busca un Perro por id en la base de datos y extrae toda su informacion
+     * Metodo que busca un Perro por id en la base de datos y extrae toda su informacion
      * @param id --> id pasado por parámetro
      * @return --> devuelve el objeto Perro encontrado o null si no lo encuentra
      */
@@ -73,7 +73,7 @@ public class PerroDAO {
         return rellenarDatosPerro(a);
     }
     /**
-     * Método que busca un Perro por chip en la base de datos y extrae toda su informacion
+     * Metodo que busca un Perro por chip en la base de datos y extrae toda su informacion
      * @param chip --> número del chip pasado por parámetro
      * @return --> devuelve el objeto Perro encontrado o null si no lo encuentra
      */
@@ -84,7 +84,7 @@ public class PerroDAO {
     }
 
     /**
-     * Método que busca a los perros que tengan un nombre específico
+     * Metodo que busca a los perros que tengan un nombre específico
      *
      * @param name --> nombre a buscar, introducido por el usuario
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
@@ -107,7 +107,7 @@ public class PerroDAO {
     }
 
     /**
-     * Método que extrae de la base de datos toda la información del objeto Perro
+     * Metodo que extrae de la base de datos toda la información del objeto Perro
      * @param a --> Animal pasado por parámetro
      * @return --> devuelve el objeto Perro completo con la información de los atributos de la clase Animal
      * y de la clase Perro
@@ -147,7 +147,7 @@ public class PerroDAO {
     }
 
     /**
-     * Método que busca a los perros que tengan una raza específica
+     * Metodo que busca a los perros que tengan una raza específica
      *
      * @param breed --> raza a buscar, introducido por el usuario
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
@@ -170,7 +170,7 @@ public class PerroDAO {
 
     //////////////////////// ADD ////////////////////
     /**
-     * Método que inserta un PERRO en la base de datos dentro de la tabla perro
+     * Metodo que inserta un PERRO en la base de datos dentro de la tabla perro
      *
      * @param p --> objeto Perro pasado como parámetro
      * @param a --> objeto Animal pasado como parámetro
@@ -197,7 +197,7 @@ public class PerroDAO {
 
     //////////////////////// UPDATE ////////////////////
     /**
-     * Método que actualiza la informacion del peso del perro
+     * Metodo que actualiza la informacion del peso del perro
      *
      * @param a    --> animal al que vamos a actualizar la información
      * @param peso --> peso del perro pasado por parámetro
@@ -221,7 +221,7 @@ public class PerroDAO {
     }
 
     /**
-     * Método que actualiza la informacion sobre la agresividad del perro
+     * Metodo que actualiza la informacion sobre la agresividad del perro
      *
      * @param a --> animal al que vamos a actualizar la información
      * @param agresivo --> agresividad del perro, true si es agresivo, false si no lo es
@@ -245,7 +245,7 @@ public class PerroDAO {
     }
 
     /**
-     * Método que busca a los perros que tengan unos colores específicos
+     * Metodo que busca a los perros que tengan unos colores específicos
      *
      * @param colour --> color a buscar, introducido por el usuario
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no

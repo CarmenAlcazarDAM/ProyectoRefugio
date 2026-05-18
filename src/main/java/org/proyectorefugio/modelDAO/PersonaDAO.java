@@ -33,7 +33,7 @@ public class PersonaDAO {
     /////////////////////// FIND ///////////////////////
 
     /**
-     * Método que busca y devuelve un objeto Persona según su DNI
+     * Metodo que busca y devuelve un objeto Persona según su DNI
      *
      * @param dni --> dni pasado por parámetro
      * @return --> devuelve un objeto Persona
@@ -62,7 +62,7 @@ public class PersonaDAO {
     }
 
     /**
-     * Método que crea una lista con todas las personas de la base de datos
+     * Metodo que crea una lista con todas las personas de la base de datos
      *
      * @return --> devuelve una lista con todas personas y sus datos
      */
@@ -82,7 +82,7 @@ public class PersonaDAO {
     }
 
     /**
-     * Método que busca a las personas que tengan un nombre específico
+     * Metodo que busca a las personas que tengan un nombre específico
      *
      * @param name --> nombre pasado por parámetro
      * @return --> devuelve una lista de personas que compartan el mismo nombre
@@ -107,7 +107,7 @@ public class PersonaDAO {
     }
 
     /**
-     * Método que busca a las personas que tengan un apellido específico
+     * Metodo que busca a las personas que tengan un apellido específico
      *
      * @param lastName --> apellido pasado por parámetro
      * @return --> devuelve una lista de personas que compartan el mismo apellido
@@ -133,7 +133,7 @@ public class PersonaDAO {
     /////////////////////// INSERT ///////////////////////
 
     /**
-     * Método que inserta una Persona en la base de datos
+     * Metodo que inserta una Persona en la base de datos
      * @param p --> persona que vamos a insertar pasada como parámetro
      * @return --> devuelve el Objeto Persona insertado en la base de datos
      */
@@ -163,7 +163,7 @@ public class PersonaDAO {
     /////////////////////// DELETE ///////////////////////
 
     /**
-     * Método que borra una persona de la base de datos
+     * Metodo que borra una persona de la base de datos
      * @param dni --> dni de la persona pasado por parámetro
      * @return --> devuelve true si se borra correctamente, false si no se borra
      */
@@ -184,7 +184,7 @@ public class PersonaDAO {
     /////////////////////// UPDATE ///////////////////////
 
     /**
-     * Método que actualiza la información del télefono de contacto de una persona
+     * Metodo que actualiza la información del télefono de contacto de una persona
      * @param p --> Persona a la que vamos a actualizar la información
      * @param telefono --> telefono de la persona pasado por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
@@ -207,7 +207,7 @@ public class PersonaDAO {
     }
 
     /**
-     * Método que actualiza la información del correo de contacto de una persona
+     * Metodo que actualiza la información del correo de contacto de una persona
      * @param p --> Persona a la que vamos a actualizar la información
      * @param correo --> correo de la persona pasado por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
@@ -230,7 +230,7 @@ public class PersonaDAO {
     }
 
     /**
-     * Método que actualiza la información de la dirección de una persona
+     * Metodo que actualiza la información de la dirección de una persona
      * @param p --> Persona a la que vamos a actualizar la información
      * @param direccion --> dirección de la persona pasada por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
@@ -254,7 +254,7 @@ public class PersonaDAO {
     }
 
     /**
-     * Método que actualiza toda la información de una persona
+     * Metodo que actualiza toda la información de una persona
      * @param p --> Persona a la que vamos a actualizar la información
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
