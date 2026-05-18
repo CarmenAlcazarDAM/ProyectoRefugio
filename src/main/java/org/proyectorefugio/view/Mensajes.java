@@ -28,7 +28,7 @@ public class Mensajes {
         return "Negativo";
     }
 
-    //region----------MENSAJES ALERTA--------------
+    //region----------MENSAJES ALERTA ERRORES--------------
     //todo-> comentar los métodos
 
     public static void aletaObligatoriosCamposVacios(String mensaje){
@@ -47,7 +47,18 @@ public class Mensajes {
         alerta.showAndWait();
     }
 
+    //enregion
+
+    //region----------MENSAJES CONFIRMACIONES--------------
+    public static void operacionCompletada(String mensaje){
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Operación completada");
+        alerta.setHeaderText("¡Completado con éxito!");
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
 
 
+    //endregion
 
 }
