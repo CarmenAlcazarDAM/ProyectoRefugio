@@ -31,7 +31,6 @@ public class AnimalDAO {
 
     private final static String SQL_FIND_BY_UBICACION_AND_ALTA = "SELECT * FROM animal WHERE idUbicacion = ? AND fechaALTA IS NULL";
 
-
     private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion, fechaIngreso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String SQL_DELETE_BY_ID = "DELETE animal FROM animal WHERE id = ?";
@@ -227,6 +226,7 @@ public class AnimalDAO {
         }
         return listaAnimal;
     }
+
 
     /////////////////////// ADD ///////////////////////
     /**
