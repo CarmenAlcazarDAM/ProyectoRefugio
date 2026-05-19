@@ -69,9 +69,9 @@ public class AnimalDAO {
                 Boolean esterilizado = rs.getBoolean("esterilizado");
                 String historia = rs.getString("historia");
                 String observaciones = rs.getString("observaciones");
-                Date fechaIngreso = rs.getDate("fechaIngreso");
+                LocalDate fechaIngreso = rs.getDate("fechaIngreso").toLocalDate();
                 Boolean adoptado = rs.getBoolean("adoptado");
-                Date fechaAlta = rs.getDate("fechaAlta");
+                LocalDate fechaAlta = rs.getDate("fechaAlta").toLocalDate();
                 String dniAdoptante = rs.getString("dniAdoptante");
                 int idUbicacion = rs.getInt("idUbicacion");
 
@@ -251,7 +251,7 @@ public class AnimalDAO {
                 ps.setString(9, animal.getHistoria());
                 ps.setString(10, animal.getObservaciones());
                 ps.setInt(11, animal.getIdUbicacion());
-                ps.setDate(12, (Date) animal.getFechaIngreso());
+                ps.setDate(12, Date.valueOf(animal.getFechaIngreso()));
 
                 ps.executeUpdate();
 

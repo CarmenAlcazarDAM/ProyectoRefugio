@@ -3,6 +3,7 @@ package org.proyectorefugio.model;
 import org.proyectorefugio.enums.Sexo;
 import org.proyectorefugio.view.Mensajes;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Gato extends Animal{
@@ -16,7 +17,7 @@ public class Gato extends Animal{
     public Gato(int id, String nombre, String raza, Sexo sexo,
                 String color, String edad,
                 String marcasDistintivas, String numeroChip, boolean esterilizado,
-                String historia, String observaciones, Date fechaIngreso,
+                String historia, String observaciones, LocalDate fechaIngreso,
                 int idUbicacion, boolean leucemiaFelina) {
         super(id, nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip,
                 esterilizado, historia, observaciones, fechaIngreso, false, null, null, idUbicacion);

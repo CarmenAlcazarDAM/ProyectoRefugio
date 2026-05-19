@@ -4,8 +4,8 @@ import org.proyectorefugio.enums.Sexo;
 import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.Mensajes;
 
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
 
 public class Animal {
@@ -20,9 +20,9 @@ public class Animal {
     private boolean esterilizado = false;
     private String historia;
     private String observaciones;
-    private Date fechaIngreso;
+    private LocalDate fechaIngreso;
     private boolean adoptado = false;
-    private Date fechaAlta;
+    private LocalDate fechaAlta;
     private String dniAdoptante;
     private int idUbicacion;
 
@@ -52,8 +52,8 @@ public class Animal {
     //este se usa en AnimalDAO
     public Animal(int id, String nombre, String raza, Sexo sexo, String color, String edad,
                   String marcasDistintivas, String numeroChip, boolean esterilizado, String historia,
-                  String observaciones, Date fechaIngreso, boolean adoptado,
-                  Date fechaAlta, String dniAdoptante, int idUbicacion) {
+                  String observaciones, LocalDate fechaIngreso, boolean adoptado,
+                  LocalDate fechaAlta, String dniAdoptante, int idUbicacion) {
         this.id = id;
         this.nombre = nombre;
         this.raza = raza;
@@ -72,7 +72,7 @@ public class Animal {
         this.idUbicacion = idUbicacion;
     }
 
-    public Animal(String nombre, String raza, Sexo sexo, String color, String edad, String marcasDistintivas, String numeroChip, boolean esterilizado, String historia, String observaciones, int idUbicacion,Date fechaIngreso) {
+    public Animal(String nombre, String raza, Sexo sexo, String color, String edad, String marcasDistintivas, String numeroChip, boolean esterilizado, String historia, String observaciones, int idUbicacion,LocalDate fechaIngreso) {
         this.nombre = nombre;
         this.raza = raza;
         this.sexo = sexo;
@@ -183,19 +183,16 @@ public class Animal {
         this.observaciones = observaciones;
     }
 
-    public Date getFechaIngreso() {
+    public LocalDate getFechaIngreso() {
         return fechaIngreso;
     }
 
-    public void setFechaIngreso(Date fechaIngreso) {
+    public void setFechaIngreso(LocalDate fechaIngreso) {
         if (fechaIngreso == null) {
             throw new IllegalArgumentException("La fecha de ingreso no puede ser nula");
         }
 
-        //Necesito esto para pasar de LocalDate a Date
-        LocalDate localDate = ((java.sql.Date) fechaIngreso).toLocalDate();
-
-        if (!Utils.validarFecha(localDate)) {
+        if (!Utils.validarFecha(fechaIngreso)) {
             throw new IllegalArgumentException("La fecha de ingreso no puede ser posterior al día actual");
         }
         this.fechaIngreso = fechaIngreso;
@@ -213,19 +210,16 @@ public class Animal {
         }
     }
 
-    public Date getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(Date fechaAlta) {
-        if (fechaAlta == null) {
-            throw new IllegalArgumentException("La fecha de ingreso no puede ser nula");
+    public void setFechaAlta(LocalDate fechaAlta) {
+        if(fechaAlta == null){
+            this.fechaAlta = null;
         }
 
-        //Necesito esto para pasar de LocalDate a Date  //todo-> si me da tiempo pasarlo todo a LocalDate
-        LocalDate localDate = ((java.sql.Date) fechaAlta).toLocalDate();
-
-        if (!Utils.validarFecha(localDate)) {
+        if (!Utils.validarFecha(fechaAlta)) {
             throw new IllegalArgumentException("La fecha de ingreso no puede ser posterior al día actual");
         }
         this.fechaAlta = fechaAlta;

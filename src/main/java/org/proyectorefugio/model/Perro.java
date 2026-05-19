@@ -4,6 +4,7 @@ import org.proyectorefugio.enums.Sexo;
 import org.proyectorefugio.interfaces.Acogible;
 import org.proyectorefugio.view.Mensajes;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -16,7 +17,7 @@ public class Perro extends Animal implements Acogible {
     public Perro(int id, String nombre, String raza, Sexo sexo,
                  String color, String edad, String marcasDistintivas,
                  String numeroChip, boolean esterilizado, String historia,
-                 String observaciones, Date fechaIngreso, int idUbicacion,
+                 String observaciones, LocalDate fechaIngreso, int idUbicacion,
                  double peso, boolean agresivo) {
 
         super(id, nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip,
