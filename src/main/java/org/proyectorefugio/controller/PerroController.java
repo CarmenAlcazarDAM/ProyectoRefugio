@@ -12,6 +12,7 @@ import org.proyectorefugio.model.Perro;
 import org.proyectorefugio.modelDAO.AnimalDAO;
 import org.proyectorefugio.modelDAO.PerroDAO;
 import org.proyectorefugio.utils.Utils;
+import org.proyectorefugio.view.Mensajes;
 import org.proyectorefugio.view.SceneManager;
 
 import java.time.LocalDate;
@@ -71,6 +72,7 @@ public class PerroController {
      */
     private void initialize() {
         noAdoptado.setSelected(true);
+        adoptado.setSelected(false);
         tablaPerros();
         ocultarTodosPaneles();
         mostrarInformacionAdicional();
@@ -197,7 +199,7 @@ public class PerroController {
     //region---------------ADOPTAR-------------------
 
     /**
-     * Método que cuando al pulsar el botón Adoptar abrirá el formulario correspondiente
+     * Metodo que cuando al pulsar el botón Adoptar abrirá el formulario correspondiente
      *
      * @param event --> acción que se va a llevar a cabo
      */
@@ -242,6 +244,12 @@ public class PerroController {
         String colorAnimal = buscarColor.getText();
 
         boolean buscarNoAdoptados = noAdoptado.isSelected();
+        if (idAnimalTexto.isEmpty() && chipAnimal.isEmpty() &&
+                nombreAnimal.isEmpty() && razaAnimal.isEmpty() && colorAnimal.isEmpty()) {
+            Mensajes.aletaObligatoriosCamposVacios("Introduce al menos un criterio de búsqueda");
+            tablaPerros();
+            return null;
+        }
 
         List<Perro> resultadosEncontrados = new ArrayList<>();
 
@@ -250,6 +258,9 @@ public class PerroController {
             if (p != null) {
                 resultadosEncontrados.add(p);
                 return resultadosEncontrados;
+            }else {
+                Mensajes.alertaNoExiste("No existe ningún perro con el ID: " + idAnimalTexto);
+                return new ArrayList<>();
             }
         }
         if (chipAnimal != null && !chipAnimal.isEmpty()) {
@@ -257,6 +268,9 @@ public class PerroController {
             if (p != null) {
                 resultadosEncontrados.add(p);
                 return resultadosEncontrados;
+            }else {
+                Mensajes.alertaNoExiste("El número de chip " + chipAnimal + "no existe en nuestros registros");
+                return new ArrayList<>();
             }
         }
         if (nombreAnimal != null && !nombreAnimal.isEmpty()) {
@@ -274,8 +288,13 @@ public class PerroController {
 
         HashSet<Perro> busquedaFinal = new HashSet<>(resultadosEncontrados);
         busquedaFinal.remove(null);
+
+        if (busquedaFinal.isEmpty()) {
+            Mensajes.alertaErrorDeRegistro("No se encontraron resultados en la base de datos");
+            return new ArrayList<>();
+        }
+
         return new ArrayList<>(busquedaFinal);
-        //todo --> alertas
     }
 
     @FXML
@@ -305,7 +324,7 @@ public class PerroController {
         ventanaBuscar.setVisible(false);
         informacionAdicional.setVisible(false);
         modificarUbicacion.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
-        //todo --> cargar datos
+        tablaPerros();
     }
 
     /**
@@ -321,7 +340,7 @@ public class PerroController {
         Animal aSeleccionado = tablaPerros.getSelectionModel().getSelectedItem();
 
         if (pSeleccionado == null || aSeleccionado == null) {
-            // todo -> alerta: selecciona un elemento primero
+            Mensajes.alertaNoSeleccionado("Por favor, seleccione un perro");
             return false;
         }
 
@@ -335,7 +354,7 @@ public class PerroController {
         if ((chip == null || chip.isEmpty()) && fecha == null && (observaciones == null || observaciones.isEmpty())
                 && (dniAdoptante == null || dniAdoptante.isEmpty()) && ubicacion == 0 && (peso == null || peso == 0.0) &&
                 !modificarEsterilizado.isSelected() && !modificarAgresivo.isSelected()) {
-            //todo --> alerta de campos vacíos
+            Mensajes.aletaObligatoriosCamposVacios("Debe completar todos los campos obligatorios");
             return false;
         }
 
@@ -344,84 +363,83 @@ public class PerroController {
         if (chip != null && !chip.trim().isEmpty()) {
             if (AnimalDAO.findByChip(chip) == null) {
                 if (AnimalDAO.updateNumeroChip(aSeleccionado, chip)) {
-                    // todo -> alerta éxito — chip actualizado correctamente
+                    Mensajes.actualizacionCorrecta("Número de chip actualizado con éxito");
                     actualizado = true;
                 } else {
-                    // todo -> alerta error — no se pudo actualizar el chip
+                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido completar, compruebe la información");
                 }
             } else {
-                // todo -> alerta error — ya existe un animal con ese chip
+                Mensajes.alertaYaExiste("El número de chip " + chip + " ya está en uso");
             }
         }
 
         if (fecha != null) {
             if (fecha.isAfter(LocalDate.now())) {
-                // todo -> alerta error — la fecha no puede ser futura
+                Mensajes.alertaErrorDeRegistro("La fecha de registro no puede ser posterior a la fecha actual");
                 return false;
             } else if (AnimalDAO.updateFechaAlta(aSeleccionado, fecha)) {
-                // todo -> alerta éxito — fecha actualizada correctamente
+                Mensajes.actualizacionCorrecta("Fecha actualizada con éxito");
+
                 actualizado = true;
             } else {
-                // todo -> alerta error — no se pudo actualizar la fecha
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
             }
         }
 
         if (observaciones != null && !observaciones.trim().isEmpty()) {
             if (AnimalDAO.updateObservaciones(aSeleccionado, observaciones)) {
-                // todo -> alerta éxito — observaciones actualizadas correctamente
+                Mensajes.actualizacionCorrecta("Observaciones actualizadas con éxito");
                 actualizado = true;
             } else {
-                // todo -> alerta error — no se pudo actualizar las observaciones
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
             }
         }
 
         if (!aSeleccionado.isEsterilizado() && modificarEsterilizado.isSelected()) {
             if (AnimalDAO.updateEsterilizado(aSeleccionado, true)) {
-                // todo -> alerta éxito — esterilizado actualizado correctamente
+                Mensajes.actualizacionCorrecta("Información actualizada con éxito");
                 actualizado = true;
             } else {
-                // todo -> alerta error — no se pudo actualizar esterilizado
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
             }
         } // todo -> esto debería cambiar si cargo los datos
 
         if (!pSeleccionado.isAgresivo() && modificarAgresivo.isSelected()) {
             if (PerroDAO.updateAgresivo(pSeleccionado, true)) {
-                // todo -> alerta éxito — agresivo actualizado correctamente
+                Mensajes.actualizacionCorrecta("Información actualizada con éxito");
                 actualizado = true;
             } else {
-                // todo -> alerta error — no se pudo actualizar agresivo
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
             }
         } // todo -> esto debería cambiar si cargo los datos
 
         if (dniAdoptante != null && !dniAdoptante.trim().isEmpty()) {
             if (AnimalDAO.updateAdoptante(aSeleccionado, dniAdoptante)) {
-                // todo -> alerta éxito — adoptante actualizado correctamente
+                Mensajes.actualizacionCorrecta("Información del adoptante actualizada con éxito");
                 actualizado = true;
             } else {
-                // todo -> alerta error — no se pudo actualizar el adoptante
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información del adoptante");
             }
         }
 
         if (ubicacion > 0) {
             if (AnimalDAO.updateUbicacion(aSeleccionado, ubicacion)) {
-                // todo -> alerta éxito — ubicación actualizada correctamente
+                Mensajes.actualizacionCorrecta("Ubicación cambiada correctamente");
                 actualizado = true;
             } else {
-                // todo -> alerta error — no se pudo actualizar la ubicación
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar ubicación");
             }
         }
 
         if (peso != null && peso > 0) {
             if (PerroDAO.updatePeso(pSeleccionado, peso)) {
-                // todo -> alerta éxito — peso actualizado correctamente
+                Mensajes.actualizacionCorrecta("Peso cambiado correctamente");
                 actualizado = true;
             } else {
-                // todo -> alerta error — no se pudo actualizar el peso
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar el peso");
             }
         }
-
         return actualizado;
-
     }
 
     /**
@@ -466,18 +484,18 @@ public class PerroController {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(false);
         Animal animalSeleccionado = tablaPerros.getSelectionModel().getSelectedItem();
-        // todo -> confirmacion de alerta de si quiere borrar o no
 
         if (animalSeleccionado == null) {
-            // todo -> alerta: selecciona un elemento primero
+            Mensajes.alertaNoSeleccionado("No hay ningún animal seleccionado");
             return;
         }
 
         if (PerroDAO.findByID(animalSeleccionado.getId()) != null) {
-            //todo-> confirmacion
-            AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
+            if (Mensajes.confirmarEliminar("El gato seleccionado será eliminado permanentemente.")) {
+                AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
+            }
         } else {
-            //todo -> alerta: ese animal no es un gato
+            Mensajes.alertaNoSeleccionado("Debe seleccionar un perro");
         }
         initialize();
     }
