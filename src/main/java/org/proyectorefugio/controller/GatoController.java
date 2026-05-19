@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 
 //todo -> comentarios
+//todo--> cuando muestre los no adoptados que si estan dados de alta tampoco los muestre, pueden estar dados de alta por otro motivo(muerte)
 
 public class GatoController {
     @FXML
