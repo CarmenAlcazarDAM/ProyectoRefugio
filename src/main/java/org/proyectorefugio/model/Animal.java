@@ -217,10 +217,11 @@ public class Animal {
     public void setFechaAlta(LocalDate fechaAlta) {
         if(fechaAlta == null){
             this.fechaAlta = null;
+            return;
         }
 
         if (!Utils.validarFecha(fechaAlta)) {
-            throw new IllegalArgumentException("La fecha de ingreso no puede ser posterior al día actual");
+            throw new IllegalArgumentException("La fecha de alta no puede ser posterior al día actual");
         }
         this.fechaAlta = fechaAlta;
     }

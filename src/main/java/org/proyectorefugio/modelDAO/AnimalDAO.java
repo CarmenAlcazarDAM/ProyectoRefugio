@@ -71,13 +71,19 @@ public class AnimalDAO {
                 String observaciones = rs.getString("observaciones");
                 LocalDate fechaIngreso = rs.getDate("fechaIngreso").toLocalDate();
                 Boolean adoptado = rs.getBoolean("adoptado");
-                LocalDate fechaAlta = rs.getDate("fechaAlta").toLocalDate();
+                Date fechaAlta = rs.getDate("fechaAlta");
                 String dniAdoptante = rs.getString("dniAdoptante");
                 int idUbicacion = rs.getInt("idUbicacion");
 
+                LocalDate fechaAltaPermitida = null;
+
+                if (fechaAlta != null) {
+                    fechaAltaPermitida = fechaAlta.toLocalDate();
+                }
+
 
                 animal = new Animal(id, nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip,
-                        esterilizado, historia, observaciones, fechaIngreso, adoptado, fechaAlta,
+                        esterilizado, historia, observaciones, fechaIngreso, adoptado, fechaAltaPermitida,
                         dniAdoptante, idUbicacion);
             }
 
