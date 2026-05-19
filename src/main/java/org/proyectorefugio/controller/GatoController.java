@@ -321,7 +321,7 @@ public class GatoController {
             Animal aSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
 
             if (gSeleccionado == null || aSeleccionado == null) {
-                Mensajes.alertaNoSeleccionado("Por favor, selecciona un gato");
+                Mensajes.alertaNoSeleccionado("Por favor, seleccione un gato");
                 return false;
             }
 
@@ -359,7 +359,7 @@ public class GatoController {
 
             if (fecha != null) {
                 if (fecha.isAfter(LocalDate.now())) {
-                    Mensajes.alertaErrorDeRegistro("La fecha de de adopción no puede ser posterior a la fecha actual");
+                    Mensajes.alertaErrorDeRegistro("La fecha de registro no puede ser posterior a la fecha actual");
                     return false;
                 } else if (AnimalDAO.updateFechaAlta(aSeleccionado, fecha)) {
                     Mensajes.actualizacionCorrecta("Fecha actualizada con éxito");
@@ -376,7 +376,6 @@ public class GatoController {
                     actualizado = true;
                 } else {
                     Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
-
                 }
             }
 
@@ -405,7 +404,6 @@ public class GatoController {
                     actualizado = true;
                 } else {
                     Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información del adoptante");
-
                 }
             }
 
