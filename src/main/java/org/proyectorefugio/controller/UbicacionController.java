@@ -288,7 +288,6 @@ public class UbicacionController {
 
         if (resultados == null || resultados.isEmpty()) {
             Mensajes.alertaNoExiste("No hay resultados para la búsqueda");
-
             //al no encontrar resultados devuelve la lista entera otra vez
             iniciarTabla();
             return;
@@ -329,7 +328,7 @@ public class UbicacionController {
     public boolean accionModificar() {
         Ubicacion seleccionada = tablaUbicaciones.getSelectionModel().getSelectedItem();
         if (seleccionada == null) {
-            // todo -> alerta: selecciona un elemento primero
+            Mensajes.alertaNoSeleccionado("Ningún elemento seleccionado");
             return false;
         }
 
@@ -350,7 +349,7 @@ public class UbicacionController {
     }
 
     /**
-     * Metodo que gestiona que aparezcan mensaje de error si no se actuliza y de sí se ha actualizado correctamente
+     * Metodo que gestiona que aparezcan mensaje de error si no se actualiza y de sí se ha actualizado correctamente
      * También actualiza la tabla inicial
      *
      * @param event --> accion que se realiza cuando se pulsa el botón
@@ -358,11 +357,11 @@ public class UbicacionController {
     public void botonActualizarModificacion(ActionEvent event) {
         boolean modificado = accionModificar();
         if (modificado) {
-            //todo -> mensaje de "Actualizado correctamente"
+            Mensajes.actualizacionCorrecta("Modificación realizada con éxito");
             iniciarTabla();
             limpiarCampos();
         } else {
-            // todo -> alerta: "No se pudo actualizar o no hay cambios"
+            Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar");
         }
 
     }
@@ -379,8 +378,15 @@ public class UbicacionController {
     public void botonEliminar(ActionEvent event) {
         Ubicacion seleccionada = tablaUbicaciones.getSelectionModel().getSelectedItem();
         panelInsertar.setVisible(false);
-        // todo -> confirmacion de alerta de si quiere borrar o no
-        UbicacionDAO.deleteUbicacionById(seleccionada.getId());
+        if (seleccionada == null) {
+            Mensajes.alertaNoSeleccionado("No hay ninguna ubicación seleccionada");
+            return;
+        }
+        if (Mensajes.confirmarEliminar("La ubicación seleccionada será eliminado permanentemente.")) {
+            UbicacionDAO.deleteUbicacionById(seleccionada.getId());
+        } else {
+                Mensajes.alertaNoSeleccionado("Debe seleccionar una ubicación");
+            }
         iniciarTabla();
     }
     //endregion
