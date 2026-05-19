@@ -18,6 +18,7 @@ import org.proyectorefugio.model.Ubicacion;
 import org.proyectorefugio.modelDAO.AnimalDAO;
 import org.proyectorefugio.modelDAO.UbicacionDAO;
 import org.proyectorefugio.utils.Utils;
+import org.proyectorefugio.view.Mensajes;
 
 
 import java.sql.Time;
@@ -96,8 +97,8 @@ public class UbicacionController {
         disponibilidadCol.setCellValueFactory(cellData -> {
 
             int id = cellData.getValue().getId(); //id de la ubicación actual
-            int capacidadUbicacion = cellData.getValue().getCapacidad(); //capacidad de la ubicación actual
-            int disponibilidad = capacidadUbicacion - ocupacionDeUbicacion(id); //obtengo las plazas disponibles
+            int capacidad = cellData.getValue().getCapacidad(); //capacidad de la ubicación actual
+            int disponibilidad = calcularDisponibilidad(id, capacidad); //obtengo las plazas disponibles
             return new SimpleObjectProperty<>(disponibilidad);
         });
 
@@ -125,6 +126,11 @@ public class UbicacionController {
         return animalesEnUbicacion.size();
     }
 
+    public int calcularDisponibilidad(int idUbicacion, int capacidad) {
+
+        return capacidad - ocupacionDeUbicacion(idUbicacion);
+
+    }
 
 
     //region ------------------- GESTIÓN INSERTAR UBICACIÓN-------------------
@@ -136,7 +142,7 @@ public class UbicacionController {
     public void insertarUbicacion() {
         try {
             if (insertarTipo.getValue() == null || (int) insertarCapacidad.getValue() < 1) {
-                // todo -> alerta
+                Mensajes.aletaObligatoriosCamposVacios("Debe completar al menos el tipo y su capacidad");
                 return;
             }
             Ubicaciones tipo = Ubicaciones.valueOf(insertarTipo.getValue().toString().toUpperCase());
@@ -150,12 +156,12 @@ public class UbicacionController {
             Ubicacion encontrada = UbicacionDAO.findById(u.getId());
 
             if (encontrada != null) {
-                //todo --> mensaje confirmacion
+                Mensajes.operacionCompletada("Ubicación registrada con éxito");
             }
 
 
         } catch (Exception e) {
-            //todo --> alertas y la excepción -> illegalException
+            Mensajes.alertaErrorDeRegistro("Lo sentimos, no se ha completar el registro");
             throw new RuntimeException(e);
         }
     }
@@ -202,7 +208,7 @@ public class UbicacionController {
         try {
             insertarUbicacion();
         } catch (Exception e) {
-            //todo --> alertas y la excepción -> illegalException --> elarta si no se ha guardado
+            Mensajes.alertaErrorDeRegistro("Lo sentimos, no se ha completar el registro");
             throw new RuntimeException(e);
         }
         iniciarTabla();
@@ -238,36 +244,36 @@ public class UbicacionController {
      */
     public List<Ubicacion> busquedaAccion() {
 
-        try {
+        String horaTexto = insertarHoraSalida.getText();
+        LocalTime hora = Utils.validarHora(horaTexto);
+        int minutos = (int) insertarTiempo.getValue();
 
-            String horaTexto = insertarHoraSalida.getText();
-            LocalTime hora = Utils.validarHora(horaTexto);
-            int minutos = (int) insertarTiempo.getValue();
-
-
-            if (minutos > 0) {
-                List<Ubicacion> resultadoUnico = new ArrayList<>();
-                resultadoUnico.add(UbicacionDAO.findById(minutos));
-                return resultadoUnico;
-            }
-
-            List<Ubicacion> resultadosEncontrados = new ArrayList<>();
-
-            if (insertarTipo.getValue() != null) {
-                resultadosEncontrados.addAll(UbicacionDAO.findByType(insertarTipo.getValue().toString().toUpperCase()));
-            }
-
-            if (hora != null) {
-                resultadosEncontrados.addAll(UbicacionDAO.findByHour(Time.valueOf(hora)));
-            }
-
-            return resultadosEncontrados;
-
-
-        } catch (Exception e) {
-            //todo --> alertas y la excepción -> illegalException
-            throw new RuntimeException(e);
+        if (horaTexto.trim().isEmpty() && hora == null && minutos <= 0) {
+            Mensajes.aletaObligatoriosCamposVacios("Introduce al menos un criterio de búsqueda");
+            iniciarTabla();
+            return null;
         }
+
+
+        if (minutos > 0) {
+            List<Ubicacion> resultadoUnico = new ArrayList<>();
+            resultadoUnico.add(UbicacionDAO.findById(minutos));
+            return resultadoUnico;
+        } else {
+            Mensajes.alertaNoExiste("No hay resultados para la búsqueda");
+        }
+
+        List<Ubicacion> resultadosEncontrados = new ArrayList<>();
+
+        if (insertarTipo.getValue() != null) {
+            resultadosEncontrados.addAll(UbicacionDAO.findByType(insertarTipo.getValue().toString().toUpperCase()));
+        }
+
+        if (hora != null) {
+            resultadosEncontrados.addAll(UbicacionDAO.findByHour(Time.valueOf(hora)));
+        }
+
+        return resultadosEncontrados;
 
     }
 
@@ -281,7 +287,7 @@ public class UbicacionController {
                 FXCollections.observableArrayList(busquedaAccion());
 
         if (resultados == null || resultados.isEmpty()) {
-            // todo -> alerta: no se encontraron resultados
+            Mensajes.alertaNoExiste("No hay resultados para la búsqueda");
 
             //al no encontrar resultados devuelve la lista entera otra vez
             iniciarTabla();
@@ -292,7 +298,6 @@ public class UbicacionController {
         limpiarCampos();
     }
 //endregion
-
 
 
 //region ------------------- GESTIÓN MODIFICAR UBICACIÓN -------------------
@@ -368,6 +373,7 @@ public class UbicacionController {
 
     /**
      * Metodo que elimina la ubicación seleccionada de la BBDD
+     *
      * @param event --> acción que ocurre cuando se pulsa el boton
      */
     public void botonEliminar(ActionEvent event) {
