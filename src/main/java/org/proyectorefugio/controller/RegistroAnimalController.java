@@ -181,7 +181,7 @@ public class RegistroAnimalController {
             Mensajes.operacionCompletada("El gato ha sido registrado correctamente");
 
         } else {
-            Mensajes.alertaErrorDeRegistro("2"); //"No se ha podido completar el registro"
+            Mensajes.alertaErrorDeRegistro("No se ha podido completar el registro");
             return;
         }
         limpiarCampos();
