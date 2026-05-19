@@ -12,10 +12,12 @@ import javafx.scene.text.Text;
 import org.proyectorefugio.model.*;
 import org.proyectorefugio.modelDAO.*;
 import org.proyectorefugio.utils.Utils;
+import org.proyectorefugio.view.Mensajes;
 import org.proyectorefugio.view.SceneManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class VoluntarioController {
@@ -127,14 +129,15 @@ public class VoluntarioController {
         listaVoluntarios.getSelectionModel().selectedItemProperty().addListener((observable, anterior, seleccionado) -> {
             if (seleccionado != null) {
                 Voluntario v = VoluntarioDAO.findByDni(seleccionado.getDni());
-                if(v ==null){return;}
+                if (v == null) {
+                    return;
+                }
 
                 informacionAdicional.setVisible(true);
                 ventanaBuscar.setVisible(false);
                 ventanaAñadirTarea.setVisible(false);
                 botonGuardarModificacion.setVisible(false);
                 botonGuardarTarea.setVisible(false);
-
 
 
                 informacionAdicional.setText(
@@ -158,7 +161,6 @@ public class VoluntarioController {
      *
      * @param event --> acción que se va a llevar a cabo
      */
-    //todo -> podria hacer una opcion que pregunte antes si se ha registrado anteriormente como voluntario o adoptante
     public void botonInsertarVoluntario(ActionEvent event) {
 
         FormularioPersonaYAdoptarController.persona = "voluntario";
@@ -259,31 +261,48 @@ public class VoluntarioController {
      * @return --> devuelve una lista con los resultados obtenidos
      */
     public List<Voluntario> buscarVoluntario() {
-        //todo-> validaciones y alert
-        //todo -> ¿que pasa si no rellenas nada?
-        //todo -> si no rellenas nada volver a la informacion inicial
-
         String dniVoluntario = buscarDNI.getText();
         String nombreVoluntario = buscarNombre.getText();
         String apellidoVoluntario = buscarApellidos.getText();
 
+        if (dniVoluntario.trim().isEmpty() && nombreVoluntario.trim().isEmpty() && apellidoVoluntario.trim().isEmpty()) {
+            Mensajes.aletaObligatoriosCamposVacios("Introduce al menos un criterio de búsqueda");
+            iniciarListaVoluntarios();
+            return null;
+        }
+
+
         List<Voluntario> voluntariosEncontrados = new ArrayList<>();
 
-        if (dniVoluntario != null && !dniVoluntario.isEmpty()) {
-            voluntariosEncontrados.clear();
-            voluntariosEncontrados.add(VoluntarioDAO.findByDni(dniVoluntario));
-            return voluntariosEncontrados;
-        }
-        if (nombreVoluntario != null && !nombreVoluntario.isEmpty()) {
-            List<Voluntario> resultados = VoluntarioDAO.findByName(nombreVoluntario);
-            return resultados;
-        }
-        if (apellidoVoluntario != null && !apellidoVoluntario.isEmpty()) {
-            List<Voluntario> resultados = VoluntarioDAO.findByLastName(apellidoVoluntario);
-            return resultados;
+        if (dniVoluntario != null && !dniVoluntario.trim().isEmpty()) {
+            Voluntario v = VoluntarioDAO.findByDni(dniVoluntario);
+            List<Voluntario> resultados = new ArrayList<>();
+            if (v != null) {
+                resultados.add(v);
+                return resultados;
+            } else {
+                Mensajes.alertaNoExiste("No existe ningún voluntario con el DNI / NIF: " + dniVoluntario);
+            }
         }
 
-        return null;
+        if (nombreVoluntario != null && !nombreVoluntario.trim().isEmpty()) {
+            voluntariosEncontrados.addAll(VoluntarioDAO.findByName(nombreVoluntario));
+        }
+
+        if (apellidoVoluntario != null && !apellidoVoluntario.isEmpty()) {
+            voluntariosEncontrados.addAll(VoluntarioDAO.findByLastName(apellidoVoluntario));
+        }
+
+        HashSet<Voluntario> busquedaFinal = new HashSet<>(voluntariosEncontrados);
+        busquedaFinal.remove(null);
+
+        if (busquedaFinal.isEmpty()) {
+            Mensajes.alertaErrorDeRegistro("No se encontraron resultados en la base de datos");
+            return new ArrayList<>();
+        }
+
+        return new ArrayList<>(busquedaFinal);
+
     }
 
     //endregion
@@ -301,7 +320,6 @@ public class VoluntarioController {
         ObservableList<Ayuda> resultados =
                 FXCollections.observableArrayList(buscarTarea());
 
-
         tablaAyuda.setItems(resultados);
 
         ObservableList<Voluntario> resultadosVoluntarios =
@@ -313,8 +331,6 @@ public class VoluntarioController {
     //endregion
 
     //region ------------------- GESTIÓN AÑADIR TAREA -------------------
-
-
 
 
     public void botonAñadirTarea(ActionEvent event) {
@@ -335,19 +351,20 @@ public class VoluntarioController {
 
             if (tarea == null || tarea.trim().isEmpty() || dniVoluntario == null ||
                     dniVoluntario.trim().isEmpty() || fecha == null || idUbicacion <= 0) {
-                // todo -> alerta, campos obligatorios vacíos
+                Mensajes.aletaObligatoriosCamposVacios("Los campos obligatorios no pueden estar vacíos");
                 return;
             }
+
             Ayuda a = new Ayuda(dniVoluntario, idUbicacion, fecha, tarea);
             AyudaDAO.addAyuda(a);
             Ayuda encontrada = AyudaDAO.findSingle(dniVoluntario, idUbicacion, fecha);
 
             if (encontrada != null) {
-                //todo --> mensaje confirmacion
+                Mensajes.operacionCompletada("Tarea registrada con éxito");
             }
 
         } catch (Exception e) {
-            //todo --> alertas y la excepción -> illegalException
+            Mensajes.alertaErrorDeRegistro("Lo sentimos, no se ha completar el registro");
             throw new RuntimeException(e);
         }
     }
@@ -373,7 +390,6 @@ public class VoluntarioController {
     //region ------------------- GESTIÓN MODIFICAR AYUDA -------------------
 
 
-
     public void botonModificar(ActionEvent event) {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(false);
@@ -389,47 +405,44 @@ public class VoluntarioController {
     public boolean modificarAyuda() {
         Ayuda a = tablaAyuda.getSelectionModel().getSelectedItem();
         if (a == null) {
-            // todo -> alerta: selecciona un elemento primero
+            Mensajes.aletaObligatoriosCamposVacios("Debe completar todos los campos obligatorios");
             return false;
         }
         String tarea = insertarTareaTexto.getText();
         int idUbicacion = (int) insertarTareaUbicacion.getValue();
         LocalDate fecha = insertarTareaFecha.getValue();
 
-        if ((tarea == null || tarea.trim().isEmpty()) &&  idUbicacion <= 0 && fecha == null){
-            // todo -> alerta: no ha rellenado ningun campo
+        if ((tarea == null || tarea.trim().isEmpty()) && idUbicacion <= 0 && fecha == null) {
+            Mensajes.aletaObligatoriosCamposVacios("Ningún campo está relleno");
             return false;
         }
         boolean actualizado = false;
         if (tarea != null && !tarea.trim().isEmpty()) {
             if (AyudaDAO.updateTarea(a, tarea)) {
-                // todo -> alerta éxito — tarea actualizada correctamente
                 actualizado = true;
             } else {
-                // todo -> alerta error — no se pudo actualizar la tarea
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la tarea");
             }
         }
 
         if (idUbicacion >= 1) {
             if (AyudaDAO.updateUbicacion(a, idUbicacion)) {
-                // todo -> alerta éxito — ubicación actualizada correctamente
                 actualizado = true;
 
             } else {
-                // todo -> alerta error — no se pudo actualizar la ubicación
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la ubicación");
             }
         }
 
         if (fecha != null) {
             if (!Utils.validarFecha(fecha)) {
-                // todo -> alerta error — la fecha no puede ser futura
+                Mensajes.alertaErrorDeRegistro("La fecha de registro no puede ser posterior a la fecha actual");
                 return false;
             } else if (AyudaDAO.updateFecha(a, fecha)) {
-                // todo -> alerta éxito — fecha actualizada correctamente
                 actualizado = true;
 
             } else {
-                // todo -> alerta error — no se pudo actualizar la fecha
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la fecha");
             }
         }
         return actualizado;
@@ -461,21 +474,17 @@ public class VoluntarioController {
         ventanaBuscar.setVisible(false);
         Ayuda ayudaSeleccionada = tablaAyuda.getSelectionModel().getSelectedItem();
         Voluntario voluntarioSeleccionado = listaVoluntarios.getSelectionModel().getSelectedItem();
-        // todo -> confirmacion de alerta de si quiere borrar o no
 
         if (ayudaSeleccionada == null && voluntarioSeleccionado == null) {
-            // todo -> alerta: selecciona un elemento primero
+            Mensajes.alertaNoSeleccionado("No hay ningún elemento seleccionado");
             return;
         }
-
-        // todo -> confirmación de alerta de si quiere borrar o no
-        if (ayudaSeleccionada != null) {
+        if (Mensajes.confirmarEliminar("¿Desea eliminar el elemento de forma permanente?")) {
             AyudaDAO.deleteAyuda(ayudaSeleccionada.getDniVoluntario(), ayudaSeleccionada.getIdUbicacion(), ayudaSeleccionada.getFecha());
+        }else {
+            Mensajes.alertaNoSeleccionado("Debe seleccionar al menos un elemento");
         }
         initialize();
     }
-
     //endregion
-
-
 }

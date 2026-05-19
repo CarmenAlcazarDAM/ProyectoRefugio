@@ -331,8 +331,13 @@ public class UbicacionController {
             Mensajes.alertaNoSeleccionado("Ningún elemento seleccionado");
             return false;
         }
-
         LocalTime hora = Utils.validarHora(insertarHoraSalida.getText());
+
+        if((int) insertarTiempo.getValue()<=0 && hora == null &&(int) insertarCapacidad.getValue() <= 0){
+            Mensajes.alertaNoSeleccionado("Por favor, seleccione un perro");
+            return false;
+        }
+
         boolean actualizada = false;
 
         if (hora != null) {
@@ -386,7 +391,7 @@ public class UbicacionController {
             UbicacionDAO.deleteUbicacionById(seleccionada.getId());
         } else {
                 Mensajes.alertaNoSeleccionado("Debe seleccionar una ubicación");
-            }
+        }
         iniciarTabla();
     }
     //endregion
