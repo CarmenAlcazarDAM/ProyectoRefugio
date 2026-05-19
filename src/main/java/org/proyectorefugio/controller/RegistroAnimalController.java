@@ -14,7 +14,9 @@ import org.proyectorefugio.model.Perro;
 import org.proyectorefugio.modelDAO.AnimalDAO;
 import org.proyectorefugio.modelDAO.GatoDAO;
 import org.proyectorefugio.modelDAO.PerroDAO;
+import org.proyectorefugio.view.Mensajes;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 
@@ -86,9 +88,7 @@ public class RegistroAnimalController {
     /**
      * Metodo que va a recoger toda la información procedente de del formulario
      */
-    //todo -> edad no se ha guardado
-    //todo --> este método se puede refactorizar
-    //todo -> validaciones de entrada
+
     public Animal obtenerInformacionGenericaDelFormulario() {
         String nombre = infoNombre.getText();
         String opSexo = opcionesSexo.getValue().toString().toLowerCase();
@@ -103,8 +103,10 @@ public class RegistroAnimalController {
         String edad = infoEdad.getText();
         String marcasDistintivas = infoMarcas.getText();
         String numeroChip = infoChip.getText();
-        // todo-> arreglar que siempre hay fecha de ingreso, si es null que se ponga por defecto la fecha del sistema
         LocalDate fechaIngreso = infoFecha.getValue();
+        if (fechaIngreso == null) {
+            fechaIngreso = LocalDate.now();
+        }
 
         Boolean esterilizado;
         if (infoEsterilizado.isSelected()) {
@@ -121,10 +123,10 @@ public class RegistroAnimalController {
         String historia = infoHistoria.getText();
         String pesoTexto = pesoField.getText();
         if (pesoTexto.isEmpty()) {
-            pesoNumero =  Double.parseDouble(pesoTexto);
+            pesoNumero = Double.parseDouble(pesoTexto);
         }
 
-        return new Animal(nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion);
+        return new Animal(nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion,Date.valueOf(fechaIngreso));
     }
 
     @FXML
@@ -133,52 +135,47 @@ public class RegistroAnimalController {
      * @param event --> evento que ocurre cuando pulsas el boton
      */
     public void guardarInformacion(ActionEvent event) {
-        try {
-            boolean variable;
-            //Independientemente de la información que pida, si está seleccionado será true.
-            if (checkVariable.isSelected()) {
-                variable = true;
-            } else {
-                variable = false;
-            }
 
-            Animal animalBase = obtenerInformacionGenericaDelFormulario();
-
-            Animal animalInsertado = AnimalDAO.addAnimal(animalBase);
-
-            String textoConfirmacion = "Registrado correctamente.";
-            if ("perro".equals(tipo)) {
-                double pesoPerro = pesoNumero;
-
-                Perro perroInsertar = new Perro(animalInsertado.getId(), animalInsertado.getNombre(),
-                        animalInsertado.getRaza(), animalInsertado.getSexo(),
-                        pesoPerro, variable);
-
-                PerroDAO.addPerro(perroInsertar, animalInsertado);
-                System.out.println(textoConfirmacion);
-
-            } else if ("gato".equals(tipo)) {
-                Gato gatoInsertar = new Gato(animalInsertado.getId(), animalInsertado.getNombre(),
-                        animalInsertado.getRaza(), animalInsertado.getSexo(),
-                        variable);
-
-                GatoDAO.addGato(gatoInsertar, animalInsertado);
-                System.out.println(textoConfirmacion);
-            }
-            // todo ->  añadir un Alert flotante confirmando el éxito y cierre el formulario
-            limpiarCampos();
-
-        } catch (Exception e) {
-            System.err.println("Ocurrió un error al intentar guardar el registro: " + e.getMessage());
-            e.printStackTrace();
-            //todo -> alertas de error
+        boolean variable;
+        //Independientemente de la información que pida, si está seleccionado será true.
+        if (checkVariable.isSelected()) {
+            variable = true;
+        } else {
+            variable = false;
         }
+
+        Animal animalBase = obtenerInformacionGenericaDelFormulario();
+
+        Animal animalInsertado = AnimalDAO.addAnimal(animalBase);
+
+
+        if ("perro".equals(tipo)) {
+            double pesoPerro = pesoNumero;
+
+            Perro perroInsertar = new Perro(animalInsertado.getId(), animalInsertado.getNombre(),
+                    animalInsertado.getRaza(), animalInsertado.getSexo(),
+                    pesoPerro, variable);
+
+            PerroDAO.addPerro(perroInsertar, animalInsertado);
+            Mensajes.operacionCompletada("El perro ha sido registrado correctamente");
+        } else if ("gato".equals(tipo)) {
+            Gato gatoInsertar = new Gato(animalInsertado.getId(), animalInsertado.getNombre(),
+                    animalInsertado.getRaza(), animalInsertado.getSexo(),
+                    variable);
+
+            GatoDAO.addGato(gatoInsertar, animalInsertado);
+            Mensajes.operacionCompletada("El gato ha sido registrado correctamente");
+
+        } else {
+            Mensajes.alertaErrorDeRegistro("No se ha podido completar el registro");
+        }
+        limpiarCampos();
     }
 
     /**
      * Metodo que limpia los campos del formulario
      */
-    public void limpiarCampos(){
+    public void limpiarCampos() {
         infoNombre.clear();
         checkVariable.setSelected(false);
         pesoField.clear();
@@ -201,7 +198,7 @@ public class RegistroAnimalController {
      * Metodo para cerrar la ventana cuando pulsamos cancelar
      */
     public void accionCancelar(ActionEvent event) {
-        Stage stage = (Stage)botonCancelar.getScene().getWindow();
+        Stage stage = (Stage) botonCancelar.getScene().getWindow();
         stage.close();
     }
 }
