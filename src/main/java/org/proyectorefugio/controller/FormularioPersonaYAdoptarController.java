@@ -19,6 +19,7 @@ import java.time.LocalDate;
 public class FormularioPersonaYAdoptarController {
     //Cuando el correspondiente controlador inicie el formulario
     // le va a dar a persona un valor "voluntario" o "adoptante".
+    @FXML
     public static String persona;
     public Text subtitulo;
     public Text titulo;
