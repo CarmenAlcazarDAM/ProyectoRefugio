@@ -149,6 +149,10 @@ public class Animal {
     }
 
     public void setNumeroChip(String numeroChip) {
+        if(numeroChip==null|| numeroChip.trim().isEmpty()){
+            this.numeroChip = null;
+            return;
+        }
         if (!Utils.validaChip(numeroChip)) {
             throw new IllegalArgumentException("Número de chip no válido");
         }
