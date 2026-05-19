@@ -6,12 +6,9 @@ import org.proyectorefugio.dataAccess.ConnectionBD;
 import org.proyectorefugio.enums.Sexo;
 import org.proyectorefugio.utils.Utils;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.sql.Date;
 import java.util.List;
 
 public class AnimalDAO {
@@ -22,14 +19,12 @@ public class AnimalDAO {
 
     private final static String SQL_FIND_BY_ID = "SELECT * FROM animal WHERE id = ?";
     private final static String SQL_FIND_BY_CHIP = "SELECT * FROM animal WHERE numeroChip = ?";
-
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM animal WHERE nombre LIKE ? AND adoptado = ?";
-
     private final static String SQL_FIND_BY_BREED = "SELECT * FROM animal WHERE raza LIKE ? AND adoptado = ?";
-
     private final static String SQL_FIND_BY_COLOUR = "SELECT * FROM animal WHERE color LIKE ? AND adoptado = ? AND id IN (SELECT idGato FROM gato)";
-
     private final static String SQL_FIND_BY_UBICACION_AND_ALTA = "SELECT * FROM animal WHERE idUbicacion = ? AND fechaALTA IS NULL";
+
+
 
     private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion, fechaIngreso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -241,11 +236,11 @@ public class AnimalDAO {
      * @param animal --> recibe el objeto Animal a insertar
      * @return --> devuelve un int que es el id del animal
      */
-    public static Animal addAnimal(Animal animal) {
+    public static int addAnimal(Animal animal) {
         Animal añadido = null;
 
         if ((animal != null) && findByChip(animal.getNumeroChip()) == null) {
-            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT_ANIMAL)) {
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT_ANIMAL, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setString(1, animal.getNombre());
                 ps.setString(2, animal.getRaza());
                 ps.setString(3, animal.getSexo().toString().toLowerCase());
@@ -261,13 +256,17 @@ public class AnimalDAO {
 
                 ps.executeUpdate();
 
-                añadido = findByID(animal.getId());
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        return rs.getInt(1);
+                    }
+                }
 
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-        return añadido;
+        return -1;
     }
 
     /////////////////////// DELETE ///////////////////////

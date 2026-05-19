@@ -14,6 +14,7 @@ import org.proyectorefugio.model.Perro;
 import org.proyectorefugio.modelDAO.AnimalDAO;
 import org.proyectorefugio.modelDAO.GatoDAO;
 import org.proyectorefugio.modelDAO.PerroDAO;
+import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.Mensajes;
 
 import java.sql.Date;
@@ -115,18 +116,38 @@ public class RegistroAnimalController {
             esterilizado = false;
         }
 
-        int idUbicacion;
+        int idUbicacion = 0;
         String textoUbi = infoUbicacion.getText();
-        idUbicacion = Integer.parseInt(textoUbi);
+        if (!textoUbi.trim().isEmpty()) {
+            idUbicacion = Utils.conversorInt(textoUbi);
+        }
 
         String observaciones = infoObservaciones.getText();
         String historia = infoHistoria.getText();
         String pesoTexto = pesoField.getText();
-        if (pesoTexto.isEmpty()) {
-            pesoNumero = Double.parseDouble(pesoTexto);
+        if (!pesoTexto.trim().isEmpty()) {
+            pesoNumero = Utils.conversorDouble(pesoTexto);
         }
 
-        return new Animal(nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion,Date.valueOf(fechaIngreso));
+        return new Animal(nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion, fechaIngreso);
+    }
+
+    public Animal insertarAnimal(){
+
+        Animal animal = obtenerInformacionGenericaDelFormulario();
+        if (animal == null) {
+            Mensajes.alertaErrorDeRegistro("Por favor, completa todos los campos obligatorios.");
+            return null;
+        }
+
+        int idAsignado = AnimalDAO.addAnimal(animal);
+        if (idAsignado <= 0) {
+            Mensajes.alertaErrorDeRegistro("No se pudo insertar el animal.");
+            return null;
+        }
+
+        animal.setId(idAsignado);
+        return animal;
     }
 
     @FXML
@@ -135,39 +156,33 @@ public class RegistroAnimalController {
      * @param event --> evento que ocurre cuando pulsas el boton
      */
     public void guardarInformacion(ActionEvent event) {
+        boolean variable = checkVariable.isSelected();
 
-        boolean variable;
-        //Independientemente de la información que pida, si está seleccionado será true.
-        if (checkVariable.isSelected()) {
-            variable = true;
-        } else {
-            variable = false;
+    Animal animal = insertarAnimal();
+        if (animal == null) {
+            Mensajes.alertaErrorDeRegistro("No se ha podido completar el registro");
+            return;
         }
-
-        Animal animalBase = obtenerInformacionGenericaDelFormulario();
-
-        Animal animalInsertado = AnimalDAO.addAnimal(animalBase);
 
 
         if ("perro".equals(tipo)) {
             double pesoPerro = pesoNumero;
 
-            Perro perroInsertar = new Perro(animalInsertado.getId(), animalInsertado.getNombre(),
-                    animalInsertado.getRaza(), animalInsertado.getSexo(),
-                    pesoPerro, variable);
+            Perro perroInsertar = new Perro(animal.getId(), animal.getNombre(),
+                    animal.getRaza(), animal.getSexo(), pesoPerro, variable);
 
-            PerroDAO.addPerro(perroInsertar, animalInsertado);
+            PerroDAO.addPerro(perroInsertar, animal);
             Mensajes.operacionCompletada("El perro ha sido registrado correctamente");
         } else if ("gato".equals(tipo)) {
-            Gato gatoInsertar = new Gato(animalInsertado.getId(), animalInsertado.getNombre(),
-                    animalInsertado.getRaza(), animalInsertado.getSexo(),
-                    variable);
+            Gato gatoInsertar = new Gato(animal.getId(), animal.getNombre(),
+                    animal.getRaza(), animal.getSexo(), variable);
 
-            GatoDAO.addGato(gatoInsertar, animalInsertado);
+            GatoDAO.addGato(gatoInsertar, animal);
             Mensajes.operacionCompletada("El gato ha sido registrado correctamente");
 
         } else {
-            Mensajes.alertaErrorDeRegistro("No se ha podido completar el registro");
+            Mensajes.alertaErrorDeRegistro("2"); //"No se ha podido completar el registro"
+            return;
         }
         limpiarCampos();
     }
