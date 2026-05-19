@@ -74,6 +74,7 @@ public class GatoController {
      */
     private void initialize() {
         noAdoptado.setSelected(true);
+        adoptado.setSelected(false);
         tablaGatos();
         ocultarTodosPaneles();
         mostrarInformacionAdicional();
@@ -346,70 +347,74 @@ public class GatoController {
             if (chip != null && !chip.trim().isEmpty()) {
                 if (AnimalDAO.findByChip(chip) == null) {
                     if (AnimalDAO.updateNumeroChip(aSeleccionado, chip)) {
-                        // todo -> alerta éxito — chip actualizado correctamente
+                        Mensajes.actualizacionCorrecta("Número de chip actualizado con éxito");
                         actualizado = true;
                     } else {
-                        // todo -> alerta error — no se pudo actualizar el chip
+                        Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido completar, compruebe la información");
                     }
                 } else {
-                    // todo -> alerta error — ya existe un animal con ese chip
+                    Mensajes.alertaYaExiste("El número de chip " + chip + " ya está en uso");
                 }
             }
 
             if (fecha != null) {
                 if (fecha.isAfter(LocalDate.now())) {
-                    // todo -> alerta error — la fecha no puede ser futura
+                    Mensajes.alertaErrorDeRegistro("La fecha de de adopción no puede ser posterior a la fecha actual");
                     return false;
                 } else if (AnimalDAO.updateFechaAlta(aSeleccionado, fecha)) {
-                    // todo -> alerta éxito — fecha actualizada correctamente
+                    Mensajes.actualizacionCorrecta("Fecha actualizada con éxito");
+
                     actualizado = true;
                 } else {
-                    // todo -> alerta error — no se pudo actualizar la fecha
+                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
                 }
             }
 
             if (observaciones != null && !observaciones.trim().isEmpty()) {
                 if (AnimalDAO.updateObservaciones(aSeleccionado, observaciones)) {
-                    // todo -> alerta éxito — observaciones actualizadas correctamente
+                    Mensajes.actualizacionCorrecta("Observaciones actualizadas con éxito");
                     actualizado = true;
                 } else {
-                    // todo -> alerta error — no se pudo actualizar las observaciones
+                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
+
                 }
             }
 
             if (!aSeleccionado.isEsterilizado() && modificarEsterilizado.isSelected()) {
                 if (AnimalDAO.updateEsterilizado(aSeleccionado, true)) {
-                    // todo -> alerta éxito — esterilizado actualizado correctamente
+                    Mensajes.actualizacionCorrecta("Información actualizada con éxito");
                     actualizado = true;
                 } else {
-                    // todo -> alerta error — no se pudo actualizar esterilizado
+                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
+
                 }
             } // todo -> esto debería cambiar si cargo los datos
 
             if (!gSeleccionado.isLeucemiaFelina() && modificarLeucemia.isSelected()) {
                 if (GatoDAO.updateLeucemia(gSeleccionado, true)) {
-                    // todo -> alerta éxito — leucemia actualizada correctamente
+                    Mensajes.actualizacionCorrecta("Información actualizada con éxito");
                     actualizado = true;
                 } else {
-                    // todo -> alerta error — no se pudo actualizar leucemia
+                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
                 }
             } // todo -> esto debería cambiar si cargo los datos
 
             if (dniAdoptante != null && !dniAdoptante.trim().isEmpty()) {
                 if (AnimalDAO.updateAdoptante(aSeleccionado, dniAdoptante)) {
-                    // todo -> alerta éxito — adoptante actualizado correctamente
+                    Mensajes.actualizacionCorrecta("Información del adoptante actualizada con éxito");
                     actualizado = true;
                 } else {
-                    // todo -> alerta error — no se pudo actualizar el adoptante
+                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información del adoptante");
+
                 }
             }
 
             if (ubicacion > 0) {
                 if (AnimalDAO.updateUbicacion(aSeleccionado, ubicacion)) {
-                    // todo -> alerta éxito — ubicación actualizada correctamente
+                    Mensajes.actualizacionCorrecta("Ubicación cambiada correctamente");
                     actualizado = true;
                 } else {
-                    // todo -> alerta error — no se pudo actualizar la ubicación
+                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar ubicación");
                 }
             }
 
@@ -457,19 +462,20 @@ public class GatoController {
             informacionAdicional.setVisible(false);
             ventanaBuscar.setVisible(false);
             Animal animalSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
-            // todo -> confirmacion de alerta de si quiere borrar o no
 
             if (animalSeleccionado == null) {
-                // todo -> alerta: selecciona un elemento primero
+                Mensajes.alertaNoSeleccionado("No hay ningún animal seleccionado");
                 return;
             }
 
             if (GatoDAO.findByID(animalSeleccionado.getId()) != null) {
-                //todo-> confirmacion
+                if (Mensajes.confirmarEliminar("El gato seleccionado será eliminado permanentemente.")) {
                 AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
+                }
             } else {
-                //todo -> alerta: ese animal no es un gato
+                Mensajes.alertaNoSeleccionado("Debe seleccionar un gato");
             }
+
             initialize();
         }
         //endregion
