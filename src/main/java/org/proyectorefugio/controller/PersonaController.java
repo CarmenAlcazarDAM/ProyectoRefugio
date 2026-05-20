@@ -10,13 +10,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.proyectorefugio.model.Adoptante;
 import org.proyectorefugio.model.Ayuda;
-import org.proyectorefugio.model.Voluntario;
 import org.proyectorefugio.modelDAO.AdoptanteDAO;
-import org.proyectorefugio.modelDAO.AyudaDAO;
-import org.proyectorefugio.modelDAO.VoluntarioDAO;
 
 
-public class AdoptanteController {
+public class PersonaController {
 
     @FXML
     public TableView<Adoptante> tablaAdoptantes;

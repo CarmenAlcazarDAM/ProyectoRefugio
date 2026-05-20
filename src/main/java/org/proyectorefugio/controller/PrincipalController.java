@@ -29,11 +29,11 @@ public class PrincipalController {
     }
     @FXML
     /**
-     * Metodo que abre la ventana adoptante-view.fxml cuando pulsamos el botón Adoptantes en JavaFX
+     * Metodo que abre la ventana persona-view.fxml cuando pulsamos el botón Adoptantes en JavaFX
      * @param event --> evento de acción (clic del botón)
      */
     public void abrirAdoptantes(ActionEvent event) {
-        SceneManager.cargarVista(panelContenido,"/org/proyectorefugio/adoptante-view.fxml");
+        SceneManager.cargarVista(panelContenido,"/org/proyectorefugio/persona-view.fxml");
     }
 
     @FXML
