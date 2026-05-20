@@ -83,6 +83,8 @@ public class RegistroAnimalController {
 
         } else if ("gato".equals(tipo)) {
             checkVariable.setText("¿Leucemia?");
+            peso.setVisible(false);
+            pesoField.setVisible(false);
         }
     }
 

@@ -248,7 +248,7 @@ public class UbicacionController {
         LocalTime hora = Utils.validarHora(horaTexto);
         int minutos = (int) insertarTiempo.getValue();
 
-        if (horaTexto.trim().isEmpty() && hora == null && minutos <= 0) {
+        if (insertarTipo.getValue() == null && horaTexto.trim().isEmpty() && hora == null && minutos <= 0) {
             Mensajes.aletaObligatoriosCamposVacios("Introduce al menos un criterio de búsqueda");
             iniciarTabla();
             return null;
@@ -259,8 +259,6 @@ public class UbicacionController {
             List<Ubicacion> resultadoUnico = new ArrayList<>();
             resultadoUnico.add(UbicacionDAO.findById(minutos));
             return resultadoUnico;
-        } else {
-            Mensajes.alertaNoExiste("No hay resultados para la búsqueda");
         }
 
         List<Ubicacion> resultadosEncontrados = new ArrayList<>();
@@ -283,17 +281,17 @@ public class UbicacionController {
      * @param event --> accion que se realiza cuando se pulsa el botón
      */
     public void botonContinuarBusqueda(ActionEvent event) {
-        ObservableList<Ubicacion> resultados =
-                FXCollections.observableArrayList(busquedaAccion());
+        List<Ubicacion> resultados = busquedaAccion();
 
         if (resultados == null || resultados.isEmpty()) {
-            Mensajes.alertaNoExiste("No hay resultados para la búsqueda");
             //al no encontrar resultados devuelve la lista entera otra vez
             iniciarTabla();
             return;
         }
+        ObservableList<Ubicacion> vista =
+                FXCollections.observableArrayList(busquedaAccion());
 
-        tablaUbicaciones.setItems(resultados);
+        tablaUbicaciones.setItems(vista);
         limpiarCampos();
     }
 //endregion
