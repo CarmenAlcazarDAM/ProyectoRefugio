@@ -119,8 +119,22 @@ public class Mensajes {
         Optional<ButtonType> resultado = alerta.showAndWait();
         return resultado.isPresent() && resultado.get() == btnEliminar;
     }
+    public static boolean noPuedeEliminar(String mensaje){
+        Alert alerta = new Alert(Alert.AlertType.WARNING);
+        alerta.setTitle("ATENCIÓN");
+        alerta.setHeaderText("No puedes eliminar esta persona");
+        alerta.setContentText(mensaje);
 
+        ButtonType btnEliminar = new ButtonType("Eliminar");
+        ButtonType btnCancelar = new ButtonType("Cancelar");
+
+        alerta.getButtonTypes().setAll(btnEliminar, btnCancelar);
+
+        Optional<ButtonType> resultado = alerta.showAndWait();
+        return resultado.isPresent() && resultado.get() == btnEliminar;
+    }
     //endregion
+
 
 
 }

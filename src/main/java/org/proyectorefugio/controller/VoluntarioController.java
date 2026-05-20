@@ -405,7 +405,7 @@ public class VoluntarioController {
     public boolean modificarAyuda() {
         Ayuda a = tablaAyuda.getSelectionModel().getSelectedItem();
         if (a == null) {
-            Mensajes.aletaObligatoriosCamposVacios("Debe completar todos los campos obligatorios");
+            Mensajes.alertaNoSeleccionado("Debe seleccionar al menos un elemento");
             return false;
         }
         String tarea = insertarTareaTexto.getText();

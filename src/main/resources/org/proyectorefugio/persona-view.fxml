@@ -27,7 +27,7 @@
       <HBox layoutX="84.0" layoutY="652.0" prefHeight="29.0" prefWidth="444.0" spacing="15.0">
          <children>
             <Button mnemonicParsing="false" onAction="#botonBusqueda" text="Búsqueda" />
-            <Button mnemonicParsing="false" text="Modificar" />
+            <Button mnemonicParsing="false" onAction="#botonModificar" text="Modificar" />
             <Button mnemonicParsing="false" text="Eliminar" />
          </children>
       </HBox>
@@ -58,6 +58,45 @@
                   <Font name="Segoe UI Semibold" size="14.0" />
                </font>
             </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="panelModificacion" layoutX="584.0" layoutY="195.0" prefHeight="324.0" prefWidth="478.0">
+         <children>
+            <Text layoutX="26.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NOMBRE" wrappingWidth="150.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="modificarNombre" layoutX="26.0" layoutY="31.0" prefHeight="32.0" prefWidth="190.0" />
+            <Button layoutX="232.0" layoutY="198.0" mnemonicParsing="false" onAction="#botonGuardarModificacion" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: #3b668c;" text="Guardar" textFill="WHITE">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Button>
+            <Text layoutX="232.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="APELLIDOS" wrappingWidth="150.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="26.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TELÉFONO" wrappingWidth="150.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="modificarTelefono" layoutX="26.0" layoutY="90.0" prefHeight="32.0" prefWidth="190.0" />
+            <Text layoutX="232.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CORREO" wrappingWidth="150.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="modificarCorreo" layoutX="232.0" layoutY="91.0" prefHeight="32.0" prefWidth="190.0" />
+            <TextField fx:id="modificarApellidos" layoutX="232.0" layoutY="31.0" prefHeight="32.0" prefWidth="190.0" />
+            <Text layoutX="26.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DIRECCIÓN" wrappingWidth="150.0472412109375">
+               <font>
+                  <Font name="Segoe UI Semibold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="modificarDireccion" layoutX="26.0" layoutY="145.0" prefHeight="32.0" prefWidth="397.0" />
          </children>
       </AnchorPane>
    </children>

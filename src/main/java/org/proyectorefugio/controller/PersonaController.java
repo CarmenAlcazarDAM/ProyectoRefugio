@@ -13,6 +13,7 @@ import org.proyectorefugio.model.Ayuda;
 import org.proyectorefugio.model.Persona;
 import org.proyectorefugio.model.Voluntario;
 import org.proyectorefugio.modelDAO.AdoptanteDAO;
+import org.proyectorefugio.modelDAO.AyudaDAO;
 import org.proyectorefugio.modelDAO.PersonaDAO;
 import org.proyectorefugio.modelDAO.VoluntarioDAO;
 import org.proyectorefugio.view.Mensajes;
@@ -40,6 +41,12 @@ public class PersonaController {
     public TextField buscarDNI;
     public TextField buscarNombre;
     public TextField buscarApellidos;
+    public AnchorPane panelModificacion;
+    public TextField modificarNombre;
+    public TextField modificarTelefono;
+    public TextField modificarCorreo;
+    public TextField modificarApellidos;
+    public TextField modificarDireccion;
 
 
     @FXML
@@ -59,7 +66,7 @@ public class PersonaController {
     private void ocultarTodosPaneles() {
         ventanaBuscar.setVisible(false);
         informacionAdicional.setVisible(false);
-//        panelModificacion.setVisible(false);
+        panelModificacion.setVisible(false);
     }
 
     public void seleccionVoluntario(ActionEvent event) {
@@ -105,8 +112,10 @@ public class PersonaController {
      * La información aparece en un recuadro Label que aparece cuando das el primer click.
      */
     public void mostrarInformacionAdicional() {
+
         tablaPersonas.getSelectionModel().selectedItemProperty().addListener((observable, anterior, seleccionado) -> {
             if (seleccionado != null) {
+                ventanaBuscar.setVisible(false);
                 informacionAdicional.setVisible(true);
                 informacionAdicional.setText(
                         "Nombre: " + seleccionado.getNombre() + "\n" +
@@ -124,7 +133,7 @@ public class PersonaController {
 
     public void botonBusqueda(ActionEvent event) {
         tablaPersonas();
-//        panelModificacion.setVisible(false);
+        panelModificacion.setVisible(false);
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(true);
     }
@@ -175,10 +184,116 @@ public class PersonaController {
     }
 
     public void botonContinuarBusqueda(ActionEvent event) {
+        informacionAdicional.setVisible(false);
         ObservableList<Persona> resultados =
                 FXCollections.observableArrayList(buscarPersona());
 
         tablaPersonas.setItems(resultados);
     }
-//endregion
+
+    //endregion
+
+    //region---------------MODIFICAR-------------------
+
+    public void botonModificar(ActionEvent event) {
+        informacionAdicional.setVisible(false);
+        ventanaBuscar.setVisible(false);
+        panelModificacion.setVisible(true);
+    }
+
+    public boolean modificarPersona() {
+        Persona p = tablaPersonas.getSelectionModel().getSelectedItem();
+        if (p == null) {
+            Mensajes.alertaNoSeleccionado("Debe seleccionar al menos un elemento");
+            return false;
+        }
+
+        String nombre = modificarNombre.getText();
+        String apellidos = modificarApellidos.getText();
+        String telefono = modificarTelefono.getText();
+        String correo = modificarCorreo.getText();
+        String direccion = modificarDireccion.getText();
+
+        if (nombre.trim().isEmpty() && apellidos.trim().isEmpty() && telefono.trim().isEmpty() && correo.trim().isEmpty() && direccion.trim().isEmpty()) {
+            Mensajes.aletaObligatoriosCamposVacios("Ningún campo está relleno");
+        }
+        boolean actualizado = false;
+        if (nombre == null || nombre.trim().isEmpty()) {
+            nombre = p.getNombre();
+        }
+        if (apellidos == null || apellidos.trim().isEmpty()) {
+            apellidos = p.getNombre();
+        }
+        if (telefono == null || telefono.trim().isEmpty()) {
+            telefono = p.getNombre();
+        }
+        if (correo == null || correo.trim().isEmpty()) {
+            correo = p.getNombre();
+        }
+        if (direccion == null || direccion.trim().isEmpty()) {
+            direccion = p.getNombre();
+        }
+
+        Persona datosCompletos = new Persona(p.getDni(), nombre, apellidos, telefono, correo, direccion);
+        if (datosCompletos != null) {
+            PersonaDAO.updatePerson(datosCompletos);
+            actualizado = true;
+        } else {
+            Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la tarea");
+        }
+        return actualizado;
+
+    }
+
+    public void limpiarCampos() {
+        modificarNombre.clear();
+        modificarApellidos.clear();
+        modificarTelefono.clear();
+        modificarCorreo.clear();
+        modificarDireccion.clear();
+    }
+
+    public void botonGuardarModificacion(ActionEvent event) {
+
+        if (modificarPersona()) {
+            Mensajes.operacionCompletada("Modificación realizada con éxito");
+            limpiarCampos();
+        } else {
+            Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la tarea");
+        }
+        tablaPersonas();
+
+    }
+    //endregion
+
+
+    //region ------------------- GESTIÓN DELETE PERSONA -------------------
+    public void botonEliminar(ActionEvent event) {
+        informacionAdicional.setVisible(false);
+        ventanaBuscar.setVisible(false);
+        Persona persona = tablaPersonas.getSelectionModel().getSelectedItem();
+
+        if (persona == null) {
+            Mensajes.alertaNoSeleccionado("No hay ningún elemento seleccionado");
+            return;
+        }
+        Voluntario v = VoluntarioDAO.findByDni(persona.getDni());
+        Adoptante a = AdoptanteDAO.findByDni(persona.getDni());
+
+            if (v != null || a != null) {
+
+                if (a != null) {
+                    Mensajes.noPuedeEliminar("No puedes eliminar a esta persona porque tiene un animal adoptado");
+                } else {
+                    Mensajes.noPuedeEliminar("No puedes eliminar a esta persona porque tiene tareas asociadas");
+                }
+            }
+
+        if (Mensajes.confirmarEliminar("¿Desea eliminar el elemento de forma permanente?")) {
+                PersonaDAO.deletePersona(persona.getDni());
+        }
+
+        initialize();
+    }
+    //endregion
 }
