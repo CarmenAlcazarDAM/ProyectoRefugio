@@ -37,7 +37,7 @@ public class VoluntarioController {
     public TableColumn<Ayuda, String> tareaCol;
 
     @FXML
-    public ListView<Voluntario> listaVoluntarios;
+    public ListView<Persona> listaVoluntarios;
 
     @FXML
     public Label informacionAdicional;
@@ -110,7 +110,7 @@ public class VoluntarioController {
      * Metodo que rellena la tabla con todos los datos encontrados en la base de datos
      */
     public void iniciarListaVoluntarios() {
-        ObservableList<Voluntario> observable = FXCollections.observableList(VoluntarioDAO.findAll());
+        ObservableList<Persona> observable = FXCollections.observableList(VoluntarioDAO.findAll());
         listaVoluntarios.setItems(observable);
     }
 
@@ -322,7 +322,7 @@ public class VoluntarioController {
 
         tablaAyuda.setItems(resultados);
 
-        ObservableList<Voluntario> resultadosVoluntarios =
+        ObservableList<Persona> resultadosVoluntarios =
                 FXCollections.observableArrayList(buscarVoluntario());
 
         listaVoluntarios.setItems(resultadosVoluntarios);
@@ -473,7 +473,7 @@ public class VoluntarioController {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(false);
         Ayuda ayudaSeleccionada = tablaAyuda.getSelectionModel().getSelectedItem();
-        Voluntario voluntarioSeleccionado = listaVoluntarios.getSelectionModel().getSelectedItem();
+        Persona voluntarioSeleccionado = listaVoluntarios.getSelectionModel().getSelectedItem();
 
         if (ayudaSeleccionada == null && voluntarioSeleccionado == null) {
             Mensajes.alertaNoSeleccionado("No hay ningún elemento seleccionado");
