@@ -9,6 +9,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
@@ -16,7 +18,11 @@
 
 <AnchorPane prefHeight="643.0" prefWidth="1066.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.GatoController">
    <children>
-      <Text layoutX="490.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Miau" />
+      <ImageView fitHeight="498.0" fitWidth="530.0" layoutX="646.0" layoutY="187.0" opacity="0.33" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@abc9403594fe735e6139fe3f131b0f05-gato-mirando-hacia-arriba-silueta-gato%20(1).png" />
+         </image>
+      </ImageView>
       <TableView fx:id="tablaGatos" layoutX="70.0" layoutY="66.0" prefHeight="549.0" prefWidth="414.0">
          <columns>
             <TableColumn fx:id="nombreCol" prefWidth="151.0" text="Nombre" />

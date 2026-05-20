@@ -73,7 +73,7 @@
                         <Insets left="70.0" right="70.0" top="35.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#abrirAdoptantes" prefHeight="56.0" prefWidth="234.0" text="Adoptantes">
+                  <Button mnemonicParsing="false" onAction="#abrirAdoptantes" prefHeight="56.0" prefWidth="234.0" text="Personas">
                      <font>
                         <Font name="Arial" size="18.0" />
                      </font>

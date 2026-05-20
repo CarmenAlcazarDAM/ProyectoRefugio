@@ -28,7 +28,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#botonBusqueda" text="Búsqueda" />
             <Button mnemonicParsing="false" onAction="#botonModificar" text="Modificar" />
-            <Button mnemonicParsing="false" text="Eliminar" />
+            <Button mnemonicParsing="false" onAction="#botonEliminar" text="Eliminar" />
          </children>
       </HBox>
       <CheckBox fx:id="voluntario" layoutX="550.0" layoutY="103.0" mnemonicParsing="false" onAction="#seleccionVoluntario" prefHeight="17.0" prefWidth="105.0" text="Voluntarios" />

@@ -307,6 +307,10 @@ public class PerroController {
         ObservableList<Perro> resultados =
                 FXCollections.observableArrayList(buscarAnimal());
 
+        if(resultados.isEmpty()){
+            tablaPerros();
+        }
+
         tablaPerros.setItems(resultados);
     }
 
