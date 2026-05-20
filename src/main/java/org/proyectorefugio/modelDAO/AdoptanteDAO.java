@@ -29,25 +29,30 @@ public class AdoptanteDAO {
      *
      * @return --> devuelve una lista con todos los adoptantes y sus datos
      */
-    public static List<Adoptante> findAll() {
+    public static List<Persona> findAll() {
 
-        List<Adoptante> listaAdoptantes = new ArrayList<>();
-        Adoptante a = null;
+        List<Persona> listaAdoptantes = new ArrayList<>();
+        List<String> listaDNI = new ArrayList<>();
         try (ResultSet rs = ConnectionBD.getConnection().createStatement().executeQuery(SQL_FIND)) {
             while (rs.next()) {
-                String dni = rs.getString("dniAdoptante");
-                Persona datosPersona = PersonaDAO.findByDni(dni);
-                a = new Adoptante(datosPersona.getDni(), datosPersona.getNombre(), datosPersona.getApellidos(), datosPersona.getTelefono(), datosPersona.getCorreo(), datosPersona.getDireccion());
-                listaAdoptantes.add(a);
+                listaDNI.add(rs.getString("dniAdoptante"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+
+        for (String dni : listaDNI) {
+            Persona p = PersonaDAO.findByDni(dni);
+            if (p != null) {
+                listaAdoptantes.add(p);
+            }
         }
         return listaAdoptantes;
     }
 
     /**
      * Metodo que verifica si un dni especifico existe dentro de la tabla adoptantes
+     *
      * @param dni --> dni a buscar
      * @return --> devuelve true si encuentra el dni dentro de adoptantes, false si no lo encuentra
      */
@@ -70,6 +75,7 @@ public class AdoptanteDAO {
 
     /**
      * Metodo que busca a un adoptante por su dni específico
+     *
      * @param dni --> dni a buscar
      * @return --> devuelve el objeto Adoptante si lo encuentra
      *
@@ -87,6 +93,7 @@ public class AdoptanteDAO {
 
     /**
      * Metodo que busca a los Adoptantes con un nombre específico
+     *
      * @param name --> nombre a buscar
      * @return --> devuelve una lista de Adoptantes que compartan el mismo nombre
      */
@@ -107,6 +114,7 @@ public class AdoptanteDAO {
 
     /**
      * Metodo que busca a los Adoptantes con un apellido específico
+     *
      * @param lastName --> apellido a buscar
      * @return --> devuelve una lista de Adoptantes que compartan el mismo apellido
      */
@@ -127,6 +135,7 @@ public class AdoptanteDAO {
     /**
      * Metodo que rellena el constructor del objeto Adoptante, para no tener que rellenarlo en todos los métodos en los que se use
      * en caso de que haya modificaciones de atributos en el objeto Voluntario
+     *
      * @param p --> objeto Persona (superclase).
      * @return --> devuelve el objeto Persona (superclase) convertido en Adoptante (subclase)
      */
@@ -140,6 +149,7 @@ public class AdoptanteDAO {
     //////////////////////// ADD ////////////////////
     /**
      * Metodo que inserta un ADOPTANTE en la base de datos dentro de la tabla adoptante
+     *
      * @param p --> objeto Persona pasado como parámetro
      * @return --> devuelve true si se ha insertado correctamente, false si no se ha insertado
      */

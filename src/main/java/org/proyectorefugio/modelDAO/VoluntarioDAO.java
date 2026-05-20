@@ -1,6 +1,7 @@
 package org.proyectorefugio.modelDAO;
 
 import org.proyectorefugio.dataAccess.ConnectionBD;
+import org.proyectorefugio.model.Adoptante;
 import org.proyectorefugio.model.Persona;
 import org.proyectorefugio.model.Voluntario;
 
@@ -29,23 +30,26 @@ public class VoluntarioDAO {
      *
      * @return --> devuelve una lista con todos los voluntarios y sus datos
      */
-    public static List<Voluntario> findAll() {
+    public static List<Persona> findAll() {
+        List<Persona> listaVoluntarios = new ArrayList<>();
 
-        List<Voluntario> listaVoluntarios = new ArrayList<>();
-        Voluntario v = null;
+        List<String> listaDNI = new ArrayList<>();
         try (ResultSet rs = ConnectionBD.getConnection().createStatement().executeQuery(SQL_FIND)) {
             while (rs.next()) {
-                String dni = rs.getString("dniVoluntario");
-                Persona datosPersona = PersonaDAO.findByDni(dni);
-                v = new Voluntario(datosPersona.getDni(), datosPersona.getNombre(), datosPersona.getApellidos(), datosPersona.getTelefono(), datosPersona.getCorreo(), datosPersona.getDireccion());
-                listaVoluntarios.add(v);
+                listaDNI.add(rs.getString("dniVoluntario"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return listaVoluntarios;
-    }
 
+        for (String dni : listaDNI) {
+            Persona p = PersonaDAO.findByDni(dni);
+            if (p != null) {
+                listaVoluntarios.add(p);
+            }
+        }
+            return listaVoluntarios;
+    }
     /**
      * Metodo que verifica si un dni especifico existe dentro de la tabla voluntarios
      * @param dni --> dni a buscar
