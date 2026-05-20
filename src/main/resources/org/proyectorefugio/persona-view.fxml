@@ -15,26 +15,25 @@
    <children>
       <TableView fx:id="tablaPersonas" layoutX="84.0" layoutY="55.0" prefHeight="586.0" prefWidth="444.0">
         <columns>
-          <TableColumn fx:id="nombreCompletoCol" prefWidth="263.2000617980957" text="Adoptante" />
+          <TableColumn fx:id="nombreCompletoCol" prefWidth="263.2000617980957" text="Persona" />
           <TableColumn fx:id="dniCol" prefWidth="178.39990234375" text="DNI" />
         </columns>
       </TableView>
-      <Label fx:id="informacionAdicional" layoutX="550.0" layoutY="39.0" lineSpacing="10.0" prefHeight="252.0" prefWidth="546.0" wrapText="true">
+      <Label fx:id="informacionAdicional" layoutX="550.0" layoutY="194.0" lineSpacing="10.0" prefHeight="252.0" prefWidth="546.0" wrapText="true">
          <font>
             <Font name="Arial" size="14.0" />
          </font>
       </Label>
       <HBox layoutX="84.0" layoutY="652.0" prefHeight="29.0" prefWidth="444.0" spacing="15.0">
          <children>
-            <Button mnemonicParsing="false" text="Añadir" />
             <Button mnemonicParsing="false" onAction="#botonBusqueda" text="Búsqueda" />
             <Button mnemonicParsing="false" text="Modificar" />
             <Button mnemonicParsing="false" text="Eliminar" />
          </children>
       </HBox>
-      <CheckBox fx:id="adoptado" layoutX="550.0" layoutY="103.0" mnemonicParsing="false" onAction="#seleccionAdoptado" prefHeight="17.0" prefWidth="105.0" text="Voluntarios" />
-      <CheckBox fx:id="noAdoptado" layoutX="550.0" layoutY="80.0" mnemonicParsing="false" onAction="#seleccionNoAdoptado" prefWidth="142.0" selected="true" text="Adoptantes" />
-      <AnchorPane fx:id="ventanaBuscar" layoutX="584.0" layoutY="195.0" prefHeight="61.0" prefWidth="478.0">
+      <CheckBox fx:id="voluntario" layoutX="550.0" layoutY="103.0" mnemonicParsing="false" onAction="#seleccionVoluntario" prefHeight="17.0" prefWidth="105.0" text="Voluntarios" />
+      <CheckBox fx:id="adoptante" layoutX="550.0" layoutY="80.0" mnemonicParsing="false" onAction="#seleccionAdoptante" prefWidth="142.0" selected="true" text="Adoptantes" />
+      <AnchorPane fx:id="ventanaBuscar" layoutX="584.0" layoutY="195.0" prefHeight="61.0" prefWidth="478.0" visible="false">
          <children>
             <Text layoutX="26.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DNI / NIE" wrappingWidth="104.447265625">
                <font>
