@@ -17,14 +17,20 @@ import org.proyectorefugio.modelDAO.PerroDAO;
 import org.proyectorefugio.utils.Utils;
 import org.proyectorefugio.view.Mensajes;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
-
+/**
+ * Controlador del formulario de registro de animales.
+ * Gestiona el alta de perros y gatos en la base de datos,
+ * adaptando los campos del formulario según el tipo de animal.
+ */
 public class RegistroAnimalController {
 
-    //Cuando el correspondiente controlador inicie el formulario
-    // le va a dar a tipo un valor "perro" o "gato".
+    /**
+     * Tipo de animal que solicita el formulario.
+     * Cuando el correspondiente controlador inicie el formulario
+     * le va a dar a persona un valor "perro" o "gato".
+     */
     public static String tipo;
 
     @FXML
@@ -73,7 +79,9 @@ public class RegistroAnimalController {
     }
 
     /**
-     * Metodo que recibe que tipo de animal está abriendo el formulario
+     * Configura la vista del formulario según el tipo de animal.
+     * Si es "perro", muestra el campo de peso y el check de agresividad.
+     * Si es "gato", oculta el peso y muestra el check de leucemia.
      */
     public void definirTipoAnimal() {
         if ("perro".equals(tipo)) {
@@ -89,7 +97,10 @@ public class RegistroAnimalController {
     }
 
     /**
-     * Metodo que va a recoger toda la información procedente de del formulario
+     * Metodo que va a recoger toda la información procedente del formulario
+     * Si no se introduce fecha de ingreso, se asigna la fecha actual.
+     * Si no se introduce peso, se mantiene el valor por defecto.
+     * @return --> un objeto Animal con los datos del formulario
      */
 
     public Animal obtenerInformacionGenericaDelFormulario() {
@@ -134,6 +145,12 @@ public class RegistroAnimalController {
         return new Animal(nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion, fechaIngreso);
     }
 
+    /**
+     * Metodo que inserta un animal en la base de datos.
+     *
+     * @return --> devuelve el Animal insertado con su ID asignado,
+     * o  null si los datos son inválidos o la inserción falla
+     */
     public Animal insertarAnimal(){
 
         Animal animal = obtenerInformacionGenericaDelFormulario();
@@ -190,7 +207,7 @@ public class RegistroAnimalController {
     }
 
     /**
-     * Metodo que limpia los campos del formulario
+     * Limpia todos los campos del formulario dejándolos en su estado inicial.
      */
     public void limpiarCampos() {
         infoNombre.clear();
@@ -213,6 +230,7 @@ public class RegistroAnimalController {
     @FXML
     /**
      * Metodo para cerrar la ventana cuando pulsamos cancelar
+     * @param event --> acción que se va a llevar a cabo
      */
     public void accionCancelar(ActionEvent event) {
         Stage stage = (Stage) botonCancelar.getScene().getWindow();

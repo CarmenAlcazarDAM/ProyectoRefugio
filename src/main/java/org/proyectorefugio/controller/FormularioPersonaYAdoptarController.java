@@ -20,7 +20,7 @@ import java.time.LocalDate;
  */
 
 public class FormularioPersonaYAdoptarController {
-    @FXML
+
     /**
      * Tipo de persona que abre el formulario.
      * Cuando el correspondiente controlador inicie el formulario
