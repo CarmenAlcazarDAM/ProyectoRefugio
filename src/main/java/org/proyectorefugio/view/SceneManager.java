@@ -49,6 +49,7 @@ public class SceneManager {
             Stage stage = new Stage();
             stage.setTitle(titulo);
             stage.setScene(new Scene(root));
+            stage.setResizable(false);
 
 
             // Bloquea la ventana principal hasta que se cierre esta
