@@ -52,9 +52,6 @@ public class Persona {
         return apellidos;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
 
     public String getTelefono() {
         return telefono;
@@ -72,17 +69,11 @@ public class Persona {
         return correo;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
-    }
 
     public String getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
 
     @Override
     public String toString() {
