@@ -33,21 +33,6 @@ public class Animal {
         this.sexo = sexo;
     }
 
-//    public Animal(int id, String nombre, String raza, Sexo sexo, String marcasDistintivas,
-//                  String numeroChip, boolean esterilizado, String historia,
-//                  String observaciones, Date fechaIngreso, int idUbicacion) {
-//        this.id = id;
-//        this.nombre = nombre;
-//        this.raza = raza;
-//        this.sexo = sexo;
-//        this.marcasDistintivas = marcasDistintivas;
-//        setNumeroChip(numeroChip);
-//        this.esterilizado = esterilizado;
-//        this.historia = historia;
-//        this.observaciones = observaciones;
-//        this.fechaIngreso = fechaIngreso;
-//        this.idUbicacion = idUbicacion;
-//    }
 
     //este se usa en AnimalDAO
     public Animal(int id, String nombre, String raza, Sexo sexo, String color, String edad,
@@ -132,16 +117,8 @@ public class Animal {
         return edad;
     }
 
-    public void setEdad(String edad) {
-        this.edad = edad;
-    }
-
     public String getMarcasDistintivas() {
         return marcasDistintivas;
-    }
-
-    public void setMarcasDistintivas(String marcasDistintivas) {
-        this.marcasDistintivas = marcasDistintivas;
     }
 
     public String getNumeroChip() {
@@ -163,24 +140,12 @@ public class Animal {
         return esterilizado;
     }
 
-    public void setEsterilizado(boolean esterilizado) {
-        this.esterilizado = esterilizado;
-    }
-
     public String getHistoria() {
         return historia;
     }
 
-    public void setHistoria(String historia) {
-        this.historia = historia;
-    }
-
     public String getObservaciones() {
         return observaciones;
-    }
-
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
     }
 
     public LocalDate getFechaIngreso() {
@@ -198,18 +163,6 @@ public class Animal {
         this.fechaIngreso = fechaIngreso;
     }
 
-    public boolean isAdoptado() {
-        return adoptado;
-    }
-
-    public void setAdoptado(boolean adoptado) {
-        if (this.dniAdoptante != null) {
-            this.adoptado = true;
-        } else {
-            this.adoptado = adoptado;
-        }
-    }
-
     public LocalDate getFechaAlta() {
         return fechaAlta;
     }
@@ -224,10 +177,6 @@ public class Animal {
             throw new IllegalArgumentException("La fecha de alta no puede ser posterior al día actual");
         }
         this.fechaAlta = fechaAlta;
-    }
-
-    public String getDniAdoptante() {
-        return dniAdoptante;
     }
 
     public void setDniAdoptante(String dniAdoptante) {
@@ -250,10 +199,6 @@ public class Animal {
 
     public int getIdUbicacion() {
         return idUbicacion;
-    }
-
-    public void setIdUbicacion(int idUbicacion) {
-        this.idUbicacion = idUbicacion;
     }
 
     @Override
