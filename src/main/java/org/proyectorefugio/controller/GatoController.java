@@ -22,9 +22,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-//todo -> comentarios
-//todo--> cuando muestre los no adoptados que si estan dados de alta tampoco los muestre, pueden estar dados de alta por otro motivo(muerte)
+//todo--> cuando muestre los no adoptados que si están dados de alta tampoco los muestre, pueden estar dados de alta por otro motivo(muerte)
 
+/**
+ * Controlador de la vista de gestión de los gatos.
+ * Permite mostrar, buscar, añadir, modificar y eliminar,
+ * así como registrar adopciones.
+ */
 public class GatoController {
     @FXML
     public TableView<Gato> tablaGatos;
@@ -71,7 +75,9 @@ public class GatoController {
 
     @FXML
     /**
-     * Metodo que inicia la vista del fxml cuando abrimos la ventana
+     * Metodo de inicialización
+     * Se encarga de llevar a cabo las primeras acciones que
+     * aparecerán al cargar el archivo fxml
      */
     private void initialize() {
         noAdoptado.setSelected(true);
@@ -128,7 +134,7 @@ public class GatoController {
         sexoCol.setCellValueFactory(new PropertyValueFactory<>("sexo"));
         razaCol.setCellValueFactory(new PropertyValueFactory<>("raza"));
 
-        boolean buscarAdoptados = adoptado.isSelected(); //
+        boolean buscarAdoptados = adoptado.isSelected();
         ObservableList<Gato> listaGatos =
                 FXCollections.observableArrayList(GatoDAO.findAll(buscarAdoptados));
 
@@ -136,7 +142,7 @@ public class GatoController {
     }
 
     /**
-     * Metodo que muestra toda la información del Gato cuando seleccionas sobre él en la tabla
+     * Metodo que muestra toda la información completa del Gato cuando seleccionas sobre él en la tabla
      * La información aparece en un recuadro Label que aparece cuando das el primer click.
      */
     public void mostrarInformacionAdicional() {
@@ -192,21 +198,23 @@ public class GatoController {
 
     @FXML
     /**
-     * Metodo que busca gatos en la base de datos según los filtros introducidos (id, chip, nombre, raza, color).
-     * Prioriza la búsqueda por su id y por chip al ser identificadores únicos.
-     * Elimina duplicados usando un HashSet antes de devolver los resultados.
-     * @return --> lista de gatos que coinciden con los criterios de búsqueda
+     * Metodo que abre el formulario de adopción configurado para adoptantes
+     * y recarga la tabla al cerrar.
+     * @param event --> acción que se va a llevar a cabo al pulsar el botón
      */
     public void botonAdoptar(ActionEvent event) {
         FormularioPersonaYAdoptarController.persona = "adoptante";
         SceneManager.abrirVentanaEmergente("/org/proyectorefugio/formularioPersonaYAdoptar-view.fxml", "Formulario de Registro");
         tablaGatos();
-
-        //region---------------BUSCAR GATO-------------------
-
     }
 
+    //region---------------BUSCAR GATO-------------------
+
     @FXML
+    /**
+     * Muestra el panel de búsqueda y oculta el resto de paneles.
+     * @param event --> acción que se va a llevar a cabo al pulsar el botón
+     */
     public void botonBusqueda(ActionEvent event) {
         tablaGatos();
         panelModificacion.setVisible(false);
@@ -214,6 +222,13 @@ public class GatoController {
         ventanaBuscar.setVisible(true);
     }
 
+    /**
+     * Recoge la información introducida por teclado.
+     * Valida que no estén vacías todas las entradas.
+     * Prioriza la búsqueda por ID y por chip al ser identificadores únicos.
+     *
+     * @return --> lista de gatos que coinciden con los criterios de búsqueda
+     */
     public List<Gato> buscarAnimal() {
         String idAnimalTexto = buscarId.getText();
         int idAnimal = 0;
@@ -281,203 +296,204 @@ public class GatoController {
     }
 
 
-        @FXML
-        /**
-         * Ejecuta la búsqueda y actualiza la tabla con los resultados obtenidos.
-         * @param event -> acción que se realiza cuando se pulsa el botón
-         */
-        public void botonContinuarBusqueda(ActionEvent event) {
-            ObservableList<Gato> resultados =
-                    FXCollections.observableArrayList(buscarAnimal());
+    @FXML
+    /**
+     * Ejecuta la búsqueda y actualiza la tabla con los resultados obtenidos.
+     * @param event -> acción que se realiza cuando se pulsa el botón
+     */
+    public void botonContinuarBusqueda(ActionEvent event) {
+        ObservableList<Gato> resultados =
+                FXCollections.observableArrayList(buscarAnimal());
 
-            tablaGatos.setItems(resultados);
-        }
-        //endregion
+        tablaGatos.setItems(resultados);
+    }
+    //endregion
 
-        //region---------------MODIFICAR GATO-------------------
-        @FXML
+    //region---------------MODIFICAR GATO-------------------
+    @FXML
 
-        /**
-         * Muestra el panel de modificación y oculta los demás paneles.
-         * @param event -> acción que se realiza cuando se pulsa el botón
-         */
-        public void botonModificar(ActionEvent event) {
-            panelModificacion.setVisible(true);
-            ventanaBuscar.setVisible(false);
-            informacionAdicional.setVisible(false);
-            modificarUbicacion.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
-            modificarPeso.setVisible(false);
-            textoPeso.setVisible(false);
-            tablaGatos();
-        }
+    /**
+     * Muestra el panel de modificación y oculta los demás paneles.
+     * @param event -> acción que se realiza cuando se pulsa el botón
+     */
+    public void botonModificar(ActionEvent event) {
+        panelModificacion.setVisible(true);
+        ventanaBuscar.setVisible(false);
+        informacionAdicional.setVisible(false);
+        modificarUbicacion.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 999, 0));
+        modificarPeso.setVisible(false);
+        textoPeso.setVisible(false);
+        tablaGatos();
+    }
 
-        /**
-         * Metodo que recoge los campos rellenos y actualiza la base de datos
-         *
-         * @return --> true si al menos un campo fue actualizado correctamente, false en caso contrario
-         */
-        public boolean modificarGato() {
-            informacionAdicional.setVisible(false);
-            Gato gSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
-            Animal aSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
+    /**
+     * Metodo que recoge los campos rellenos y actualiza la base de datos
+     * Valida que no estén vacías todas las entradas.
+     *
+     * @return --> true si al menos un campo fue actualizado correctamente, false en caso contrario
+     */
+    public boolean modificarGato() {
+        informacionAdicional.setVisible(false);
+        Gato gSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
+        Animal aSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
 
-            if (gSeleccionado == null || aSeleccionado == null) {
-                Mensajes.alertaNoSeleccionado("Por favor, seleccione un gato");
-                return false;
-            }
-
-            String chip = modificarChip.getText();
-            LocalDate fecha = modificarFecha.getValue();
-            String observaciones = modificarObservaciones.getText();
-            String dniAdoptante = modificarDniAdoptante.getText();
-            int ubicacion = (int) modificarUbicacion.getValue();
-
-            if ((chip == null || chip.trim().isEmpty()) &&
-                    fecha == null &&
-                    (observaciones == null || observaciones.trim().isEmpty()) &&
-                    (dniAdoptante == null || dniAdoptante.trim().isEmpty()) &&
-                    ubicacion == 0 &&
-                    !modificarEsterilizado.isSelected() &&
-                    !modificarLeucemia.isSelected()) {
-                Mensajes.aletaObligatoriosCamposVacios("Debe completar todos los campos obligatorios");
-                return false;
-            }
-
-            boolean actualizado = false;
-
-            if (chip != null && !chip.trim().isEmpty()) {
-                if (AnimalDAO.findByChip(chip) == null) {
-                    if (AnimalDAO.updateNumeroChip(aSeleccionado, chip)) {
-                        Mensajes.actualizacionCorrecta("Número de chip actualizado con éxito");
-                        actualizado = true;
-                    } else {
-                        Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido completar, compruebe la información");
-                    }
-                } else {
-                    Mensajes.alertaYaExiste("El número de chip " + chip + " ya está en uso");
-                }
-            }
-
-            if (fecha != null) {
-                if (fecha.isAfter(LocalDate.now())) {
-                    Mensajes.alertaErrorDeRegistro("La fecha de registro no puede ser posterior a la fecha actual");
-                    return false;
-                } else if (AnimalDAO.updateFechaAlta(aSeleccionado, fecha)) {
-                    Mensajes.actualizacionCorrecta("Fecha actualizada con éxito");
-
-                    actualizado = true;
-                } else {
-                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
-                }
-            }
-
-            if (observaciones != null && !observaciones.trim().isEmpty()) {
-                if (AnimalDAO.updateObservaciones(aSeleccionado, observaciones)) {
-                    Mensajes.actualizacionCorrecta("Observaciones actualizadas con éxito");
-                    actualizado = true;
-                } else {
-                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
-                }
-            }
-
-            if (!aSeleccionado.isEsterilizado() && modificarEsterilizado.isSelected()) {
-                if (AnimalDAO.updateEsterilizado(aSeleccionado, true)) {
-                    Mensajes.actualizacionCorrecta("Información actualizada con éxito");
-                    actualizado = true;
-                } else {
-                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
-
-                }
-            } // todo -> esto debería cambiar si cargo los datos
-
-            if (!gSeleccionado.isLeucemiaFelina() && modificarLeucemia.isSelected()) {
-                if (GatoDAO.updateLeucemia(gSeleccionado, true)) {
-                    Mensajes.actualizacionCorrecta("Información actualizada con éxito");
-                    actualizado = true;
-                } else {
-                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
-                }
-            } // todo -> esto debería cambiar si cargo los datos
-
-            if (dniAdoptante != null && !dniAdoptante.trim().isEmpty()) {
-                if (AnimalDAO.updateAdoptante(aSeleccionado, dniAdoptante)) {
-                    Mensajes.actualizacionCorrecta("Información del adoptante actualizada con éxito");
-                    actualizado = true;
-                } else {
-                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información del adoptante");
-                }
-            }
-
-            if (ubicacion > 0) {
-                if (AnimalDAO.updateUbicacion(aSeleccionado, ubicacion)) {
-                    Mensajes.actualizacionCorrecta("Ubicación cambiada correctamente");
-                    actualizado = true;
-                } else {
-                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar ubicación");
-                }
-            }
-
-            return actualizado;
+        if (gSeleccionado == null || aSeleccionado == null) {
+            Mensajes.alertaNoSeleccionado("Por favor, seleccione un gato");
+            return false;
         }
 
-        /**
-         * Metodo que limpia todos los campos del formulario de modificación dejándolos en su estado inicial.
-         */
-        public void limpiarCamposGato() {
-            modificarChip.clear();
-            modificarFecha.setValue(null);
-            modificarObservaciones.clear();
-            modificarDniAdoptante.clear();
-            modificarUbicacion.getValueFactory().setValue(0);
-            modificarEsterilizado.setSelected(false);
-            modificarLeucemia.setSelected(false);
+        String chip = modificarChip.getText();
+        LocalDate fecha = modificarFecha.getValue();
+        String observaciones = modificarObservaciones.getText();
+        String dniAdoptante = modificarDniAdoptante.getText();
+        int ubicacion = (int) modificarUbicacion.getValue();
+
+        if ((chip == null || chip.trim().isEmpty()) &&
+                fecha == null &&
+                (observaciones == null || observaciones.trim().isEmpty()) &&
+                (dniAdoptante == null || dniAdoptante.trim().isEmpty()) &&
+                ubicacion == 0 &&
+                !modificarEsterilizado.isSelected() &&
+                !modificarLeucemia.isSelected()) {
+            Mensajes.aletaObligatoriosCamposVacios("Debe completar todos los campos obligatorios");
+            return false;
         }
 
-        @FXML
-        /**
-         * Guarda los cambios del formulario de modificación, limpia los campos y recarga la tabla.
-         * @param event -> acción que se realiza cuando se pulsa el botón
-         */
-        public void botonGuardarModificacion(ActionEvent event) {
-            modificarGato();
-            limpiarCamposGato();
-            panelModificacion.setVisible(false);
-            tablaGatos();
-            informacionAdicional.setVisible(false);
-        }
+        boolean actualizado = false;
 
-        //endregion
-
-
-        //region---------------ELIMINAR GATO-------------------
-
-        @FXML
-        /**
-         * Metodo que elimina de la base de datos el gato seleccionado en la tabla,
-         * verificando que existe en GatoDAO.
-         * @param event -> acción que se realiza cuando se pulsa el botón
-         */
-        public void botonEliminar(ActionEvent event) {
-            informacionAdicional.setVisible(false);
-            ventanaBuscar.setVisible(false);
-            Animal animalSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
-
-            if (animalSeleccionado == null) {
-                Mensajes.alertaNoSeleccionado("No hay ningún animal seleccionado");
-                return;
-            }
-
-            if (GatoDAO.findByID(animalSeleccionado.getId()) != null) {
-                if (Mensajes.confirmarEliminar("El gato seleccionado será eliminado permanentemente.")) {
-                AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
+        if (chip != null && !chip.trim().isEmpty()) {
+            if (AnimalDAO.findByChip(chip) == null) {
+                if (AnimalDAO.updateNumeroChip(aSeleccionado, chip)) {
+                    Mensajes.actualizacionCorrecta("Número de chip actualizado con éxito");
+                    actualizado = true;
+                } else {
+                    Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido completar, compruebe la información");
                 }
             } else {
-                Mensajes.alertaNoSeleccionado("Debe seleccionar un gato");
+                Mensajes.alertaYaExiste("El número de chip " + chip + " ya está en uso");
             }
-
-            initialize();
         }
-        //endregion
+
+        if (fecha != null) {
+            if (fecha.isAfter(LocalDate.now())) {
+                Mensajes.alertaErrorDeRegistro("La fecha de registro no puede ser posterior a la fecha actual");
+                return false;
+            } else if (AnimalDAO.updateFechaAlta(aSeleccionado, fecha)) {
+                Mensajes.actualizacionCorrecta("Fecha actualizada con éxito");
+
+                actualizado = true;
+            } else {
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
+            }
+        }
+
+        if (observaciones != null && !observaciones.trim().isEmpty()) {
+            if (AnimalDAO.updateObservaciones(aSeleccionado, observaciones)) {
+                Mensajes.actualizacionCorrecta("Observaciones actualizadas con éxito");
+                actualizado = true;
+            } else {
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
+            }
+        }
+
+        if (!aSeleccionado.isEsterilizado() && modificarEsterilizado.isSelected()) {
+            if (AnimalDAO.updateEsterilizado(aSeleccionado, true)) {
+                Mensajes.actualizacionCorrecta("Información actualizada con éxito");
+                actualizado = true;
+            } else {
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
+
+            }
+        }
+
+        if (!gSeleccionado.isLeucemiaFelina() && modificarLeucemia.isSelected()) {
+            if (GatoDAO.updateLeucemia(gSeleccionado, true)) {
+                Mensajes.actualizacionCorrecta("Información actualizada con éxito");
+                actualizado = true;
+            } else {
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
+            }
+        }
+
+        if (dniAdoptante != null && !dniAdoptante.trim().isEmpty()) {
+            if (AnimalDAO.updateAdoptante(aSeleccionado, dniAdoptante)) {
+                Mensajes.actualizacionCorrecta("Información del adoptante actualizada con éxito");
+                actualizado = true;
+            } else {
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información del adoptante");
+            }
+        }
+
+        if (ubicacion > 0) {
+            if (AnimalDAO.updateUbicacion(aSeleccionado, ubicacion)) {
+                Mensajes.actualizacionCorrecta("Ubicación cambiada correctamente");
+                actualizado = true;
+            } else {
+                Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar ubicación");
+            }
+        }
+
+        return actualizado;
+    }
+
+    /**
+     * Metodo que limpia todos los campos del formulario de modificación dejándolos en su estado inicial.
+     */
+    public void limpiarCamposGato() {
+        modificarChip.clear();
+        modificarFecha.setValue(null);
+        modificarObservaciones.clear();
+        modificarDniAdoptante.clear();
+        modificarUbicacion.getValueFactory().setValue(0);
+        modificarEsterilizado.setSelected(false);
+        modificarLeucemia.setSelected(false);
+    }
+
+    @FXML
+    /**
+     * Guarda los cambios del formulario de modificación, limpia los campos y recarga la tabla.
+     * @param event -> acción que se realiza cuando se pulsa el botón
+     */
+    public void botonGuardarModificacion(ActionEvent event) {
+        modificarGato();
+        limpiarCamposGato();
+        panelModificacion.setVisible(false);
+        tablaGatos();
+        informacionAdicional.setVisible(false);
+    }
+
+    //endregion
+
+
+    //region---------------ELIMINAR GATO-------------------
+
+    @FXML
+    /**
+     * Metodo que elimina de la base de datos el gato seleccionado en la tabla,
+     * verificando que existe en GatoDAO.
+     * @param event -> acción que se realiza cuando se pulsa el botón
+     */
+    public void botonEliminar(ActionEvent event) {
+        informacionAdicional.setVisible(false);
+        ventanaBuscar.setVisible(false);
+        Animal animalSeleccionado = tablaGatos.getSelectionModel().getSelectedItem();
+
+        if (animalSeleccionado == null) {
+            Mensajes.alertaNoSeleccionado("No hay ningún animal seleccionado");
+            return;
+        }
+
+        if (GatoDAO.findByID(animalSeleccionado.getId()) != null) {
+            if (Mensajes.confirmarEliminar("El gato seleccionado será eliminado permanentemente.")) {
+                AnimalDAO.deleteAnimalById(animalSeleccionado.getId());
+            }
+        } else {
+            Mensajes.alertaNoSeleccionado("Debe seleccionar un gato");
+        }
+
+        initialize();
+    }
+    //endregion
 }
 
 
