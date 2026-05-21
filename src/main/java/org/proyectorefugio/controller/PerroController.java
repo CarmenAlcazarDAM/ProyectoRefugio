@@ -73,9 +73,9 @@ public class PerroController {
 
     @FXML
     /**
-     * Controlador de la vista de gestión de los gatos.
-     * Permite mostrar, buscar, añadir, modificar y eliminar,
-     * así como registrar adopciones.
+     * Metodo de inicialización
+     * Se encarga de llevar a cabo las primeras acciones que
+     * aparecerán al cargar el archivo fxml
      */
     private void initialize() {
         noAdoptado.setSelected(true);
@@ -327,10 +327,10 @@ public class PerroController {
     //region---------------MODIFICAR-------------------
 
     @FXML
-/**
- * Muestra el panel de modificación, oculta los demás paneles.
- * @param event --> acción que se va a llevar a cabo
- */
+    /**
+     * Muestra el panel de modificación, oculta los demás paneles.
+     * @param event --> acción que se va a llevar a cabo
+     */
     public void botonModificar(ActionEvent event) {
         panelModificacion.setVisible(true);
         ventanaBuscar.setVisible(false);

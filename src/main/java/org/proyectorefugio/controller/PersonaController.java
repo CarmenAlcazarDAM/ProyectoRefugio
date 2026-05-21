@@ -9,11 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.proyectorefugio.model.Adoptante;
-import org.proyectorefugio.model.Ayuda;
 import org.proyectorefugio.model.Persona;
 import org.proyectorefugio.model.Voluntario;
 import org.proyectorefugio.modelDAO.AdoptanteDAO;
-import org.proyectorefugio.modelDAO.AyudaDAO;
 import org.proyectorefugio.modelDAO.PersonaDAO;
 import org.proyectorefugio.modelDAO.VoluntarioDAO;
 import org.proyectorefugio.view.Mensajes;
@@ -22,7 +20,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-
+/**
+ * Controlador de la vista de gestión de personas del refugio,
+ * los cuales son voluntarios o adoptantes.
+ * Permite mostrar, buscar, modificar y eliminar.
+ */
 public class PersonaController {
 
 
@@ -51,7 +53,9 @@ public class PersonaController {
 
     @FXML
     /**
-     * Metodo que inicia la vista del fxml cuando abrimos la ventana
+     * Metodo de inicialización
+     * Se encarga de llevar a cabo las primeras acciones que
+     * aparecerán al cargar el archivo fxml
      */
     private void initialize() {
         adoptante.setSelected(true);
@@ -69,6 +73,13 @@ public class PersonaController {
         panelModificacion.setVisible(false);
     }
 
+    @FXML
+    /**
+     * Selecciona el check de voluntarios y desmarca el de adoptantes.
+     * Recarga la tabla.
+     *
+     * @param event --> evento al pulsar el checkbox
+     */
     public void seleccionVoluntario(ActionEvent event) {
         if (voluntario.isSelected()) {
             adoptante.setSelected(false);
@@ -76,6 +87,13 @@ public class PersonaController {
         }
     }
 
+    @FXML
+    /**
+     * Selecciona el check de adoptantes y desmarca el de voluntarios.
+     * Recarga la tabla.
+     *
+     * @param event --> evento al pulsar el checkbox
+     */
     public void seleccionAdoptante(ActionEvent event) {
         if (adoptante.isSelected()) {
             voluntario.setSelected(false);
@@ -86,6 +104,7 @@ public class PersonaController {
     /**
      * Metodo que extrae los datos de los adoptantes de la base de datos y clasifica la
      * información por columnas en una tabla.
+     * Carga voluntarios o adoptantes según el checkbox activo.
      */
     public void tablaPersonas() {
         nombreCompletoCol.setCellValueFactory(cellData -> {
@@ -130,7 +149,11 @@ public class PersonaController {
 
     //region ------------------- GESTIÓN DE BÚSQUEDAS -------------------
 
-
+    @FXML
+    /**
+     * Muestra el panel de búsqueda y oculta el resto de paneles.
+     * @param event --> acción que se va a llevar a cabo al pulsar el botón
+     */
     public void botonBusqueda(ActionEvent event) {
         tablaPersonas();
         panelModificacion.setVisible(false);
@@ -138,6 +161,12 @@ public class PersonaController {
         ventanaBuscar.setVisible(true);
     }
 
+    /**
+     * Busca personas en la base de datos según los filtros introducidos.
+     * Prioriza la búsqueda por DNI al ser un identificador único.
+     * Para el resto de criterios acumula resultados y elimina duplicados con un {@link HashSet}.
+     * @return --> lista de personas que coinciden con los criterios de búsqueda
+     */
     public List<Persona> buscarPersona() {
         String dni = buscarDNI.getText();
         String nombre = buscarNombre.getText();
@@ -182,7 +211,11 @@ public class PersonaController {
 
 
     }
-
+    @FXML
+    /**
+     * Metodo que ejecuta la búsqueda y actualiza la tabla con los resultados obtenidos.
+     * @param event -> acción que se realiza cuando se pulsa el botón
+     */
     public void botonContinuarBusqueda(ActionEvent event) {
         informacionAdicional.setVisible(false);
         ObservableList<Persona> resultados =
@@ -194,13 +227,24 @@ public class PersonaController {
     //endregion
 
     //region---------------MODIFICAR-------------------
-
+    @FXML
+    /**
+     * Muestra el panel de modificación, oculta los demás paneles.
+     * @param event --> acción que se va a llevar a cabo
+     */
     public void botonModificar(ActionEvent event) {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(false);
         panelModificacion.setVisible(true);
     }
 
+    /**
+     * Recoge los campos del panel de modificación y actualiza en la base de datos
+     * únicamente los campos que han sido rellenados.
+     * Valida que haya un perro seleccionado y que al menos un campo esté relleno.
+     *
+     * @return --> true si al menos un campo fue actualizado correctamente, false en caso contrario
+     */
     public boolean modificarPersona() {
         Persona p = tablaPersonas.getSelectionModel().getSelectedItem();
         if (p == null) {
@@ -245,6 +289,9 @@ public class PersonaController {
 
     }
 
+    /**
+     * Metodo que limpia todos los campos del formulario de modificación dejándolos en su estado inicial.
+     */
     public void limpiarCampos() {
         modificarNombre.clear();
         modificarApellidos.clear();
@@ -252,7 +299,11 @@ public class PersonaController {
         modificarCorreo.clear();
         modificarDireccion.clear();
     }
-
+    @FXML
+    /**
+     * Guarda los cambios del formulario de modificación, limpia los campos y recarga la tabla.
+     * @param event -> acción que se realiza cuando se pulsa el botón
+     */
     public void botonGuardarModificacion(ActionEvent event) {
 
         if (modificarPersona()) {
@@ -268,6 +319,15 @@ public class PersonaController {
 
 
     //region ------------------- GESTIÓN DELETE PERSONA -------------------
+
+    @FXML
+    /**
+     * Elimina de la base de datos la persona seleccionada en la tabla,
+     * previa confirmación del usuario.
+     * Impide el borrado si la persona tiene un animal adoptado o tareas de voluntariado asociadas.
+     *
+     * @param event -> acción que se realiza cuando se pulsa el botón
+     */
     public void botonEliminar(ActionEvent event) {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(false);
@@ -280,17 +340,17 @@ public class PersonaController {
         Voluntario v = VoluntarioDAO.findByDni(persona.getDni());
         Adoptante a = AdoptanteDAO.findByDni(persona.getDni());
 
-            if (v != null || a != null) {
+        if (v != null || a != null) {
 
-                if (a != null) {
-                    Mensajes.noPuedeEliminar("No puedes eliminar a esta persona porque tiene un animal adoptado");
-                } else {
-                    Mensajes.noPuedeEliminar("No puedes eliminar a esta persona porque tiene tareas asociadas");
-                }
+            if (a != null) {
+                Mensajes.noPuedeEliminar("No puedes eliminar a esta persona porque tiene un animal adoptado");
+            } else {
+                Mensajes.noPuedeEliminar("No puedes eliminar a esta persona porque tiene tareas asociadas");
             }
+        }
 
         if (Mensajes.confirmarEliminar("¿Desea eliminar el elemento de forma permanente?")) {
-                PersonaDAO.deletePersona(persona.getDni());
+            PersonaDAO.deletePersona(persona.getDni());
         }
 
         initialize();
