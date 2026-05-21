@@ -20,6 +20,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * Controlador de la vista de gestión de voluntarios y sus tareas de ayuda.
+ * Permite mostrar, buscar, añadir, modificar y eliminar voluntarios y tareas.
+ */
 public class VoluntarioController {
     //region ------------------- FXML-------------------
     @FXML
@@ -67,7 +71,9 @@ public class VoluntarioController {
 
     @FXML
     /**
-     * Gestiona que es lo primero que aparece cuando abrimos el archivo.fxml
+     * Metodo de inicialización
+     * Se encarga de llevar a cabo las primeras acciones que
+     * aparecerán al cargar el archivo fxml
      */
     private void initialize() {
         iniciarTabla();
@@ -107,7 +113,7 @@ public class VoluntarioController {
     }
 
     /**
-     * Metodo que rellena la tabla con todos los datos encontrados en la base de datos
+     * Metodo que rellena la lista de Voluntarios con todos los datos encontrados en la base de datos
      */
     public void iniciarListaVoluntarios() {
         ObservableList<Persona> observable = FXCollections.observableList(VoluntarioDAO.findAll());
@@ -119,6 +125,7 @@ public class VoluntarioController {
     /**
      * Metodo que muestra toda la información del Voluntario cuando seleccionas sobre él en la tabla
      * La información aparece en un recuadro Label que aparece cuando das el primer click.
+     * Oculta los paneles secundarios al mostrar la información.
      */
     public void mostrarInformacionAdicional() {
         ventanaBuscar.setVisible(false);
@@ -155,11 +162,12 @@ public class VoluntarioController {
 
 
     //region ------------------- INSERTAR VOLUNTARIO -------------------
-
+    @FXML
     /**
-     * Metodo que cuando al pulsar el botón "Nuevo Voluntario" abrirá el formulario correspondiente
+     * Metodo que cuando al pulsar el botón "Nuevo Voluntario" abrirá el formulario correspondiente,
+     *recarga la tabla y la lista al cerrar.
      *
-     * @param event --> acción que se va a llevar a cabo
+     * @param event --> acción que se va a llevar a cabo al pulsar el botón
      */
     public void botonInsertarVoluntario(ActionEvent event) {
 
@@ -189,8 +197,9 @@ public class VoluntarioController {
     }
 
     /**
-     * Metodo que busca a los tareas que coincidan con los parametros
+     * Metodo que busca las tareas que coincidan con los parámetros
      * introducidos por teclado.
+     * Prioriza la búsqueda exacta por DNI + ubicación + fecha cuando los tres están presentes.
      *
      * @return --> devuelve una lista con los resultados obtenidos
      */
@@ -258,7 +267,7 @@ public class VoluntarioController {
      * Metodo que busca a los voluntarios que coincidan con los parametros
      * introducidos por teclado
      *
-     * @return --> devuelve una lista con los resultados obtenidos
+     * @return --> devuelve una lista con los resultados obtenidos,  null si no se introdujo ningún criterio
      */
     public List<Voluntario> buscarVoluntario() {
         String dniVoluntario = buscarDNI.getText();
@@ -310,6 +319,7 @@ public class VoluntarioController {
 
     //region ------------------- BOTÓN CONTINUAR BÚSQUEDA -------------------
 
+    @FXML
     /**
      * Metodo que gestiona lo que ocurre al pulsar el botón Continuar cuando estamos
      * realizando busqueda
@@ -332,7 +342,13 @@ public class VoluntarioController {
 
     //region ------------------- GESTIÓN AÑADIR TAREA -------------------
 
-
+    @FXML
+    /**
+     * Muestra el panel de inserción de tarea y oculta el resto de paneles.
+     * Inicializa el spinner de ubicación.
+     *
+     * @param event --> acción que tiene lugar cuando pulsas el botón
+     */
     public void botonAñadirTarea(ActionEvent event) {
         ventanaBuscar.setVisible(false);
         informacionAdicional.setVisible(false);
@@ -342,6 +358,10 @@ public class VoluntarioController {
 
     }
 
+    /**
+     * Recoge los datos del formulario de inserción, valida que todos los campos
+     * obligatorios estén rellenos y registra la tarea en la base de datos.
+     */
     public void insertarTarea() {
         try {
             String tarea = insertarTareaTexto.getText();
@@ -369,6 +389,9 @@ public class VoluntarioController {
         }
     }
 
+    /**
+     * Limpia todos los campos del formulario.
+     */
     public void limpiarCampos() {
         insertarTareaTexto.clear();
         insertarTareaDni.clear();
@@ -377,6 +400,10 @@ public class VoluntarioController {
     }
 
     @FXML
+    /**
+     * Inserta la tarea en la base de datos, limpia el formulario y recarga
+     * la tabla y lista de voluntarios.
+     */
     public void botonGuardarTarea(ActionEvent event) {
         insertarTarea();
         limpiarCampos();
@@ -388,8 +415,13 @@ public class VoluntarioController {
 
 
     //region ------------------- GESTIÓN MODIFICAR AYUDA -------------------
-
-
+    @FXML
+    /**
+     * Muestra el panel de modificación de tarea ocultando el campo DNI
+     * (no editable en una modificación) y el botón de guardar nueva tarea.
+     *
+     * @param event --> acción que tiene lugar cuando pulsas el botón
+     */
     public void botonModificar(ActionEvent event) {
         informacionAdicional.setVisible(false);
         ventanaBuscar.setVisible(false);
@@ -402,6 +434,15 @@ public class VoluntarioController {
 
     }
 
+    /**
+     * Recoge los campos rellenos del formulario y actualiza los datos
+     * de la tarea seleccionada en la base de datos.
+     * Valida que al menos un campo esté informado y que la fecha no sea futura.
+     *
+     * @return --> true si al menos un campo fue actualizado correctamente,
+     * false si no hay tarea seleccionada, todos los campos están vacíos
+     * o la fecha es inválida
+     */
     public boolean modificarAyuda() {
         Ayuda a = tablaAyuda.getSelectionModel().getSelectedItem();
         if (a == null) {
@@ -448,6 +489,12 @@ public class VoluntarioController {
         return actualizado;
     }
 
+    /**
+     * Guarda la modificación la base de datos, limpia el formulario y recarga
+     * la tabla y  lista de voluntarios.
+     *
+     * @param event --> acción que tiene lugar cuando pulsas el botón
+     */
     public void botonGuardarModificacion(ActionEvent event) {
         modificarAyuda();
         limpiarCampos();
@@ -481,7 +528,7 @@ public class VoluntarioController {
         }
         if (Mensajes.confirmarEliminar("¿Desea eliminar el elemento de forma permanente?")) {
             AyudaDAO.deleteAyuda(ayudaSeleccionada.getDniVoluntario(), ayudaSeleccionada.getIdUbicacion(), ayudaSeleccionada.getFecha());
-        }else {
+        } else {
             Mensajes.alertaNoSeleccionado("Debe seleccionar al menos un elemento");
         }
         initialize();
