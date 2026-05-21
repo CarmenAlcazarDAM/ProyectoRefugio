@@ -1,7 +1,6 @@
 package org.proyectorefugio.model;
 
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 public class Ayuda {
@@ -21,17 +20,11 @@ public class Ayuda {
         return dniVoluntario;
     }
 
-    public void setDniVoluntario(String dniVoluntario) {
-        this.dniVoluntario = dniVoluntario;
-    }
 
     public int getIdUbicacion() {
         return idUbicacion;
     }
 
-    public void setIdUbicacion(int idUbicacion) {
-        this.idUbicacion = idUbicacion;
-    }
 
     public LocalDate getFecha() {
         return fecha;
@@ -45,9 +38,6 @@ public class Ayuda {
         return tarea;
     }
 
-    public void setTarea(String tarea) {
-        this.tarea = tarea;
-    }
 
     @Override
     public String toString() {

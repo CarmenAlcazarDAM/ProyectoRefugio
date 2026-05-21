@@ -28,9 +28,6 @@ public class Gato extends Animal{
         return leucemiaFelina;
     }
 
-    public void setLeucemiaFelina(boolean leucemiaFelina) {
-        this.leucemiaFelina = leucemiaFelina;
-    }
 
     @Override
     public String toString() {
