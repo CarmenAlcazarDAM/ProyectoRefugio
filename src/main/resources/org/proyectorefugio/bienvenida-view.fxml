@@ -2,21 +2,26 @@
 
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.BienvenidaController">
+
+<Pane xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.BienvenidaController">
    <children>
-      <Text fill="#2c3e50" layoutX="255.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BIENVENIDOS AL PROGRAMA" wrappingWidth="707.9376220703125">
-         <font>
-            <Font name="Segoe UI Bold" size="48.0" />
-         </font>
-      </Text>
-      <ImageView fitHeight="531.0" fitWidth="1153.0" layoutX="39.0" layoutY="186.0" opacity="0.54" pickOnBounds="true" preserveRatio="true" rotate="12.1">
-         <image>
-            <Image url="@1.png" />
-         </image>
-      </ImageView>
+      <Pane>
+         <children>
+            <Text fill="#2c3e50" layoutX="264.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BIENVENIDOS AL PROGRAMA" wrappingWidth="707.9376220703125">
+               <font>
+                  <Font name="Segoe UI Bold" size="48.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="579.0" fitWidth="1243.0" layoutX="28.0" layoutY="182.0" opacity="0.54" pickOnBounds="true" preserveRatio="true" rotate="12.1">
+               <image>
+                  <Image url="@1.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
-</AnchorPane>
+</Pane>

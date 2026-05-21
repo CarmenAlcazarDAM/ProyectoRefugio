@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -16,15 +17,15 @@ public class SceneManager {
      * Carga de forma dinámica un archivo FXML dentro del AnchorPane.
      * @param fxml --> ruta del archivo.fxml que deseamos cargar
      */
-    public static void cargarVista(AnchorPane panelContenido, String fxml) {
+    public static void cargarVista(Pane panelContenido, String fxml) {
         try {
             Parent vista = FXMLLoader.load(SceneManager.class.getResource(fxml));
-
-            // Ajustamos los márgenes a 0 para que sea responsivo
-            AnchorPane.setTopAnchor(vista, 0.0);
-            AnchorPane.setBottomAnchor(vista, 0.0);
-            AnchorPane.setLeftAnchor(vista, 0.0);
-            AnchorPane.setRightAnchor(vista, 0.0);
+            if (panelContenido instanceof AnchorPane) {
+                AnchorPane.setTopAnchor(vista, 0.0);
+                AnchorPane.setBottomAnchor(vista, 0.0);
+                AnchorPane.setLeftAnchor(vista, 0.0);
+                AnchorPane.setRightAnchor(vista, 0.0);
+            }
 
             // Cambiamos el contenido del panel
             panelContenido.getChildren().setAll(vista);

@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="panelContenido" prefHeight="717.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.AnimalController">
+<AnchorPane fx:id="panelContenido" minHeight="717.0" minWidth="1186.0" prefHeight="717.0" prefWidth="1186.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.proyectorefugio.controller.AnimalController">
    <children>
-      <HBox layoutX="186.0" layoutY="185.0" prefHeight="291.0" prefWidth="648.0" spacing="150.0">
+      <HBox alignment="CENTER" layoutX="-2.0" layoutY="-5.0" prefHeight="725.0" prefWidth="1187.0" spacing="150.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="-5.0">
          <children>
-            <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#seleccionarPerro" prefHeight="252.0" prefWidth="257.0" text="Perros" textAlignment="CENTER">
+            <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#seleccionarPerro" prefHeight="252.0" prefWidth="257.0" text="Perros" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                <graphic>
                   <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -23,7 +23,7 @@
                   <Font name="Calibri Bold Italic" size="24.0" />
                </font>
             </Button>
-            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#seleccionarGato" text="Gatos" textAlignment="CENTER">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#seleccionarGato" text="Gatos" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                <graphic>
                   <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                      <image>

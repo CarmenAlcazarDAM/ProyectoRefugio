@@ -4,12 +4,20 @@ package org.proyectorefugio.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import org.proyectorefugio.view.SceneManager;
 
 
 public class PrincipalController {
     @FXML
-    private AnchorPane panelContenido;
+    private Pane panelContenido;
+
+    @FXML
+    private void initialize(){
+        SceneManager.cargarVista(panelContenido,"/org/proyectorefugio/bienvenida-view.fxml");
+    }
+
+
 
     @FXML
     /**
