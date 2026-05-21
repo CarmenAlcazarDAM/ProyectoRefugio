@@ -2,11 +2,8 @@ package org.proyectorefugio.utils;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
-//todo-> comentarios
 public class Utils {
 
     /**
@@ -26,6 +23,14 @@ public class Utils {
         return false;
     }
 
+    /**
+     * Metodo que valida si un número de teléfono introducido tiene el formato correcto.
+     * Admite espacios y guiones entre dígitos, prefijo internacional opcional
+     * y una longitud de entre 9 y 15 dígitos.
+     *
+     * @param telefono --> número de teléfono a validar
+     * @return --> devuelve true si el formato es correcto, false en caso contrario
+     */
     public static boolean validarTelefono(String telefono) {
         if (telefono != null) {
             //por si ponen espacios entre números
@@ -39,7 +44,7 @@ public class Utils {
 
 
     /**
-     * Metodo de valida si un número de chip es correcto.
+     * Metodo que valida si un número de chip es correcto.
      * Para ello debe ser una cadena de caracteres con 15 números.
      *
      * @param chip --> número de chip a validar pasado por parámetro.
