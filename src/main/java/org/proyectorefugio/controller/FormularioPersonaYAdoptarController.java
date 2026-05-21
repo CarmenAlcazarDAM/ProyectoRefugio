@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import jdk.jshell.execution.Util;
 import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Persona;
 import org.proyectorefugio.modelDAO.*;
@@ -15,12 +14,21 @@ import org.proyectorefugio.view.Mensajes;
 
 import java.time.LocalDate;
 
-//todo-> hay métodos sin comentar
+/**
+ * Controlador del formulario de registro de personas (voluntarios y adoptantes).
+ * También gestiona el proceso de adopción vinculando una persona con un animal.
+ */
+
 public class FormularioPersonaYAdoptarController {
-    //Cuando el correspondiente controlador inicie el formulario
-    // le va a dar a persona un valor "voluntario" o "adoptante".
     @FXML
+    /**
+     * Tipo de persona que abre el formulario.
+     * Cuando el correspondiente controlador inicie el formulario
+     * le va a dar a persona un valor "voluntario" o "adoptante".
+     */
     public static String persona;
+
+    @FXML
     public Text subtitulo;
     public Text titulo;
     public Text separador;
@@ -36,6 +44,11 @@ public class FormularioPersonaYAdoptarController {
     @FXML
     public Button botonCancelar;
 
+    /**
+     * Metodo de inicialización
+     * Se encarga de llevar a cabo las primeras acciones que
+     * aparecerán al cargar el archivo fxml
+     */
     public void initialize() {
         definirTipoPersona();
         infoDNI.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -51,7 +64,8 @@ public class FormularioPersonaYAdoptarController {
     }
 
     /**
-     * Metodo que recibe que tipo de animal está abriendo el formulario
+     * Metodo que recibe y configura que tipo de persona está abriendo el formulario
+     * Si es "adoptante" muestra los campos adicionales para introducir el ID del animal.
      */
     public void definirTipoPersona() {
         if ("adoptante".equals(persona)) {
@@ -66,6 +80,11 @@ public class FormularioPersonaYAdoptarController {
         }
     }
 
+    /**
+     * Metodo que recoge y valida los datos introducidos en el formulario.
+     * Muestra una alerta si algún campo obligatorio está vacío.
+     * @return --> devuelve un objeto Persona obtenida gracias a los datos introducidos
+     */
     public Persona obtenerInformacionPersonaDelFormulario() {
         try {
             String nombre = infoNombre.getText();
@@ -96,8 +115,9 @@ public class FormularioPersonaYAdoptarController {
     @FXML
     /**
      * Metodo que guarda en la base de datos la información de los voluntarios o adoptantes
-     *
-     * @param event --> evento que ocurre cuando pulsas el boton
+     * Si la persona ya existe, actualiza sus datos; si no, la registra.
+     * En caso de adoptante, también vincula la persona con el animal indicado y registra la fecha de adopción.
+     * @param event --> evento que ocurre cuando pulsas el botón
      */
     public void guardarInformacion(ActionEvent event) {
         Persona registrar = obtenerInformacionPersonaDelFormulario();
@@ -137,7 +157,7 @@ public class FormularioPersonaYAdoptarController {
     }
 
     /**
-     * Metodo que limpia los campos del formulario
+     * Metodo que limpia los campos de texto del formulario
      */
     public void limpiarCampos() {
         infoNombre.clear();
@@ -151,7 +171,7 @@ public class FormularioPersonaYAdoptarController {
 
     @FXML
     /**
-     * Metodo para cerrar la ventana cuando pulsamos cancelar
+     * Metodo que cierra la ventana cuando pulsamos cancelar sin guardar ningún dato
      */
     public void accionCancelar(ActionEvent event) {
         Stage stage = (Stage)botonCancelar.getScene().getWindow();
