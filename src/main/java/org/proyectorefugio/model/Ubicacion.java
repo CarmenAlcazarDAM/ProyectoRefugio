@@ -39,10 +39,6 @@ public class Ubicacion {
         return tipo;
     }
 
-    public void setTipo(Ubicaciones tipo) {
-        this.tipo = tipo;
-    }
-
     public LocalTime getHoraRecreo() {
         return horaRecreo;
     }
@@ -64,24 +60,14 @@ public class Ubicacion {
         return this.horaRecreo.toString();
     }
 
-    public void setHoraRecreo(LocalTime horaRecreo) {
-        this.horaRecreo = horaRecreo;
-    }
 
     public int getMinutosRecreo() {
         return minutosRecreo;
     }
 
-    public void setMinutosRecreo(int minutosRecreo) {
-        this.minutosRecreo = minutosRecreo;
-    }
 
     public int getCapacidad() {
         return capacidad;
-    }
-
-    public void setCapacidad(int capacidad) {
-        this.capacidad = capacidad;
     }
 
     @Override
