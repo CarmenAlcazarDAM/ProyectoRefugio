@@ -50,7 +50,6 @@ public class RegistroAnimalController {
     public TextArea infoHistoria;
     public TextArea infoMarcas;
     public Button botonGuardar;
-    @FXML
     public Button botonCancelar;
 
     double pesoNumero = 0.0;
