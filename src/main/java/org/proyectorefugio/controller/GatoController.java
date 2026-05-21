@@ -1,6 +1,5 @@
 package org.proyectorefugio.controller;
 
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -188,7 +187,7 @@ public class GatoController {
 
     @FXML
     /**
-     * Metodo que cuando al pulsar el botón Añadir abrirá el formulario correspondiente
+     * Metodo que al pulsar el botón Añadir abrirá el formulario correspondiente
      * @param event --> acción que se va a llevar a cabo
      */
     public void botonInsertarGato(ActionEvent event) {
@@ -226,6 +225,7 @@ public class GatoController {
      * Recoge la información introducida por teclado.
      * Valida que no estén vacías todas las entradas.
      * Prioriza la búsqueda por ID y por chip al ser identificadores únicos.
+     * Elimina duplicados usando un HashSet antes de devolver los resultados.
      *
      * @return --> lista de gatos que coinciden con los criterios de búsqueda
      */
@@ -328,6 +328,7 @@ public class GatoController {
 
     /**
      * Metodo que recoge los campos rellenos y actualiza la base de datos
+     * únicamente los campos que han sido rellenados.
      * Valida que no estén vacías todas las entradas.
      *
      * @return --> true si al menos un campo fue actualizado correctamente, false en caso contrario
@@ -471,6 +472,7 @@ public class GatoController {
     /**
      * Metodo que elimina de la base de datos el gato seleccionado en la tabla,
      * verificando que existe en GatoDAO.
+     * Si no hay ningún perro seleccionado, cancela la operación.
      * @param event -> acción que se realiza cuando se pulsa el botón
      */
     public void botonEliminar(ActionEvent event) {

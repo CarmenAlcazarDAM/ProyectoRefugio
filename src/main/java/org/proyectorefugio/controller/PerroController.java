@@ -21,6 +21,11 @@ import java.util.HashSet;
 import java.util.List;
 
 //todo--> cuando muestre los no adoptados que si estan dados de alta tampoco los muestre, pueden estar dados de alta por otro motivo(muerte)
+/**
+ * Controlador de la vista de gestión de los perros.
+ * Permite mostrar, buscar, añadir, modificar y eliminar,
+ * así como registrar adopciones.
+ */
 public class PerroController {
     @FXML
     public TableView<Perro> tablaPerros;
@@ -68,7 +73,9 @@ public class PerroController {
 
     @FXML
     /**
-     * Metodo que inicia la vista del fxml cuando abrimos la ventana
+     * Controlador de la vista de gestión de los gatos.
+     * Permite mostrar, buscar, añadir, modificar y eliminar,
+     * así como registrar adopciones.
      */
     private void initialize() {
         noAdoptado.setSelected(true);
@@ -185,7 +192,7 @@ public class PerroController {
     //region---------------INSERTAR-------------------
 
     /**
-     * Metodo que cuando al pulsar el botón Añadir abrirá el formulario correspondiente
+     * Metodo que al pulsar el botón Añadir abrirá el formulario correspondiente
      *
      * @param event --> acción que se va a llevar a cabo
      */
@@ -201,8 +208,8 @@ public class PerroController {
 
     /**
      * Metodo que cuando al pulsar el botón Adoptar abrirá el formulario correspondiente
-     *
-     * @param event --> acción que se va a llevar a cabo
+     * y recarga la tabla al cerrar.
+     * @param event --> acción que se va a llevar a cabo al pulsar el botón
      */
     public void botonAdoptar(ActionEvent event) {
         FormularioPersonaYAdoptarController.persona = "adoptante";
@@ -216,8 +223,8 @@ public class PerroController {
 
     @FXML
     /**
-     * Oculta el panel de información adicional y muestra el panel de búsqueda.
-     * @param event --> acción que se va a llevar a cabo
+     * Muestra el panel de búsqueda y oculta el resto de paneles.
+     * @param event --> acción que se va a llevar a cabo al pulsar el botón
      */
     public void botonBusqueda(ActionEvent event) {
         tablaPerros();
@@ -227,11 +234,12 @@ public class PerroController {
     }
 
     /**
-     * Busca perros en la base de datos según los filtros introducidos (id, chip, nombre, raza, color).
+     * Busca perros en la base de datos según los filtros introducidos.
+     * Valida que no estén vacías todas las entradas.
      * Prioriza la búsqueda por id y por chip al ser identificadores únicos.
      * Elimina duplicados usando un HashSet antes de devolver los resultados.
      *
-     * @return lista de perros que coinciden con los criterios de búsqueda
+     * @return --> lista de perros que coinciden con los criterios de búsqueda
      */
     public List<Perro> buscarAnimal() {
         String idAnimalTexto = buscarId.getText();
@@ -301,7 +309,7 @@ public class PerroController {
     @FXML
     /**
      * Metodo que ejecuta la búsqueda y actualiza la tabla con los resultados obtenidos.
-     * @param event --> acción que se va a llevar a cabo
+     * @param event -> acción que se realiza cuando se pulsa el botón
      */
     public void botonContinuarBusqueda(ActionEvent event) {
         ObservableList<Perro> resultados =
@@ -320,8 +328,7 @@ public class PerroController {
 
     @FXML
 /**
- * Muestra el panel de modificación, oculta los demás paneles
- * e inicializa el Spinner de ubicación.
+ * Muestra el panel de modificación, oculta los demás paneles.
  * @param event --> acción que se va a llevar a cabo
  */
     public void botonModificar(ActionEvent event) {
@@ -337,7 +344,7 @@ public class PerroController {
      * únicamente los campos que han sido rellenados.
      * Valida que haya un perro seleccionado y que al menos un campo esté relleno.
      *
-     * @return true si al menos un campo fue actualizado correctamente, false en caso contrario
+     * @return --> true si al menos un campo fue actualizado correctamente, false en caso contrario
      */
     public boolean modificarAnimal() {
         informacionAdicional.setVisible(false);
@@ -407,7 +414,7 @@ public class PerroController {
             } else {
                 Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
             }
-        } // todo -> esto debería cambiar si cargo los datos
+        }
 
         if (!pSeleccionado.isAgresivo() && modificarAgresivo.isSelected()) {
             if (PerroDAO.updateAgresivo(pSeleccionado, true)) {
@@ -416,7 +423,7 @@ public class PerroController {
             } else {
                 Mensajes.actualizacionIncorrecta("Lo sentimos, no se ha podido actualizar la información");
             }
-        } // todo -> esto debería cambiar si cargo los datos
+        }
 
         if (dniAdoptante != null && !dniAdoptante.trim().isEmpty()) {
             if (AnimalDAO.updateAdoptante(aSeleccionado, dniAdoptante)) {
@@ -448,7 +455,7 @@ public class PerroController {
     }
 
     /**
-     * Limpia todos los campos del formulario de modificación dejándolos en su estado inicial.
+     * Metodo que limpia todos los campos del formulario de modificación dejándolos en su estado inicial.
      */
     public void limpiarCampos() {
         modificarChip.clear();
@@ -464,7 +471,7 @@ public class PerroController {
     @FXML
     /**
      * Guarda los cambios del formulario de modificación, limpia los campos y recarga la tabla.
-     * @param event --> acción que se va a llevar a cabo
+     * @param event -> acción que se realiza cuando se pulsa el botón
      */
     public void botonGuardarModificacion(ActionEvent event) {
         modificarAnimal();
@@ -483,7 +490,7 @@ public class PerroController {
      * Elimina de la base de datos el perro seleccionado en la tabla,
      * verificando previamente que existe en PerroDAO.
      * Si no hay ningún perro seleccionado, cancela la operación.
-     * @param event --> acción que se va a llevar a cabo
+     * @param event -> acción que se realiza cuando se pulsa el botón
      */
     public void botonEliminar(ActionEvent event) {
         informacionAdicional.setVisible(false);
