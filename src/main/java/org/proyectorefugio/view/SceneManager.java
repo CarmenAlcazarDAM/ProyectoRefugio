@@ -1,6 +1,5 @@
 package org.proyectorefugio.view;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -56,7 +55,7 @@ public class SceneManager {
             // Bloquea la ventana principal hasta que se cierre esta
             stage.initModality(Modality.APPLICATION_MODAL);
 
-            stage.showAndWait(); // showAndWait es ideal para modales
+            stage.showAndWait();
 
         } catch (IOException e) {
             System.err.println("Error al cargar la ventana: " + ruta);
