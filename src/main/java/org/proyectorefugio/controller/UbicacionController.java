@@ -26,6 +26,11 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controlador de la vista de gestión de ubicaciones del refugio.
+ * Permite mostrar, buscar, insertar, modificar y eliminar,
+ * mostrando también la disponibilidad de plazas en tiempo real.
+ */
 public class UbicacionController {
     //region ------------------- FXML-------------------
 
@@ -63,7 +68,9 @@ public class UbicacionController {
 
     @FXML
     /**
-     * Metodo que inicia la vista del fxml cuando abrimos la ventana
+     * Metodo de inicialización
+     * Se encarga de llevar a cabo las primeras acciones que
+     * aparecerán al cargar el archivo fxml
      */
     private void initialize() {
         iniciarTabla();
@@ -77,6 +84,7 @@ public class UbicacionController {
     /**
      * Metodo que extrae los datos de las ubicaciones de la base de datos y clasifica la
      * información por columnas en una tabla.
+     * Calcula y muestra la disponibilidad de plazas en tiempo real para cada ubicación.
      */
     public void iniciarTabla() {
         tipoCol.setCellValueFactory(
@@ -117,8 +125,7 @@ public class UbicacionController {
      * Metodo que obtiene la cantidad de animales que hay en la actualidad en una determinada
      * ubicacion
      *
-     * @param idUbicacion --> id de la ubicacion de la que vamos a obtener la cantidad
-     *                    de animales
+     * @param idUbicacion --> id de la ubicacion de la que vamos a obtener la cantidad de animales
      * @return --> devuelve cuantos animales están ocupando la ubicación
      */
     public int ocupacionDeUbicacion(int idUbicacion) {
@@ -126,18 +133,25 @@ public class UbicacionController {
         return animalesEnUbicacion.size();
     }
 
+    /**
+     * Metodo que calcula las plazas disponibles en una ubicación restando
+     * la ocupación actual a su capacidad total.
+     *
+     * @param idUbicacion --> id de la ubicación a consultar
+     * @param capacidad --> capacidad máxima de la ubicación
+     * @return --> número de plazas disponibles
+     */
     public int calcularDisponibilidad(int idUbicacion, int capacidad) {
-
         return capacidad - ocupacionDeUbicacion(idUbicacion);
-
     }
 
 
     //region ------------------- GESTIÓN INSERTAR UBICACIÓN-------------------
 
     /**
-     * Metodo que extrae los datos obtenidos por teclado y llama a UbicacionDAO para insertar
-     * una nueva Ubicacion
+     * Metodo que recoge los datos obtenidos por teclado y llama a UbicacionDAO para insertar
+     * una nueva Ubicacion en la base de datos.
+     * Requiere al menos el tipo y la capacidad mayor que cero.
      */
     public void insertarUbicacion() {
         try {
@@ -167,7 +181,7 @@ public class UbicacionController {
     }
 
     /**
-     * Metodo que vacía los campos TextField una vez se ha realizado correctamente la inserción de la ubicación
+     * Vacía todos los campos del formulario dejándolos en su estado inicial.
      */
     public void limpiarCampos() {
         insertarTipo.setValue(null);
@@ -175,7 +189,13 @@ public class UbicacionController {
         insertarTiempo.getValueFactory().setValue(0);
         insertarCapacidad.getValueFactory().setValue(0);
     }
-
+    @FXML
+    /**
+     * Muestra el panel de inserción configurado para añadir una nueva ubicación,
+     * inicializa los spinners y asigna las opciones al ComboBox de tipo.
+     *
+     * @param event -> acción que se realiza cuando se pulsa el botón
+     */
     public void botonAñadirUbicacion(ActionEvent event) {
         panelInsertar.setVisible(true);
         botonInsertado.setVisible(true);
@@ -191,7 +211,7 @@ public class UbicacionController {
     }
 
     /**
-     * Metodo que asigna las opciones de ubicaciones al ComboBox
+     * Asigna las opciones de tipo de ubicación disponibles al ComboBox.
      */
     public void asignarTiposUbicacion() {
         ObservableList<String> opciones = FXCollections.observableArrayList(
@@ -204,6 +224,12 @@ public class UbicacionController {
         insertarTipo.setItems(opciones);
     }
 
+    @FXML
+    /**
+     * Metodo que guarda en la base de datos la información de la ubicacion
+     * Muestra un mensaje de error si la inserción falla.
+     * @param event --> evento que ocurre cuando pulsas el botón
+     */
     public void botonGuardarUbicacion(ActionEvent event) {
         try {
             insertarUbicacion();
@@ -240,7 +266,8 @@ public class UbicacionController {
     /**
      * Metodo que recoge los datos obtenidos por teclado y llama a los metodos find correspondiente de UbicacionDAO
      *
-     * @return --> devuelve una lista con los datos encontrados
+     * @return --> devuelve una lista de ubicaciones con los datos encontrados,
+     * null si no se introdujo ningún criterio
      */
     public List<Ubicacion> busquedaAccion() {
 
@@ -284,7 +311,6 @@ public class UbicacionController {
         List<Ubicacion> resultados = busquedaAccion();
 
         if (resultados == null || resultados.isEmpty()) {
-            //al no encontrar resultados devuelve la lista entera otra vez
             iniciarTabla();
             return;
         }
@@ -320,7 +346,6 @@ public class UbicacionController {
 
     /**
      * Metodo que recoge los datos obtenidos por teclado y llama a los metodos update correspondiente de UbicacionDAO
-     *
      * @return --> devuelve true si se modifica algo y false si no
      */
     public boolean accionModificar() {
@@ -375,6 +400,7 @@ public class UbicacionController {
 
     /**
      * Metodo que elimina la ubicación seleccionada de la BBDD
+     * tras la confirmación del usuario.
      *
      * @param event --> acción que ocurre cuando se pulsa el boton
      */
