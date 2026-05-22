@@ -15,8 +15,6 @@ module org.proyectorefugio {
     opens org.proyectorefugio to javafx.fxml;
 
     exports org.proyectorefugio;
-    exports org.proyectorefugio.pruebas;
-    opens org.proyectorefugio.pruebas to javafx.fxml;
     exports org.proyectorefugio.controller;
     opens org.proyectorefugio.controller to javafx.fxml;
     exports org.proyectorefugio.view;
