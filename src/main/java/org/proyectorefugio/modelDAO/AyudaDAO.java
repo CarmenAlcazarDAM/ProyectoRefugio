@@ -12,10 +12,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase de acceso a datos para la entidad Ayuda.
+ * Gestiona las operaciones de consulta, inserción, actualización y eliminación
+ * sobre la tabla ayuda de la base de datos.
+ * La clave primaria de la tabla es compuesta: dniVoluntario, idUbicacion y fecha.
+ */
 public class AyudaDAO {
-    /**
-     * -------------------Sentencias SQL---------------------
-     **/
+    //region-------------------Sentencias SQL---------------------
+
     private final static String SQL_FIND_ALL = "SELECT * FROM ayuda ORDER BY fecha desc";
     private final static String SQL_FIND_SINGLE = "SELECT * FROM ayuda WHERE dniVoluntario = ? AND idUbicacion = ? AND fecha = ?";
     private final static String SQL_FIND_BY_DNI = "SELECT * FROM ayuda WHERE dniVoluntario = ?";
@@ -30,13 +35,13 @@ public class AyudaDAO {
     private final static String SQL_UPDATE_FECHA = "UPDATE ayuda SET fecha = ? WHERE dniVoluntario = ? AND idUbicacion = ? AND fecha = ?";
     private final static String SQL_UPDATE_TAREA = "UPDATE ayuda SET tarea = ? WHERE dniVoluntario = ? AND idUbicacion = ? AND fecha = ?";
 
-    /**------------------------------------------------------**/
+    //endregion------------------------------------------------------
 
-    /////////////////////// FIND ///////////////////////
+    //region FIND
     /**
-     * Metodo que crea una lista con todas las ayudas de la clase Ayuda
-     *
-     * @return --> devuelve una lista de tareas
+     * Devuelve una lista con todas las tareas de ayuda registradas,
+     * ordenadas por fecha descendente.
+     * @return --> lista de todas las Ayuda de la base de datos
      */
     public static List<Ayuda> findAll() {
         List<Ayuda> tareasRelizadas = new ArrayList<>();
@@ -62,9 +67,9 @@ public class AyudaDAO {
      * Metodo que busca una única tarea por su clave primaria.
      *
      * @param dniVoluntario --> dni del voluntario a buscar
-     * @param idUbicacion   --> ubicacion donde se realiza la accion
-     * @param fecha         --> fecha en la que se realiza una acción
-     * @return
+     * @param idUbicacion --> ubicacion donde se realiza la accion
+     * @param fecha --> fecha en la que se realiza una acción
+     * @return objeto Ayuda si se encuentra,  null en caso contrario
      */
     public static Ayuda findSingle(String dniVoluntario, int idUbicacion, LocalDate fecha) {
         Ayuda ayuda = null;
@@ -163,7 +168,9 @@ public class AyudaDAO {
         }
         return tareasRelizadas;
     }
-    /////////////////////// INSERT ///////////////////////
+    //endregion
+
+    //region INSERT
     /**
      * Metodo que inserta una ayuda en la base de datos
      * @param a --> objeto Ayuda pasado por parámetro
@@ -188,8 +195,9 @@ public class AyudaDAO {
         }
         return  añadida;
     }
+    //endregion
 
-    /// //////////////////// DELETE ///////////////////////
+    //region DELETE
     /**
      * Metodo que borra una ayuda de la base de datos
      * @param dniVoluntario --> dni del voluntario a buscar
@@ -213,12 +221,13 @@ public class AyudaDAO {
         }
         return false;
     }
+    //endregion
 
-    /////////////////////// UPDATE ///////////////////////
+    //region UPDATE
 
     /**
      * Metodo que actualiza la ubicacion de una Ayuda
-     * @param a --> Ayuda que vamos a actualizar pasada porparámetro
+     * @param a --> Ayuda que vamos a actualizar pasada por parámetro
      * @param idUbicacion --> id de la nueva ubicacion a la que queremos cambiar
      * @return --> devuelve true si se actualiza correctamente
      */
@@ -271,8 +280,8 @@ public class AyudaDAO {
     }
 
     /**
-     * Metodo que actualiza la informacion de la tarea de una Ayuda
-     * @param a --> Ayuda que vamos a actualizar pasada porparámetro
+     * Metodo que actualiza la información de la tarea de una Ayuda
+     * @param a --> Ayuda que vamos a actualizar pasada por parámetro
      * @param tarea --> nueva información que vamos a actualizar
      * @return --> devuelve true si se actualiza correctamente
      */
@@ -296,5 +305,5 @@ public class AyudaDAO {
         }
         return updated;
     }
-
+    //endregion
 }
