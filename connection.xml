@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!--Plantilla vacía para la conexión a la Base de Datos-->
+<!--Rellene las etiquetas server, port, user y contraseña con sus credenciales-->
 <connection>
-    <server>localhost</server>
-    <port>3307</port>
+    <server></server>
+    <port></port>
     <dataBase>refugio</dataBase>
-    <user>root</user>
-    <password>4131</password>
+    <user></user>
+    <password></password>
 </connection>
