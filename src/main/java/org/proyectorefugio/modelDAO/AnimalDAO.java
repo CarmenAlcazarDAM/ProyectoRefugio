@@ -4,18 +4,22 @@ import org.proyectorefugio.model.Animal;
 
 import org.proyectorefugio.dataAccess.ConnectionBD;
 import org.proyectorefugio.enums.Sexo;
-import org.proyectorefugio.utils.Utils;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase de acceso a base de datos para la entidad Animal.
+ * Gestiona las operaciones de consulta, inserción, actualización y eliminación
+ * sobre la tabla animal.
+ * Las subclases (Perro, Gato) se borran en cascada al eliminar un animal
+ * gracias a las claves foráneas con ON DELETE CASCADE.
+ */
 public class AnimalDAO {
 
-    /**
-     * --------------------Sentencias SQL--------------------
-     **/
+    //region --------------------Sentencias SQL--------------------
 
     private final static String SQL_FIND_BY_ID = "SELECT * FROM animal WHERE id = ?";
     private final static String SQL_FIND_BY_CHIP = "SELECT * FROM animal WHERE numeroChip = ?";
@@ -23,8 +27,6 @@ public class AnimalDAO {
     private final static String SQL_FIND_BY_BREED = "SELECT * FROM animal WHERE raza LIKE ? AND adoptado = ?";
     private final static String SQL_FIND_BY_COLOUR = "SELECT * FROM animal WHERE color LIKE ? AND adoptado = ? AND id IN (SELECT idGato FROM gato)";
     private final static String SQL_FIND_BY_UBICACION_AND_ALTA = "SELECT * FROM animal WHERE idUbicacion = ? AND fechaALTA IS NULL";
-
-
 
     private static final String SQL_INSERT_ANIMAL = "INSERT INTO animal (nombre, raza, sexo, color, edad, marcasDistintivas, numeroChip, esterilizado, historia, observaciones, idUbicacion, fechaIngreso) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -38,13 +40,13 @@ public class AnimalDAO {
     private static String SQL_UPDATE_ADOPTANTE = "UPDATE animal SET dniAdoptante = ?, adoptado = true WHERE id = ?";
 
 
-    /**------------------------------------------------------**/
+    //endregion------------------------------------------------------
 
-    /////////////////////// FIND ///////////////////////
+    //region  FIND
     /**
-     * Metodo que busca y devuelve un objeto animal según su ID
+     * Metodo que busca un animal según su ID
      *
-     * @param id --> id específica de cada animal
+     * @param id --> id única de cada animal
      * @return --> devuelve un objeto animal
      */
     public static Animal findByID(int id) {
@@ -93,7 +95,7 @@ public class AnimalDAO {
      * el número de chip de cada animal es una secuencia de 15 números e irrepetible
      *
      * @param chip --> número de chip pasado por parámetro
-     * @return --> devuelve al Animal con dicho número de chip en caso de encontrarlo
+     * @return --> devuelve al Animal en caso de encontrarlo, null en caso contrario
      */
     public static Animal findByChip(String chip) {
         Animal animal = null;
@@ -114,7 +116,7 @@ public class AnimalDAO {
     /**
      * Metodo que busca los Animales que compartan el mismo nombre
      *
-     * @param name      --> nombre a buscar
+     * @param name --> nombre a buscar
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
      * @return --> devuelve una lista con todos los Animales encontrados
      */
@@ -143,7 +145,7 @@ public class AnimalDAO {
     /**
      * Metodo que busca los Animales que compartan la misma raza
      *
-     * @param breed     --> raza a buscar
+     * @param breed --> raza a buscar
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
      * @return --> devuelve una lista con todos los Animales encontrados
      */
@@ -172,7 +174,7 @@ public class AnimalDAO {
     /**
      * Metodo que busca los Animales que compartan el mismo color
      *
-     * @param colour    --> color a buscar
+     * @param colour --> color a buscar
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
      * @return --> devuelve una lista con todos los Animales encontrados
      */
@@ -229,10 +231,13 @@ public class AnimalDAO {
     }
 
 
-    /////////////////////// ADD ///////////////////////
+    //endregion
+
+    //region ADD
     /**
      * Metodo que inserta un animal en la base de datos
-     *
+     * No inserta si el animal es null o su chip ya existe en la base de datos.
+
      * @param animal --> recibe el objeto Animal a insertar
      * @return --> devuelve un int que es el id del animal
      */
@@ -268,14 +273,16 @@ public class AnimalDAO {
         }
         return -1;
     }
+    //endregion
 
-    /////////////////////// DELETE ///////////////////////
+    //region DELETE
     /**
      * Metodo que borra un objeto Animal de la base de datos animal,
-     * sus respectivos objetos que heredan tambien se borraran ya que las FK son on delete cascade
+     * sus respectivos objetos que heredan también se borraran,
+     * ya que las FK son on delete cascade
      *
      * @param id --> id específica del animal que queremos borrar
-     * @return --> devuelve true si se borra correctamente, false si no se borra
+     * @return --> devuelve true si se borra correctamente, false en caso contrario
      */
     public static boolean deleteAnimalById(int id) {
         if (findByID(id) != null) {
@@ -291,12 +298,15 @@ public class AnimalDAO {
         return false;
 
     }
+    //endregion
 
-    /// //////////////////// UPDATE ///////////////////////
+
+    //region UPDATE
     /**
-     * Metodo que actualiza la informacion del numero de chip de un animal
+     * Metodo que actualiza la información del número de chip de un animal
+     * No actualiza si el chip ya está en uso por otro animal.
      *
-     * @param a          --> animal al que vamos a actualizar la información
+     * @param a --> animal al que vamos a actualizar la información
      * @param numeroChip --> número del chip pasado por parámetro (dos animales no pueden tener el mismo número de chip)
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
@@ -318,7 +328,7 @@ public class AnimalDAO {
     }
 
     /**
-     * Metodo que actualiza la informacion de Observaciones del animal
+     * Metodo que actualiza la información de las observaciones del animal
      *
      * @param a             --> animal al que vamos a actualizar la información
      * @param observaciones --> observacion que vamos a añadir
@@ -344,7 +354,7 @@ public class AnimalDAO {
     /**
      * Metodo que actualiza si se esteriliza a un animal
      *
-     * @param a          --> animal al que vamos a actualizar la información
+     * @param a --> animal al que vamos a actualizar la información
      * @param estelizado --> información de esterilizacion pasada por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
@@ -366,9 +376,9 @@ public class AnimalDAO {
     }
 
     /**
-     * Metodo que actualiza la fecha de alta de un animal
+     * Metodo que actualiza la fecha de alta (sale del refugio) de un animal
      *
-     * @param a         --> animal al que vamos a actualizar la información
+     * @param a --> animal al que vamos a actualizar la información
      * @param fechaAlta --> fecha en la que se dará de alta el animal
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
@@ -390,9 +400,9 @@ public class AnimalDAO {
     }
 
     /**
-     * Metodo que actualiza la informacion de la ubicación del animal
+     * Metodo que actualiza la información de la ubicación del animal
      *
-     * @param a           --> animal al que vamos a actualizar la información
+     * @param a --> animal al que vamos a actualizar la información
      * @param idUbicacion --> id de la ubicacion pasado por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
@@ -414,9 +424,9 @@ public class AnimalDAO {
     }
 
     /**
-     * Metodo que actualiza la informacion del adoptante
+     * Metodo que actualiza el DNI del adoptante de un animal y lo marca como adoptado
      *
-     * @param a            --> animal al que vamos a actualizar la información
+     * @param a --> animal al que vamos a actualizar la información
      * @param dniAdoptante --> dni del adoptante pasado por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
@@ -436,4 +446,5 @@ public class AnimalDAO {
         }
         return updated;
     }
+    //endregion
 }
