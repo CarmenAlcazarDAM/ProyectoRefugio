@@ -38,9 +38,11 @@ public class AyudaDAO {
     //endregion------------------------------------------------------
 
     //region FIND
+
     /**
      * Devuelve una lista con todas las tareas de ayuda registradas,
      * ordenadas por fecha descendente.
+     *
      * @return --> lista de todas las Ayuda de la base de datos
      */
     public static List<Ayuda> findAll() {
@@ -67,8 +69,8 @@ public class AyudaDAO {
      * Metodo que busca una única tarea por su clave primaria.
      *
      * @param dniVoluntario --> dni del voluntario a buscar
-     * @param idUbicacion --> ubicacion donde se realiza la accion
-     * @param fecha --> fecha en la que se realiza una acción
+     * @param idUbicacion   --> ubicacion donde se realiza la accion
+     * @param fecha         --> fecha en la que se realiza una acción
      * @return objeto Ayuda si se encuentra,  null en caso contrario
      */
     public static Ayuda findSingle(String dniVoluntario, int idUbicacion, LocalDate fecha) {
@@ -171,15 +173,17 @@ public class AyudaDAO {
     //endregion
 
     //region INSERT
+
     /**
      * Metodo que inserta una ayuda en la base de datos
+     *
      * @param a --> objeto Ayuda pasado por parámetro
      * @return --> devuelve el objeto Ayuda si se ha insertado correctamente
      */
-    public static Ayuda addAyuda(Ayuda a){
+    public static Ayuda addAyuda(Ayuda a) {
         Ayuda añadida = null;
-        if(a!=null){
-            try(PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT)){
+        if (a != null) {
+            try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_INSERT)) {
                 ps.setString(1, a.getDniVoluntario());
                 ps.setInt(2, a.getIdUbicacion());
                 ps.setDate(3, Date.valueOf(a.getFecha()));
@@ -187,22 +191,24 @@ public class AyudaDAO {
 
                 ps.executeUpdate();
 
-                añadida = findSingle(a.getDniVoluntario(),a.getIdUbicacion(), a.getFecha());
+                añadida = findSingle(a.getDniVoluntario(), a.getIdUbicacion(), a.getFecha());
 
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-        return  añadida;
+        return añadida;
     }
     //endregion
 
     //region DELETE
+
     /**
      * Metodo que borra una ayuda de la base de datos
+     *
      * @param dniVoluntario --> dni del voluntario a buscar
-     * @param idUbicacion --> ubicacion donde se realiza la accion
-     * @param fecha --> fecha en la que se realiza una acción
+     * @param idUbicacion   --> ubicacion donde se realiza la accion
+     * @param fecha         --> fecha en la que se realiza una acción
      * @return -> devuelve true si se ha borrado correctamente
      */
     public static boolean deleteAyuda(String dniVoluntario, int idUbicacion, LocalDate fecha) {
@@ -227,15 +233,16 @@ public class AyudaDAO {
 
     /**
      * Metodo que actualiza la ubicacion de una Ayuda
-     * @param a --> Ayuda que vamos a actualizar pasada por parámetro
+     *
+     * @param a           --> Ayuda que vamos a actualizar pasada por parámetro
      * @param idUbicacion --> id de la nueva ubicacion a la que queremos cambiar
      * @return --> devuelve true si se actualiza correctamente
      */
     public static boolean updateUbicacion(Ayuda a, int idUbicacion) {
         boolean updated = false;
-        if ((a != null) && findSingle(a.getDniVoluntario(),a.getIdUbicacion(), a.getFecha()) != null ){
+        if ((a != null) && findSingle(a.getDniVoluntario(), a.getIdUbicacion(), a.getFecha()) != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_UBICACION)) {
-                ps.setInt(1,idUbicacion);
+                ps.setInt(1, idUbicacion);
                 ps.setString(2, a.getDniVoluntario());
                 ps.setInt(3, a.getIdUbicacion());
                 ps.setDate(4, Date.valueOf(a.getFecha()));
@@ -245,7 +252,7 @@ public class AyudaDAO {
                 updated = (filasAfectadas > 0);
 
                 updated = true;
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -254,15 +261,16 @@ public class AyudaDAO {
 
     /**
      * Metodo que actualiza la fecha de una Ayuda
-     * @param a --> Ayuda que vamos a actualizar pasada por parámetro
+     *
+     * @param a     --> Ayuda que vamos a actualizar pasada por parámetro
      * @param fecha --> nueva fecha que queremos actualizar
      * @return --> devuelve true si se actualiza correctamente
      */
     public static boolean updateFecha(Ayuda a, LocalDate fecha) {
         boolean updated = false;
-        if ((a != null) && findSingle(a.getDniVoluntario(),a.getIdUbicacion(), a.getFecha()) != null ){
+        if ((a != null) && findSingle(a.getDniVoluntario(), a.getIdUbicacion(), a.getFecha()) != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_FECHA)) {
-                ps.setDate(1,Date.valueOf(fecha));
+                ps.setDate(1, Date.valueOf(fecha));
                 ps.setString(2, a.getDniVoluntario());
                 ps.setInt(3, a.getIdUbicacion());
                 ps.setDate(4, Date.valueOf(a.getFecha()));
@@ -272,7 +280,7 @@ public class AyudaDAO {
                 updated = (filasAfectadas > 0);
 
                 updated = true;
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -281,15 +289,16 @@ public class AyudaDAO {
 
     /**
      * Metodo que actualiza la información de la tarea de una Ayuda
-     * @param a --> Ayuda que vamos a actualizar pasada por parámetro
+     *
+     * @param a     --> Ayuda que vamos a actualizar pasada por parámetro
      * @param tarea --> nueva información que vamos a actualizar
      * @return --> devuelve true si se actualiza correctamente
      */
     public static boolean updateTarea(Ayuda a, String tarea) {
         boolean updated = false;
-        if ((a != null) && findSingle(a.getDniVoluntario(),a.getIdUbicacion(), a.getFecha()) != null ){
+        if ((a != null) && findSingle(a.getDniVoluntario(), a.getIdUbicacion(), a.getFecha()) != null) {
             try (PreparedStatement ps = ConnectionBD.getConnection().prepareStatement(SQL_UPDATE_TAREA)) {
-                ps.setString(1,tarea);
+                ps.setString(1, tarea);
                 ps.setString(2, a.getDniVoluntario());
                 ps.setInt(3, a.getIdUbicacion());
                 ps.setDate(4, Date.valueOf(a.getFecha()));
@@ -299,7 +308,7 @@ public class AyudaDAO {
                 updated = (filasAfectadas > 0);
 
                 updated = true;
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
