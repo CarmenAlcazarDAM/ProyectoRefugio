@@ -15,16 +15,13 @@ import java.util.List;
 
 /**
  * Clase de acceso a datos para la entidad Perro.
- * Gestiona las operaciones de consulta, inserción y actualización sobre la tabla {@code gato},
+ * Gestiona las operaciones de consulta, inserción y actualización sobre la tabla perro,
  * apoyándose en AnimalDAO para obtener los datos comunes heredados de {@link Animal}.
  */
 public class PerroDAO {
 
-    /**
-     * --------------------Sentencias SQL--------------------
-     **/
-
-    private final static String SQL_FIND_ALL = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, perro p WHERE a.id = p.idPerro AND adoptado = ?";
+    //region--------------------Sentencias SQL--------------------
+        private final static String SQL_FIND_ALL = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, perro p WHERE a.id = p.idPerro AND adoptado = ?";
 
 
     private final static String SQL_FIND_PERRO = "SELECT peso, agresivo FROM perro WHERE idPerro = ?";
@@ -34,7 +31,7 @@ public class PerroDAO {
     private static String SQL_UPDATE_PESO = "UPDATE perro SET peso = ? WHERE idPerro = ?";
     private static String SQL_UPDATE_AGRESIVO = "UPDATE perro SET agresivo = ? WHERE idPerro = ?";
 
-    /**------------------------------------------------------**/
+    //endregion------------------------------------------------------
 
     /////////////////////// FIND ///////////////////////
     /**

@@ -12,8 +12,8 @@ import java.util.List;
 
 /**
  * Clase de acceso a datos para la entidad Gato.
- * Gestiona las operaciones de consulta, inserción y actualización sobre la tabla {@code gato},
- * apoyándose en AnimalDAO para obtener los datos comunes heredados de {@link Animal}.
+ * Gestiona las operaciones de consulta, inserción y actualización sobre la tabla gato,
+ * apoyándose en AnimalDAO para obtener los datos comunes heredados de Animal.
  */
 public class GatoDAO {
 
