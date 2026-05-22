@@ -9,6 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Clase de acceso a base de datos para la entidad Persona.
+ * Gestiona las operaciones de consulta, inserción, actualización y eliminación
+ * sobre la tabla persona.
+ */
 public class PersonaDAO {
     //region--------------------Sentencias SQL--------------------
     private final static String SQL_FIND_BY_DNI = "SELECT * FROM persona WHERE dni = ?";
@@ -31,7 +37,6 @@ public class PersonaDAO {
 
     /**
      * Metodo que busca y devuelve un objeto Persona según su DNI
-     *
      * @param dni --> dni pasado por parámetro
      * @return --> devuelve un objeto Persona
      */
@@ -62,6 +67,8 @@ public class PersonaDAO {
      * Metodo que crea una lista con todas las personas de la base de datos
      *
      * @return --> devuelve una lista con todas personas y sus datos
+     *
+     * No se está usando actualmente, pero lo dejo para una posible ampliación en el futuro
      */
     public static List<Persona> findAll() {
         List<Persona> listaPersonas = new ArrayList<>();
@@ -184,9 +191,9 @@ public class PersonaDAO {
     //region UPDATE
 
     /**
-     * Metodo que actualiza la información del télefono de contacto de una persona
+     * Metodo que actualiza la información del teléfono de contacto de una persona
      * @param p --> Persona a la que vamos a actualizar la información
-     * @param telefono --> telefono de la persona pasado por parámetro
+     * @param telefono --> teléfono de la persona pasado por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
     public static boolean updateTelefono(Persona p, String telefono) {
