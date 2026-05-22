@@ -10,24 +10,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase de acceso a la base de datos para la entidad  Adoptante.
+ * Gestiona las operaciones de consulta e inserción sobre la tabla adoptante
+ * de la base de datos, apoyándose en PersonaDAO para obtener los datos personales.
+ */
 public class AdoptanteDAO {
-    /**
-     * --------------------Sentencias SQL--------------------
-     **/
+    //region--------------------Sentencias SQL--------------------
+
     private final static String SQL_FIND = "SELECT * FROM adoptante";
     private final static String SQL_FIND_ADOPTANTE = "SELECT * FROM adoptante WHERE dniAdoptante = ?";
 
     private final static String SQL_INSERT = "INSERT INTO adoptante VALUES(?)";
 
-    /**
-     * ------------------------------------------------------
-     **/
+    //endregion
 
-    /////////////////////// FIND ///////////////////////
+    //region FIND
     /**
-     * Metodo que crea una lista con todas los adoptantes de la base de datos
+     * Metodo que crea una lista con todas las Personas que son
+     * adoptantes de la base de datos
      *
-     * @return --> devuelve una lista con todos los adoptantes y sus datos
+     * @return --> devuelve una lista con todas las personas adoptantes
+     * y sus datos
      */
     public static List<Persona> findAll() {
 
@@ -51,7 +55,7 @@ public class AdoptanteDAO {
     }
 
     /**
-     * Metodo que verifica si un dni especifico existe dentro de la tabla adoptantes
+     * Metodo que verifica si un DNI especifico existe dentro de la tabla adoptantes
      *
      * @param dni --> dni a buscar
      * @return --> devuelve true si encuentra el dni dentro de adoptantes, false si no lo encuentra
@@ -74,7 +78,7 @@ public class AdoptanteDAO {
     }
 
     /**
-     * Metodo que busca a un adoptante por su dni específico
+     * Metodo que busca a un adoptante por su DNI específico
      *
      * @param dni --> dni a buscar
      * @return --> devuelve el objeto Adoptante si lo encuentra
@@ -133,8 +137,9 @@ public class AdoptanteDAO {
     }
 
     /**
-     * Metodo que rellena el constructor del objeto Adoptante, para no tener que rellenarlo en todos los métodos en los que se use
-     * en caso de que haya modificaciones de atributos en el objeto Voluntario
+     * Metodo que rellena el constructor del objeto Adoptante, para no tener que rellenarlo
+     * en todos los métodos en los que se use en caso de que haya modificaciones
+     * de atributos en el objeto Voluntario
      *
      * @param p --> objeto Persona (superclase).
      * @return --> devuelve el objeto Persona (superclase) convertido en Adoptante (subclase)
@@ -145,8 +150,9 @@ public class AdoptanteDAO {
         }
         return new Adoptante(p.getDni(), p.getNombre(), p.getApellidos(), p.getTelefono(), p.getCorreo(), p.getDireccion());
     }
+    //endregion
 
-    //////////////////////// ADD ////////////////////
+    //region ADD
     /**
      * Metodo que inserta un ADOPTANTE en la base de datos dentro de la tabla adoptante
      *
@@ -169,4 +175,5 @@ public class AdoptanteDAO {
         }
         return false;
     }
+    //endregion
 }
