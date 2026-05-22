@@ -4,18 +4,21 @@ import org.proyectorefugio.dataAccess.ConnectionBD;
 import org.proyectorefugio.model.Animal;
 import org.proyectorefugio.model.Gato;
 
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase de acceso a datos para la entidad Gato.
+ * Gestiona las operaciones de consulta, inserción y actualización sobre la tabla {@code gato},
+ * apoyándose en AnimalDAO para obtener los datos comunes heredados de {@link Animal}.
+ */
 public class GatoDAO {
 
-    /**
-     * --------------------Sentencias SQL--------------------
-     **/
+    //region--------------------Sentencias SQL--------------------
+
 
     private final static String SQL_FIND_ALL = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, gato g WHERE a.id = g.idGato AND adoptado = ?";
 
@@ -24,9 +27,9 @@ public class GatoDAO {
     private final static String SQL_INSERT = "INSERT INTO gato (idGato, leucemiaFelina) VALUES(?, ?)";
 
     private static String SQL_UPDATE_LEUCEMIA = "UPDATE gato SET leucemiaFelina = ? WHERE idGato = ?";
-    /**------------------------------------------------------**/
+    //endregion------------------------------------------------------
 
-    /////////////////////// FIND ///////////////////////
+    //region FIND
 
     /**
      * Metodo que devuelve una lista con todos los gatos de la base de datos
@@ -64,6 +67,7 @@ public class GatoDAO {
         if (a == null) return null;
         return rellenarDatosGato(a);
     }
+
     /**
      * Metodo que busca un Gato por chip en la base de datos y extrae toda su informacion
      * @param chip --> número del chip pasado por parámetro
@@ -133,7 +137,6 @@ public class GatoDAO {
                 listaGatos.add(g);
             }
         }
-
         return listaGatos;
     }
 
@@ -156,11 +159,8 @@ public class GatoDAO {
                 listaGatos.add(g);
             }
         }
-
         return listaGatos;
     }
-
-
 
     /**
      * Metodo que busca a los gatos que tengan unos colores específicos
@@ -181,11 +181,11 @@ public class GatoDAO {
                 listaGatos.add(g);
             }
         }
-
         return listaGatos;
     }
+    //endregion
 
-    //////////////////////// ADD ///////////////////////
+    //region ADD
     /**
      * Metodo que inserta un GATO en la base de datos dentro de la tabla gato
      * @param g --> objeto Gato pasado como parámetro
@@ -210,9 +210,9 @@ public class GatoDAO {
         return false;
     }
 
-    /////////////////////// UPDATE ///////////////////////
+    //endregion UPDATE
     /**
-     * Metodo que actualiza la informacion sobre la leucemia de un gato
+     * Metodo que actualiza la información sobre la leucemia de un gato
      *
      * @param a --> animal al que vamos a actualizar la información
      * @param leucemia --> leucemia del gato, true si es agresivo, false si no lo es
@@ -235,4 +235,5 @@ public class GatoDAO {
         }
         return updated;
     }
+    //endregion
 }

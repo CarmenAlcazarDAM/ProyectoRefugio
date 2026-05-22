@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Clase de acceso a datos para la entidad Perro.
+ * Gestiona las operaciones de consulta, inserción y actualización sobre la tabla {@code gato},
+ * apoyándose en AnimalDAO para obtener los datos comunes heredados de {@link Animal}.
+ */
 public class PerroDAO {
 
     /**
