@@ -1,0 +1,10 @@
+module:org.proyectorefugio
+org.proyectorefugio
+org.proyectorefugio.controller
+org.proyectorefugio.dataAccess
+org.proyectorefugio.enums
+org.proyectorefugio.interfaces
+org.proyectorefugio.model
+org.proyectorefugio.modelDAO
+org.proyectorefugio.utils
+org.proyectorefugio.view
