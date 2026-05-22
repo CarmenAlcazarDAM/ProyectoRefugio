@@ -33,7 +33,7 @@ public class PerroDAO {
 
     //endregion------------------------------------------------------
 
-    /////////////////////// FIND ///////////////////////
+    //region FIND
     /**
      * Metodo que busca todos los Perros de la base de datos.
      * @param isAdopted --> filtra si estamos buscando los que están adoptados o no
@@ -60,7 +60,6 @@ public class PerroDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return listaPerros;
     }
 
@@ -74,6 +73,7 @@ public class PerroDAO {
         if (a == null) return null;
         return rellenarDatosPerro(a);
     }
+
     /**
      * Metodo que busca un Perro por chip en la base de datos y extrae toda su informacion
      * @param chip --> número del chip pasado por parámetro
@@ -169,8 +169,9 @@ public class PerroDAO {
         }
         return listaPerros;
     }
+    //endregion
 
-    //////////////////////// ADD ////////////////////
+    //region ADD
     /**
      * Metodo que inserta un PERRO en la base de datos dentro de la tabla perro
      *
@@ -197,11 +198,11 @@ public class PerroDAO {
         return añadido;
     }
 
-    //////////////////////// UPDATE ////////////////////
+    //region UPDATE
     /**
-     * Metodo que actualiza la informacion del peso del perro
+     * Metodo que actualiza la información del peso del perro
      *
-     * @param a    --> animal al que vamos a actualizar la información
+     * @param a --> animal al que vamos a actualizar la información
      * @param peso --> peso del perro pasado por parámetro
      * @return --> devuelve true si se actualiza correctamente, false si no lo hace
      */
@@ -223,7 +224,7 @@ public class PerroDAO {
     }
 
     /**
-     * Metodo que actualiza la informacion sobre la agresividad del perro
+     * Metodo que actualiza la información sobre la agresividad del perro
      *
      * @param a --> animal al que vamos a actualizar la información
      * @param agresivo --> agresividad del perro, true si es agresivo, false si no lo es
@@ -268,6 +269,7 @@ public class PerroDAO {
 
         return listaPerros;
     }
+    //endregion
 }
 
 

@@ -19,7 +19,6 @@ public class GatoDAO {
 
     //region--------------------Sentencias SQL--------------------
 
-
     private final static String SQL_FIND_ALL = "SELECT a.id, a.nombre, a.raza, a.sexo FROM animal a, gato g WHERE a.id = g.idGato AND adoptado = ?";
 
     private final static String SQL_FIND_GATO = "SELECT leucemiaFelina FROM gato WHERE idGato = ?";
@@ -30,7 +29,6 @@ public class GatoDAO {
     //endregion------------------------------------------------------
 
     //region FIND
-
     /**
      * Metodo que devuelve una lista con todos los gatos de la base de datos
      *
