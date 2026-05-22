@@ -4,6 +4,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Clase de utilidades generales para la aplicación.
+ *
+ * Proporciona métodos estáticos auxiliares para tareas comunes como la validación
+ * de datos (DNI, correos, teléfonos), formateo de textos, fechas y otras funciones
+ * de soporte requeridas por las capas de la aplicación.
+ */
 public class Utils {
 
     /**
