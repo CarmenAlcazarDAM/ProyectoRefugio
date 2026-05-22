@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PersonaDAO {
-    /**
-     * --------------------Sentencias SQL--------------------
-     **/
+    //region--------------------Sentencias SQL--------------------
     private final static String SQL_FIND_BY_DNI = "SELECT * FROM persona WHERE dni = ?";
     private final static String SQL_FIND_ALL = "SELECT * FROM persona";
     private final static String SQL_FIND_BY_NAME = "SELECT * FROM persona WHERE nombre LIKE ?";
@@ -27,10 +25,9 @@ public class PersonaDAO {
     private final static String SQL_UPDATE_CORREO = "UPDATE persona SET correo = ? WHERE dni = ?";
     private final static String SQL_UPDATE_DIRECCION = "UPDATE persona SET direccion = ? WHERE dni = ?";
 
+    //endregion------------------------------------------------------
 
-    /**------------------------------------------------------**/
-
-    /////////////////////// FIND ///////////////////////
+    //region FIND
 
     /**
      * Metodo que busca y devuelve un objeto Persona según su DNI
@@ -130,7 +127,9 @@ public class PersonaDAO {
         }
         return listaPersonas;
     }
-    /////////////////////// INSERT ///////////////////////
+    //endregion
+
+    //region INSERT
 
     /**
      * Metodo que inserta una Persona en la base de datos
@@ -158,9 +157,9 @@ public class PersonaDAO {
         }
         return añadida;
     }
+    //endregion
 
-
-    /////////////////////// DELETE ///////////////////////
+    //region DELETE
 
     /**
      * Metodo que borra una persona de la base de datos
@@ -180,8 +179,9 @@ public class PersonaDAO {
         }
         return false;
     }
+    //endregion
 
-    /////////////////////// UPDATE ///////////////////////
+    //region UPDATE
 
     /**
      * Metodo que actualiza la información del télefono de contacto de una persona
@@ -278,4 +278,5 @@ public class PersonaDAO {
         }
         return updated;
     }
+    //endregion
 }
