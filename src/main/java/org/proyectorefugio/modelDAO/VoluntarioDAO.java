@@ -1,7 +1,6 @@
 package org.proyectorefugio.modelDAO;
 
 import org.proyectorefugio.dataAccess.ConnectionBD;
-import org.proyectorefugio.model.Adoptante;
 import org.proyectorefugio.model.Persona;
 import org.proyectorefugio.model.Voluntario;
 
@@ -11,24 +10,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase de acceso a la base de datos para la entidad Voluntario.
+ * Gestiona las operaciones de consulta e inserción sobre la tabla adoptante
+ * de la base de datos, apoyándose en PersonaDAO para obtener los datos personales.
+ */
 public class VoluntarioDAO {
-    /**
-     * --------------------Sentencias SQL--------------------
-     **/
+    //region--------------------Sentencias SQL--------------------
     private final static String SQL_FIND = "SELECT * FROM voluntario";
     private final static String SQL_FIND_VOLUNTARIO = "SELECT * FROM voluntario WHERE dniVoluntario = ?";
 
     private final static String SQL_INSERT = "INSERT INTO voluntario VALUES(?)";
 
-    /**
-     * ------------------------------------------------------
-     **/
+    //endregion------------------------------------------------------
 
-    /////////////////////// FIND ///////////////////////
+    //region FIND
     /**
-     * Metodo que crea una lista con todas los voluntarios de la base de datos
+     * Metodo que crea una lista con todas las Personas que son voluntarios de la base de datos
      *
-     * @return --> devuelve una lista con todos los voluntarios y sus datos
+     * @return --> devuelve una lista con todas las Personas que son voluntarios y sus datos
      */
     public static List<Persona> findAll() {
         List<Persona> listaVoluntarios = new ArrayList<>();
@@ -51,9 +51,9 @@ public class VoluntarioDAO {
             return listaVoluntarios;
     }
     /**
-     * Metodo que verifica si un dni especifico existe dentro de la tabla voluntarios
+     * Metodo que verifica si un DNI especifico existe dentro de la tabla voluntarios
      * @param dni --> dni a buscar
-     * @return --> devuelve true si encuentra el dni dentro de volutario, false si no lo encuentra
+     * @return --> devuelve true si encuentra el dni dentro de voluntario, false si no lo encuentra
      */
     private static boolean esVoluntario(String dni) {
         boolean existe = false;
@@ -73,7 +73,7 @@ public class VoluntarioDAO {
     }
 
     /**
-     * Metodo que busca a un voluntario por su dni específico
+     * Metodo que busca a un voluntario por su DNI específico
      * @param dni --> dni a buscar
      * @return --> devuelve el objeto Voluntario si lo encuentra
      *
@@ -129,7 +129,7 @@ public class VoluntarioDAO {
     }
 
     /**
-     * Metodo que rellena el constructor del objeto Volutario, para no tener que rellenarlo en todos los métodos en los que se use
+     * Metodo que rellena el constructor del objeto Voluntario, para no tener que rellenarlo en todos los métodos en los que se use
      * en caso de que haya modificaciones de atributos en el objeto Voluntario
      * @param p --> objeto Persona (superclase).
      * @return --> devuelve el objeto Persona (superclase) convertido en Voluntario (subclase)
@@ -141,7 +141,8 @@ public class VoluntarioDAO {
         return new Voluntario(p.getDni(), p.getNombre(), p.getApellidos(), p.getTelefono(), p.getCorreo(), p.getDireccion());
     }
 
-    //////////////////////// ADD ////////////////////
+    //endregion
+    //region ADD
     /**
      * Metodo que inserta un VOLUNTARIO en la base de datos dentro de la tabla voluntario
      * @param p --> objeto Persona pasado como parámetro
@@ -163,6 +164,5 @@ public class VoluntarioDAO {
         }
         return false;
     }
-
-
+    //endregion
 }
