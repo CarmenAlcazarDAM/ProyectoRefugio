@@ -12,10 +12,14 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase de acceso a base de datos para la entidad Ubicación.
+ * Gestiona las operaciones de consulta, inserción, actualización y eliminación
+ * sobre la tabla ubicacion.
+ */
 public class UbicacionDAO {
-    /**
-     * --------------------Sentencias SQL--------------------
-     **/
+
+    //region--------------------Sentencias SQL--------------------
     private final static String SQL_FIND_ALL = "SELECT * FROM ubicacion";
     private final static String SQL_FIND_BY_ID = "SELECT * FROM ubicacion WHERE id = ?";
     private final static String SQL_FIND_BY_HOUR = "SELECT * FROM ubicacion WHERE horaRecreo = ?";
@@ -29,13 +33,9 @@ public class UbicacionDAO {
     private static String SQL_UPDATE_MINUTES = "UPDATE ubicacion SET minutosRecreo = ? WHERE id = ?";
     private static String SQL_UPDATE_CAPACIDAD = "UPDATE ubicacion SET capacidad = ? WHERE id = ?";
 
+    //endregion------------------------------------------------------
 
-
-    /**
-     * ------------------------------------------------------
-     **/
-
-    /////////////////////// FIND ///////////////////////
+    //region FIND
     /**
      * Metodo que busca y devuelve un objeto de tipo Ubicacion según su id
      *
@@ -146,8 +146,9 @@ public class UbicacionDAO {
         }
         return ubicaciones;
     }
+    //endregion
 
-    /// ////////////////// ADD ///////////////////////
+    //region ADD
     /**
      * Metodo que inserta una nueva ubicación en la base de datos
      *
@@ -180,8 +181,9 @@ public class UbicacionDAO {
         }
         return añadida;
     }
+    //region
 
-    /////////////////////// DELETE ///////////////////////
+    //endregion DELETE
     /**
      * Metodo que borra un objeto Ubicacion de la base de datos ubicacion,
      *
@@ -202,8 +204,9 @@ public class UbicacionDAO {
         return false;
 
     }
+    //endregion
 
-    /// //////////////////// UPDATE ///////////////////////
+    //region UPDATE
     /**
      * Metodo que actualiza la hora de recreo de una ubicacion
      * @param u --> ubicacion a la que queremos actualizar la información
@@ -270,5 +273,6 @@ public class UbicacionDAO {
         }
         return updated;
     }
+    //endregion
 
 }
