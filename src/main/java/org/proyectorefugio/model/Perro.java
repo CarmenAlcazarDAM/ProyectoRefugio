@@ -8,12 +8,37 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Representa un perro del refugio.
+ * Extiende Animal añadiendo peso, agresividad e implementando
+ * Acogible para una futura funcionalidad de acogida temporal.
+ */
 public class Perro extends Animal implements Acogible {
 
     private int idPerro;
     private double peso;
     private boolean agresivo;
 
+    /**
+     * Constructor completo usado por PerroDAO para reconstruir
+     * un perro con todos sus datos desde la base de datos.
+     *
+     * @param id --> identificador único del perro
+     * @param nombre --> nombre del perro
+     * @param raza --> raza del perro
+     * @param sexo --> sexo del perro
+     * @param color --> color del pelaje
+     * @param edad --> edad del perro
+     * @param marcasDistintivas --> marcas o señales identificativas
+     * @param numeroChip --> número de chip
+     * @param esterilizado --> indica si el perro está esterilizado
+     * @param historia --> historia o procedencia del perro
+     * @param observaciones --> observaciones veterinarias o de comportamiento
+     * @param fechaIngreso --> fecha en que ingresó al refugio
+     * @param idUbicacion --> identificador de la ubicación asignada
+     * @param peso --> peso del perro en kilogramos
+     * @param agresivo --> indica si el perro tiene comportamiento agresivo
+     */
     public Perro(int id, String nombre, String raza, Sexo sexo,
                  String color, String edad, String marcasDistintivas,
                  String numeroChip, boolean esterilizado, String historia,
@@ -25,10 +50,30 @@ public class Perro extends Animal implements Acogible {
         this.peso = peso;
         this.agresivo = agresivo;
     }
-
+    /**
+     * Constructor mínimo con solo los datos básicos de identificación.
+     * Usado principalmente para operaciones simples de búsqueda o referencia.
+     *
+     * @param id --> identificador único del perro
+     * @param nombre --> nombre del perro
+     * @param raza --> raza del perro
+     * @param sexo --> sexo del perro
+     */
     public Perro(int id, String nombre, String raza, Sexo sexo) {
         super(id, nombre, raza, sexo);
     }
+
+    /**
+     * Constructor reducido con datos básicos más peso y agresividad.
+     * Usado al registrar un nuevo perro antes de asignarle ID definitivo.
+     *
+     * @param id --> identificador único del perro
+     * @param nombre --> nombre del perro
+     * @param raza --> raza del perro
+     * @param sexo --> sexo del perro
+     * @param peso --> peso del perro en kilogramos
+     * @param agresivo  --> indica si el perro tiene comportamiento agresivo
+     */
     public Perro(int id, String nombre, String raza, Sexo sexo, double peso, boolean agresivo) {
         super(id, nombre, raza, sexo);
 
@@ -36,18 +81,31 @@ public class Perro extends Animal implements Acogible {
         this.agresivo = agresivo;
     }
 
-
+    /**
+     * Devuelve el peso del perro en kilogramos.
+     * @return --> peso del perro
+     */
     public double getPeso() {
         return peso;
     }
 
-
+    /**
+     * Indica si el perro tiene comportamiento agresivo.
+     * @return --> devuelve true si es agresivo, false en caso contrario
+     */
     public boolean isAgresivo() {
         return agresivo;
     }
 
 
     @Override
+    /**
+     * Compara este perro con otro objeto por igualdad de todos sus campos,
+     * incluyendo los heredados de Animal.
+     *
+     * @param o --> objeto a comparar
+     * @return --> devuelve true si todos los campos son iguales, false en caso contrario
+     */
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
@@ -56,11 +114,21 @@ public class Perro extends Animal implements Acogible {
     }
 
     @Override
+    /**
+     * Devuelve el código hash del perro basado en sus campos propios
+     * y los heredados de Animal.
+     *
+     * @return --> código hash
+     */
     public int hashCode() {
         return Objects.hash(super.hashCode(), idPerro, peso, agresivo);
     }
 
     @Override
+    /**
+     * Devuelve una representación textual del perro.
+     * @return --> cadena con el formato heredado de Animal.
+     */
     public String toString() {
         return super.toString();
     }
@@ -85,7 +153,7 @@ public class Perro extends Animal implements Acogible {
 
     /**
      * Metodo que convierte en texto el boolean isAgresivo
-     * @return --> devuelve una cadena de texto
+     * @return --> develve "Sí" si es agresivo, "No" en caso contrario
      */
     public String isAgresivoTexto(){
         return Mensajes.afirmativoNegativo(this.agresivo);
