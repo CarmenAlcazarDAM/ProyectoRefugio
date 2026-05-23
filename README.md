@@ -72,10 +72,18 @@ Toda la documentación complementaria del proyecto se encuentra disponible dentr
 
 ### Diagramas y documentación técnica
 
+## Documentación adicional
+
+Toda la documentación complementaria del proyecto se encuentra disponible dentro de la carpeta [`Documentos Adjuntos`](./Documentos%20Adjuntos).
+
+### Diagramas y documentación técnica
+
 | Documento | Descripción |
 |---|---|
-| [Diagrama Entidad-Relación](./Documentos%20Adjuntos/ENTIDADRELACION.pdf) | Diseño conceptual de la base de datos |
-| [Modelo Relacional](./Documentos Adjuntos/ESQUEMA RELACIONAL.drawio.pdf) | Estructura relacional de las tablas |
-| [Diagrama de Clases](./Documentos%20Adjuntos/DIAGRAMA%20DE%20CLASES.drawio.pdf) | Estructura completa del modelo orientado a objetos |
-| [Casos de Uso](./Documentos%20Adjuntos/CASOS%20DE%20USO.pdf) | Diagrama de comportamiento del sistema |
 | [Memoria Técnica](./Documentación.docx) | Documentación completa del proyecto |
+| [Diagrama Entidad-Relación](./Documentos%20Adjuntos/ENTIDADRELACION.pdf) | Diseño conceptual de la base de datos |
+| [Modelo Relacional](./Documentos%20Adjuntos/MODELO%20RELACIONAL.pdf) | Estructura relacional de las tablas |
+| [Diagrama de Clases](./Documentos%20Adjuntos/DIAGRAMA%20DE%20CLASES.drawio.pdf) | Estructura completa del modelo orientado a objetos |
+| [Casos de Uso](./Documentos%20Adjuntos/CASOS%20DE%20USO.png) | Diagrama de comportamiento del sistema |
+
+
