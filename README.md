@@ -62,11 +62,17 @@ El proyecto sigue una arquitectura basada en:
 - MVC (Modelo - Vista - Controlador)
 - DAO (Data Access Object)
 
-```bash
-src/
-├── controller/
-├── dao/
-├── model/
-├── utils/
-├── view/
-└── connection/
+## Documentación adicional
+
+Toda la documentación complementaria del proyecto se encuentra disponible dentro de la carpeta [`Documentos Adjuntos`](Documentos Adjuntos).
+
+### Diagramas y documentación técnica
+
+| Documento | Descripción |
+|---|---|
+| [Diagrama Entidad-Relación](./Documentos%20Adjuntos/ENTIDADRELACION.pdf) | Diseño conceptual de la base de datos |
+| [Modelo Relacional](./Documentos%20Adjuntos/MODELO%20RELACIONAL.pdf) | Estructura relacional de las tablas |
+| [Diagrama de Clases](./Documentos%20Adjuntos/DIAGRAMA%20DE%20CLASES.drawio.pdf) | Estructura completa del modelo orientado a objetos |
+| [Casos de Uso](./Documentos%20Adjuntos/CASOS%20DE%20USO.pdf) | Diagrama de comportamiento del sistema |
+| [Memoria Técnica](./Documentación.docx) | Documentación completa del proyecto |
+
