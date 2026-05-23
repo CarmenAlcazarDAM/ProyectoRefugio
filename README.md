@@ -66,14 +66,16 @@ El proyecto sigue una arquitectura basada en:
 
 Toda la documentación complementaria del proyecto se encuentra disponible dentro de la carpeta [`Documentos Adjuntos`]([Documentos Adjuntos](https://github.com/CarmenAlcazarDAM/ProyectoRefugio/tree/39a82459d36d1c2174e3ee1ec1ae717ba2c53040/Documentos%20Adjuntos)).
 
+## Documentación adicional
+
+Toda la documentación complementaria del proyecto se encuentra disponible dentro de la carpeta [`Documentos Adjuntos`](./Documentos%20Adjuntos).
+
 ### Diagramas y documentación técnica
 
 | Documento | Descripción |
 |---|---|
+| [Diagrama Entidad-Relación](./Documentos%20Adjuntos/ENTIDADRELACION.pdf) | Diseño conceptual de la base de datos |
+| [Modelo Relacional](Documentos Adjuntos/ESQUEMA RELACIONAL.drawio.pdf) | Estructura relacional de las tablas |
+| [Diagrama de Clases](./Documentos%20Adjuntos/DIAGRAMA%20DE%20CLASES.drawio.pdf) | Estructura completa del modelo orientado a objetos |
+| [Casos de Uso](./Documentos%20Adjuntos/CASOS%20DE%20USO.pdf) | Diagrama de comportamiento del sistema |
 | [Memoria Técnica](./Documentación.docx) | Documentación completa del proyecto |
-| [Diagrama Entidad-Relación]([./Documentos%20Adjuntos/ENTIDADRELACION.pdf](https://github.com/CarmenAlcazarDAM/ProyectoRefugio/blob/f31ad5d43d4697163e3ddf4267fec7a6c2014357/Documentos%20Adjuntos/ENTIDAD-RELACI%C3%93N.pdf)) | Diseño conceptual de la base de datos |
-| [Modelo Relacional]([Documentos Adjuntos/ESQUEMA RELACIONAL.drawio.pdf]) | Estructura relacional de las tablas |
-| [Diagrama de Clases]([./Documentos%20Adjuntos/DIAGRAMA%20DE%20CLASES.drawio.pdf](https://github.com/CarmenAlcazarDAM/ProyectoRefugio/blob/f31ad5d43d4697163e3ddf4267fec7a6c2014357/Documentos%20Adjuntos/DIAGRAMA%20DE%20CLASES.drawio.pdf)) | Estructura completa del modelo orientado a objetos |
-| [Casos de Uso]([./Documentos%20Adjuntos/CASOS%20DE%20USO.pdf](https://github.com/CarmenAlcazarDAM/ProyectoRefugio/blob/f31ad5d43d4697163e3ddf4267fec7a6c2014357/Documentos%20Adjuntos/Casos%20de%20uso.png)) | Diagrama de comportamiento del sistema |
-
-
