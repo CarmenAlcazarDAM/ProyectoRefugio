@@ -71,7 +71,7 @@ Toda la documentación complementaria del proyecto se encuentra disponible dentr
 
 | Documento | Descripción |
 |---|---|
-| [Documentación](./Documentación.pdf) | Documentación completa del proyecto |
+| [Documentación](./Documentos%20Adjuntos/Documentación.pdf) | Documentación completa del proyecto |
 | [Diagrama Entidad-Relación](./Documentos%20Adjuntos/ENTIDAD-RELACIÓN.pdf) | Diseño conceptual de la base de datos |
 | [Modelo Relacional](./Documentos%20Adjuntos/ESQUEMA%20RELACIONAL.drawio.pdf) | Estructura relacional de las tablas |
 | [Diagrama de Clases](./Documentos%20Adjuntos/DIAGRAMA%20DE%20CLASES.drawio.pdf) | Estructura completa del modelo orientado a objetos |
