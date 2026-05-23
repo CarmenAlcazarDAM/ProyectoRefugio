@@ -64,7 +64,7 @@ El proyecto sigue una arquitectura basada en:
 
 ## Documentación adicional
 
-Toda la documentación complementaria del proyecto se encuentra disponible dentro de la carpeta [`Documentos Adjuntos`](Documentos Adjuntos).
+Toda la documentación complementaria del proyecto se encuentra disponible dentro de la carpeta [`Documentos Adjuntos`]([Documentos Adjuntos](https://github.com/CarmenAlcazarDAM/ProyectoRefugio/tree/39a82459d36d1c2174e3ee1ec1ae717ba2c53040/Documentos%20Adjuntos)).
 
 ### Diagramas y documentación técnica
 
