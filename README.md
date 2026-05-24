@@ -77,4 +77,12 @@ Toda la documentación complementaria del proyecto se encuentra disponible dentr
 | [Diagrama de Clases](./Documentos%20Adjuntos/DIAGRAMA%20DE%20CLASES.drawio.pdf) | Estructura completa del modelo orientado a objetos |
 | [Casos de Uso](./Documentos%20Adjuntos/Casos%20de%20uso.png) | Diagrama de comportamiento del sistema |
 
+## Ejecutable
+El JAR ejecutable del proyecto se encuentra en la carpeta [`EJECUTABLE`](./EJECUTABLE).
+
+> ⚠️ Recuerda copiar el archivo `connection.xml` en la misma carpeta y rellenarlo con sus datos de conecxión a la base de datos antes de ejecutarlo.
+
+```bash
+java -jar ProyectoRefugio.jar
+```
 
