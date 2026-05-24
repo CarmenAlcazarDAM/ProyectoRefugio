@@ -80,7 +80,7 @@ Toda la documentación complementaria del proyecto se encuentra disponible dentr
 ## Ejecutable
 El JAR ejecutable del proyecto se encuentra en la carpeta [`EJECUTABLE`](./Ejecutable).
 
-> ⚠️ Recuerda copiar el archivo `connection.xml` en la misma carpeta y rellenarlo con sus datos de conecxión a la base de datos antes de ejecutarlo.
+> ⚠️ Recuerda copiar el archivo `connection.xml` en la misma carpeta y rellenarlo con sus datos de conexión a la base de datos antes de ejecutarlo.
 
 ```bash
 java -jar ProyectoRefugio.jar
