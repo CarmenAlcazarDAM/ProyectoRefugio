@@ -353,6 +353,8 @@ public class VoluntarioController {
         ventanaBuscar.setVisible(false);
         informacionAdicional.setVisible(false);
         ventanaAñadirTarea.setVisible(true);
+        textoDni.setVisible(true);
+        insertarTareaDni.setVisible(true);
         botonGuardarTarea.setVisible(true);
         insertarTareaUbicacion.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 0));
 
